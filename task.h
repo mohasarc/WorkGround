@@ -13,6 +13,7 @@ void operator=(const Task &rhs);
 bool addFile(string afilePath, string afileNickName);
 bool removeFile(string afileNickName);
 bool changeApp(string aappPath);
+bool getNickName();
 bool run();
 
 private:

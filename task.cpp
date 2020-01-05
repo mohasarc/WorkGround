@@ -150,6 +150,10 @@ bool Task::changeApp(string aappPath){
 	return false;
 }
 
+string Task::getTaskName(){
+	return taskName;
+}
+
 bool Task::run(){
 	cout<<"running with " << appPath<<endl;
 
