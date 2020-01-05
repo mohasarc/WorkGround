@@ -5,12 +5,14 @@
 
 class Task{
 public:
-Task(string taskName, string appPath);
+Task(string ataskName = "", string aappPath = "");
 ~Task();
-Task(Task toCopy);
-bool addFile(string filePath, string fileNickName);
-bool removeFile(string fileNickName);
-bool changeProgram(string appPath);
+Task(Task &toCopy);
+
+bool addFile(string afilePath, string afileNickName);
+bool removeFile(string afileNickName);
+bool changeProgram(string aappPath);
+bool run();
 
 private:
 struct fileNode{
@@ -20,5 +22,6 @@ struct fileNode{
 }
 string taskName;
 string appPath;
+fileNode* head;
 };
 #endif
