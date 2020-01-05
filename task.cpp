@@ -29,20 +29,26 @@ Task::~Task(){
 
 // copy constructor
 Task::Task(const Task &toCopy){
+	cout<<"\n copy const \n";
+
 	taskName = toCopy.taskName;
 	appPath  = toCopy.appPath;
 
 	// delete all current nodes
-	while(head){
-		fileNode* tmp = head;
-		head = head->next;
-		delete tmp;
-	}
+	// if (head != NULL)
+	// 	while(head != NULL){
+	// 		cout<<"deleting "<< head->fileNickName<<endl;
+	// 		fileNode* tmp = head;
+	// 		head = head->next;
+	// 		delete tmp;
+	// 	}
 
 	if(toCopy.head == NULL){
 		// if toCopy files list is empty
 		head = NULL;
+		cout<<"to copy's head == NULL\n";
 	} else{
+		cout<<"copying the head\n";
 		// copy the head
 		head = new fileNode;
 		head->fileNickName = toCopy.head->fileNickName;

@@ -1,29 +1,32 @@
-#include <workGround.h>
+#include "workGround.h"
+#include <iostream>
+using namespace std;
 
-workGround::workGround(){
+WorkGround::WorkGround(){
 	wgName = "";
 	head   = NULL;
 }
 
 WorkGround::WorkGround(string awgName){
+	cout<<"\nwgconst\n";
 	wgName = awgName;
 	head   = NULL;
 }
 
-workGround::~workGround(){
+WorkGround::~WorkGround(){
 	while(head){
-		TaskNode* tmp = head;
+		taskNode* tmp = head;
 		head = head->next;
 		delete tmp;
 	}
 }
 
-workGround::workGround(const workGround &toCopy){
+WorkGround::WorkGround(const WorkGround &toCopy){
 	wgName = toCopy.wgName;
 
 	// delete all current nodes
 	while(head){
-		TaskNode* tmp = head;
+		taskNode* tmp = head;
 		head = head->next;
 		delete tmp;
 	}
@@ -33,14 +36,14 @@ workGround::workGround(const workGround &toCopy){
 		head = NULL;
 	} else{
 		// copy the head
-		head = new TaskNode;
+		head = new taskNode;
 		head->task = toCopy.head->task;
 		// pointing to the head
-		TaskNode* prev = head;
+		taskNode* prev = head;
 
 		// copy other nodes
-		for(TaskNode* cur = toCopy.head->next; cur != NULL; cur = cur->next){
-			prev->next = new TaskNode;
+		for(taskNode* cur = toCopy.head->next; cur != NULL; cur = cur->next){
+			prev->next = new taskNode;
 			prev = prev->next;
 			prev->task = cur->task;
 		}
@@ -51,12 +54,12 @@ workGround::workGround(const workGround &toCopy){
 	}
 }
 
-void operator=(const workGround &rhs){
+void WorkGround::operator=(const WorkGround &rhs){
 	wgName = rhs.wgName;
 
 	// delete all current nodes
 	while(head){
-		TaskNode* tmp = head;
+		taskNode* tmp = head;
 		head = head->next;
 		delete tmp;
 	}
@@ -66,14 +69,14 @@ void operator=(const workGround &rhs){
 		head = NULL;
 	} else{
 		// copy the head
-		head = new TaskNode;
+		head = new taskNode;
 		head->task = rhs.head->task;
 		// pointing to the head
-		TaskNode* prev = head;
+		taskNode* prev = head;
 
 		// copy other nodes
-		for(TaskNode* cur = rhs.head->next; cur != NULL; cur = cur->next){
-			prev->next = new TaskNode;
+		for(taskNode* cur = rhs.head->next; cur != NULL; cur = cur->next){
+			prev->next = new taskNode;
 			prev = prev->next;
 			prev->task = cur->task;
 		}
@@ -85,37 +88,39 @@ void operator=(const workGround &rhs){
 }
 
 bool WorkGround::addTask(Task task){
-	if(task == NULL){
-		return false;
-	}
+	// if(task == NULL){
+	// 	return false;
+	// }
+
+	cout<<"ading Task\n";
 
 	if(head != NULL){
 		// traverse till the last node
-		TaskNode* last;
+		taskNode* last;
 		for(last = head; last->next != NULL; last = last->next);
-		TaskNode* tmp = new TaskNode;
+		taskNode* tmp = new taskNode;
 		tmp->task = task;
 		tmp->next = NULL;
 		last->next = tmp;
 		return true;
 
 	} else {
-		head = new TaskNode;
+		head = new taskNode;
 		head->task = task;
 		head->next = NULL;
 		return true;
 	}
 }
 
-bool removeTask(string taskName){
+bool WorkGround::removeTask(string taskName){
 	if (head == NULL){
 		return false;
 	}
 
 	if (taskName != ""){
-		TaskNode* cur;
-		TaskNode* prev;
-		for(cur = head; cur->task->getTaskName() != taskName; cur = cur->next){
+		taskNode* cur;
+		taskNode* prev;
+		for(cur = head; cur->task.getTaskName() != taskName; cur = cur->next){
 			prev = cur;
 		}
 
@@ -139,12 +144,14 @@ bool WorkGround::renameWorkGround(string awgName){
 	return false;
 }
 
-bool workGround::run(){
+bool WorkGround::run(){
 	bool successReport = true;
 	bool enteredLoop   = false;
 	if(head != NULL){
-		for (TaskNode* cur = head; cur != NULL; cur = cur->next){
-			successReport = successReport && cur->run();
+		cout<<"head != NULL"<<endl;
+		for (taskNode* cur = head; cur != NULL; cur = cur->next){
+			cout<<"\n trying to run\t" << cur->task.getTaskName()<<endl;
+			successReport = successReport && cur->task.run();
 			enteredLoop   = true;
 		}
 	}
