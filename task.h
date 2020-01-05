@@ -7,8 +7,8 @@ class Task{
 public:
 Task(string ataskName = "", string aappPath = "");
 ~Task();
-Task(Task &toCopy);
-
+Task(const Task &toCopy);
+void operator=(const Task &rhs);
 bool addFile(string afilePath, string afileNickName);
 bool removeFile(string afileNickName);
 bool changeProgram(string aappPath);
