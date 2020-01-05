@@ -1,10 +1,12 @@
+#include <bits/stdc++.h>
 #include "task.h"
 #include <windows.h>
 #include <iostream>
 // constructor
 Task::Task(string ataskName, string aappPath){
+	cout<<"constructor"<<endl;
 	taskName = ataskName;
-	appPath = appPath;
+	appPath = aappPath;
 	head = NULL;
 	fileNo = 0;
 }
@@ -31,7 +33,7 @@ Task::Task(const Task &toCopy){
 
 	if(toCopy.head == NULL){
 		// if toCopy files list is empty
-		head = NULL
+		head = NULL;
 	} else{
 		// copy the head
 		head = new fileNode;
@@ -41,7 +43,7 @@ Task::Task(const Task &toCopy){
 		fileNode* prev = head;
 
 		// copy other nodes
-		for(fileNode cur = toCopy.head->next; cur != NULL; cur = cur->next){
+		for(fileNode* cur = toCopy.head->next; cur != NULL; cur = cur->next){
 			prev->next = new fileNode;
 			prev = prev->next;
 			prev->fileNickName = cur->fileNickName;
@@ -68,7 +70,7 @@ void Task::operator=(const Task &rhs){
 
 	if(rhs.head == NULL){
 		// if rhs files list is empty
-		head = NULL
+		head = NULL;
 	} else{
 		// copy the head
 		head = new fileNode;
@@ -78,7 +80,7 @@ void Task::operator=(const Task &rhs){
 		fileNode* prev = head;
 
 		// copy other nodes
-		for(fileNode cur = rhs.head->next; cur != NULL; cur = cur->next){
+		for(fileNode* cur = rhs.head->next; cur != NULL; cur = cur->next){
 			prev->next = new fileNode;
 			prev = prev->next;
 			prev->fileNickName = cur->fileNickName;
@@ -98,7 +100,7 @@ bool Task::addFile(string afilePath, string afileNickName){
 
 	if(head != NULL){
 		// traverse till the last node
-		fileNode last;
+		fileNode* last;
 		for(last = head; last->next != NULL; last = last->next);
 		fileNode* tmp = new fileNode;
 		tmp->fileNickName = afileNickName;
@@ -140,11 +142,18 @@ bool Task::removeFile(string afileNickName){
 }
 
 bool Task::changeApp(string aappPath){
-	appPath = aappPath;
+	if(aappPath != ""){
+		appPath = aappPath;
+		return true;	
+	}
+	
+	return false;
 }
 
 bool Task::run(){
-	STARTINFO si;
+	cout<<"running with " << appPath<<endl;
+
+	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
 	ZeroMemory(&si, sizeof(si));
 	ZeroMemory(&pi, sizeof(pi));
@@ -152,11 +161,12 @@ bool Task::run(){
 
 	string cmdCommandStr = appPath;
 	if(head != NULL){
-		for (fileNode cur = head; cur != NULL; cur = cur->next)
+		for (fileNode* cur = head; cur != NULL; cur = cur->next)
 			cmdCommandStr += " " + cur->filePath;
 	}
 
-	char cmdCommandChr[] = cmdCommandStr;
+	char cmdCommandChr[cmdCommandStr.length() + 1];
+	strcpy(cmdCommandChr, cmdCommandStr.c_str());
 
 	CreateProcessA(
 		NULL,
