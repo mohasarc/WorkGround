@@ -161,7 +161,7 @@ bool Task::run(){
 	PROCESS_INFORMATION pi;
 	ZeroMemory(&si, sizeof(si));
 	ZeroMemory(&pi, sizeof(pi));
-	bool processSuccess = NULL;
+	bool processSuccess = false;
 
 	string cmdCommandStr = appPath;
 	if(head != NULL){
@@ -172,7 +172,7 @@ bool Task::run(){
 	char cmdCommandChr[cmdCommandStr.length() + 1];
 	strcpy(cmdCommandChr, cmdCommandStr.c_str());
 
-	CreateProcessA(
+	processSuccess = CreateProcessA(
 		NULL,
 		cmdCommandChr,
 		NULL,
@@ -188,6 +188,8 @@ bool Task::run(){
 	WaitForSingleObject(pi.hProcess, INFINITE);
 	CloseHandle( pi.hProcess );
 	CloseHandle( pi.hThread );
+
+	return processSuccess;
 }
 
 //
