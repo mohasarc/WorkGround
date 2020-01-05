@@ -9,8 +9,16 @@ Task::Task(string ataskName, string aappPath){
 	fileNo = 0;
 }
 
+Task::~Task(){
+	while(head){
+		fileNode* tmp = head;
+		head = head->next;
+		delete tmp;
+	}
+}
+
 // copy constructor
-Task::~Task(const Task &toCopy){
+Task::Task(const Task &toCopy){
 	taskName = toCopy.taskName;
 	appPath  = toCopy.appPath;
 
