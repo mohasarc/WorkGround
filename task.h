@@ -6,6 +6,7 @@ using namespace std;
 
 class Task{
 public:
+Task();
 Task(string ataskName, string aappPath);
 ~Task();
 Task(const Task &toCopy);
@@ -13,7 +14,7 @@ void operator=(const Task &rhs);
 bool addFile(string afilePath, string afileNickName);
 bool removeFile(string afileNickName);
 bool changeApp(string aappPath);
-bool getNickName();
+string getTaskName();
 bool run();
 
 private:

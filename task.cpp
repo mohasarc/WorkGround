@@ -2,6 +2,14 @@
 #include "task.h"
 #include <windows.h>
 #include <iostream>
+
+Task::Task(){
+	taskName = "";
+	appPath = "";
+	head = NULL;
+	fileNo = 0;
+}
+
 // constructor
 Task::Task(string ataskName, string aappPath){
 	cout<<"constructor"<<endl;
