@@ -1,5 +1,6 @@
 #include "task.h"
-
+#include <windows.h>
+#include <iostream>
 // constructor
 Task::Task(string ataskName, string aappPath){
 	taskName = ataskName;
@@ -130,10 +131,41 @@ bool Task::removeFile(string afileNickName){
 		return false;
 }
 
-bool changeApp(string aappPath){
+bool Task::changeApp(string aappPath){
 	appPath = aappPath;
 }
 
+bool Task::run(){
+	STARTINFO si;
+	PROCESS_INFORMATION pi;
+	ZeroMemory(&si, sizeof(si));
+	ZeroMemory(&pi, sizeof(pi));
+	bool processSuccess = NULL;
 
+	string cmdCommandStr = appPath;
+	if(head != NULL){
+		for (fileNode cur = head; cur != NULL; cur = cur->next)
+			cmdCommandStr += " " + cur->filePath;
+	}
+
+	char cmdCommandChr[] = cmdCommandStr;
+
+	CreateProcessA(
+		NULL,
+		cmdCommandChr,
+		NULL,
+		NULL,
+		false,
+		0,
+		NULL,
+		NULL,
+		&si,
+		&pi
+		);
+
+	WaitForSingleObject(pi.hProcess, INFINITE);
+	CloseHandle( pi.hProcess );
+	CloseHandle( pi.hThread );
+}
 
 //
