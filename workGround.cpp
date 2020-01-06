@@ -1,3 +1,6 @@
+// author : Mohammed S. Yaseen
+// date   : 5/1/2020
+
 #include "workGround.h"
 #include <iostream>
 using namespace std;
