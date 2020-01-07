@@ -36,6 +36,7 @@ Task::Task(const Task &toCopy){
 
 	taskName = toCopy.taskName;
 	appPath  = toCopy.appPath;
+	fileNo   = toCopy.fileNo;
 
 	// delete all current nodes
 	// if (head != NULL)
@@ -77,6 +78,7 @@ Task::Task(const Task &toCopy){
 void Task::operator=(const Task &rhs){
 	taskName = rhs.taskName;
 	appPath  = rhs.appPath;
+	fileNo   = rhs.fileNo;
 
 	// delete all current nodes
 	while(head){
@@ -124,6 +126,7 @@ bool Task::addFile(string afilePath, string afileNickName){
 		tmp->filePath = afilePath;
 		tmp->next = NULL;
 		last->next = tmp;
+		fileNo++;
 		return true;
 
 	} else {
@@ -131,6 +134,7 @@ bool Task::addFile(string afilePath, string afileNickName){
 		head->fileNickName = afileNickName;
 		head->filePath = afilePath;
 		head->next = NULL;
+		fileNo++
 		return true;
 	}
 }
@@ -150,6 +154,7 @@ bool Task::removeFile(string afileNickName){
 		if (cur != NULL){
 			prev->next = cur->next;
 			delete cur;
+			fileNo--;
 			return true;
 
 		} else
@@ -207,6 +212,29 @@ bool Task::run(){
 	CloseHandle( pi.hThread );
 
 	return processSuccess;
+}
+
+string* getFilesPaths(){
+	string* pathArr = new string[fileNo];
+	int i = 0;
+	string s = "";
+
+	if (head != NULL){
+		for (fileNode* cur = head; cur != NULL; cur = cur->next){
+			pathArr[i] = cur->fileNickName 
+						 + " : " 
+						 + cur->filePath ;
+			i++;
+		}
+
+		return pathArr;
+	}
+
+	return NULL;
+}
+
+string getAppPath(){
+	return appPath;
 }
 
 //
