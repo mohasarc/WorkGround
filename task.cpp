@@ -214,7 +214,7 @@ bool Task::run(){
 	return processSuccess;
 }
 
-string* getFilesPaths(){
+string* getFilesPaths(int &size){
 	string* pathArr = new string[fileNo];
 	int i = 0;
 	string s = "";
@@ -227,6 +227,7 @@ string* getFilesPaths(){
 			i++;
 		}
 
+		size = fileNo;
 		return pathArr;
 	}
 
