@@ -18,6 +18,7 @@ public:
 	bool removeTask(string taskNickName);
 	bool renameWorkGround(string wgName);
 	bool run();
+	string wgView();
 private:
 struct taskNode{
 	Task task;
@@ -27,7 +28,5 @@ struct taskNode{
 string wgName;
 taskNode* head;
 };
-	
-	
-	
+
 #endif

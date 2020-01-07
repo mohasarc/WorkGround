@@ -161,3 +161,28 @@ bool WorkGround::run(){
 
 	return successReport && enteredLoop;
 }
+
+string wgView(){
+	string s = "";
+	int order = 0;
+
+	if (head != NULL){
+		s = s + "Tasks :\n"
+		for (taskNode* cur = head; cur != NULL; cur = cur->next){
+			order++;
+			s = s + "\t" + order + " - " + cur->task.getTaskName()
+				  + "\n\t\tApp Path : " + cur->task.getAppPath();
+
+			int size;
+			string* taskFiles = cur->task.getFilesPaths(size);
+			for(int i = 0; i < size; i++){
+				s = s + "\n\t\t + " + taskFiles[i];
+			}
+		}
+
+		s = s + "\n";
+		return s;
+	}
+
+	return "The Work Ground is empty\n";
+}
