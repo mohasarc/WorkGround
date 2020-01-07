@@ -118,7 +118,7 @@ bool WorkGround::addTask(Task task){
 bool WorkGround::removeTask(string taskName){
 	if (head == NULL){
 		return false;
-	}
+	} 
 
 	if (taskName != ""){
 		taskNode* cur;
@@ -134,8 +134,9 @@ bool WorkGround::removeTask(string taskName){
 
 		} else
 			false;
-	} else 
-		return false;
+	}
+
+	return false;
 }
 
 bool WorkGround::renameWorkGround(string awgName){
@@ -162,15 +163,15 @@ bool WorkGround::run(){
 	return successReport && enteredLoop;
 }
 
-string wgView(){
+string WorkGround::wgView(){
 	string s = "";
 	int order = 0;
 
 	if (head != NULL){
-		s = s + "Tasks :\n"
+		s = s + "Tasks :\n";
 		for (taskNode* cur = head; cur != NULL; cur = cur->next){
 			order++;
-			s = s + "\t" + order + " - " + cur->task.getTaskName()
+			s = s + "\t" + /*to_string(order) +*/ " - " + cur->task.getTaskName()
 				  + "\n\t\tApp Path : " + cur->task.getAppPath();
 
 			int size;
@@ -178,9 +179,12 @@ string wgView(){
 			for(int i = 0; i < size; i++){
 				s = s + "\n\t\t + " + taskFiles[i];
 			}
+
+			delete []taskFiles;
+			taskFiles = NULL;
+			s = s + "\n";
 		}
 
-		s = s + "\n";
 		return s;
 	}
 

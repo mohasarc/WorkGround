@@ -134,7 +134,7 @@ bool Task::addFile(string afilePath, string afileNickName){
 		head->fileNickName = afileNickName;
 		head->filePath = afilePath;
 		head->next = NULL;
-		fileNo++
+		fileNo++;
 		return true;
 	}
 }
@@ -214,7 +214,7 @@ bool Task::run(){
 	return processSuccess;
 }
 
-string* getFilesPaths(int &size){
+string* Task::getFilesPaths(int &size){
 	string* pathArr = new string[fileNo];
 	int i = 0;
 	string s = "";
@@ -234,7 +234,7 @@ string* getFilesPaths(int &size){
 	return NULL;
 }
 
-string getAppPath(){
+string Task::getAppPath(){
 	return appPath;
 }
 
