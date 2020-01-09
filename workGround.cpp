@@ -163,6 +163,13 @@ bool WorkGround::run(){
 	return successReport && enteredLoop;
 }
 
+string WorkGround::getWgName(){
+	if (wgName != ""){
+		return wgName;
+	} else 
+		return "Error: the WorkGround has no name.";
+}
+
 string WorkGround::wgView(){
 	string s = "";
 	int order = 0;

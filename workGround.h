@@ -18,6 +18,7 @@ public:
 	bool removeTask(string taskNickName);
 	bool renameWorkGround(string wgName);
 	bool run();
+	string getWgName();
 	string wgView();
 private:
 struct taskNode{
