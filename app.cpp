@@ -1,10 +1,14 @@
 #include "app.h"
 
 int main(){
-	// vars
+	// variables
 	vector<WorkGround*> workGrounds;
 	char selection = '\n';
-
+	WorkGround* newWG;
+	Task* newTask;
+	string wgName;
+	string taskName;
+	string taskPath;
 
 	// the main program
 	do{
@@ -42,17 +46,16 @@ int main(){
 					       switch(selection){
 					       		case 'a':
 					       			// view WorkGrounds names
-					       			for (int i = 0; i < workGrounds.size(); i++){
-					       				cout<<workGrounds[i]->getWgName()<<"\t";
+									for (int i = 0; i < workGrounds.size(); i++){
+										cout<<workGrounds[i]->getWgName()<<"\t";
+									
+										if( i % 4 == 0)
+											cout<<endl;
+									}
 
-					       				if( i % 4 == 0)
-					       					cout<<endl;
-					       			}
-
-					       			cout<<endl;
-
-					       			if (workGrounds.size() == 0)
-					       				cout<<"there are no WorkGrounds yet to be viewed\n";
+									cout<<endl;
+									if (workGrounds.size() == 0)
+								  		cout<<"there are no WorkGrounds yet to be viewed\n";
 					       		break;
 
 					       		case 'b':
@@ -67,12 +70,11 @@ int main(){
 
 					       		case 'c':
 
-					       			// variables
-					       			WorkGround* newWG = new WorkGround();
-					       			Task* newTask;
-					       			string wgName = "";
-					       			string taskName = "";
-					       			string taskPath = "";
+					       			// initalizing vars
+					       			newWG = new WorkGround();
+					       			wgName = "";
+					       			taskName = "";
+					       			taskPath = "";
 
 					       			// getting input
 					       			cout<< "specify a name : ";
@@ -80,7 +82,9 @@ int main(){
 					       			getline(cin, wgName);
 					       			cout<< "\nadd a task:\nchoose a task Name : ";
 					       			getline(cin, taskName);
+					       			getline(cin, taskName);
 					       			cout<< "\nadd the program path (in the form C:\\Program file\\....)\n";
+					       			getline(cin, taskPath);
 					       			getline(cin, taskPath);
 					       			
 					       			// making objects
@@ -92,9 +96,101 @@ int main(){
 					       			workGrounds.push_back(newWG);
 					       		break;
 
-					       		// case 'd':
+					       		case 'd':
+					       			// initializing vars
+					       			wgName = "";
 
-					       		// break;
+					       			// view WorkGrounds names
+					       			cout<<"\nAvailable workGrounds' names :\n";
+					       			for (int i = 0; i < workGrounds.size(); i++){
+										cout<<workGrounds[i]->getWgName()<<"\t";
+									
+										if( i % 4 == 0)
+											cout<<endl;
+									}
+
+									cout<<endl;
+									if (workGrounds.size() == 0)
+								  		cout<<"there are no WorkGrounds yet to be viewed\n";
+
+					       			cout<< "select the WorkGround to modify\ntype its name : ";
+					       			getline(cin, wgName);
+					       			getline(cin, wgName);
+
+					       			// find the WorkGround
+					       			for (int i = 0; i < workGrounds.size(); i++){
+					       				if (workGrounds[i]->getWgName() == wgName){
+					       					newWG = workGrounds[i];
+					       				}
+					       			}
+
+					       			do{
+					       				selection = '\n';
+					       				// view the menu
+					       				cout<<"select one\n"
+					       					<<"a - rename WorkGround\n"
+					       					<<"b - add a task\n" 
+					       					<<"c - remove a task\n" 
+					       					<<"d - modify a task\n"
+					       					<<"r - return to the previous menu\n";
+
+					       				// getting selection
+					       				cin>>selection;
+
+					       				// evaluating selection
+					       				switch(selection){
+					       					//rename WorkGround
+					       					case 'a':
+					       						cout<< "choose a new name for the workGround ( " 
+					       							<< newWG->getWgName() << " ) : \n";
+					       						getline(cin, wgName);
+					       						getline(cin, wgName);
+					       						newWG->renameWorkGround(wgName);
+					       					break;
+
+					       					//add a task
+					       					case 'b':
+					       						// create the task
+					       					cout<< "\nadd a task:\nchoose a task Name : ";
+					       					getline(cin, taskName);
+					       					getline(cin, taskName);
+					       					cout<< "\nadd the program path (in the form C:\\Program file\\....)\n";
+					       					getline(cin, taskPath);
+					       					getline(cin, taskPath);
+
+					       						// add it to the workground
+					       					newTask = new Task(taskName, taskPath);
+					       					newWG->addTask(*newTask);
+
+					       					break;
+
+					       					//remove a task
+					       					case 'c':
+					       						// view the workground tasks
+					       						cout<<newWG->wgView()<<endl;
+					       						cout<<"select the task to remove\ntype its name : ";
+					       						getline(cin, taskName);
+					       						getline(cin, taskName);
+
+					       						// remove the task with the name taskName
+					       						newWG->removeTask(taskName);
+					       					break;
+
+					       					//modify a task
+					       					// case 'd':
+					       					// 	// view the workground tasks
+					       					// 	cout<<newWG->wgView()<<endl;
+					       					// 	cout<<"select the task to modify\ntype its name : ";
+					       					// 	getline(cin, taskName);
+
+					       					// 	// get the task with the name taskName to modify it
+
+					       					// break;
+					       				}
+					       			}while(selection != 'r' && selection != 'R');
+
+					       			selection = '\n';
+					       		break;
 					       }
 				} while (selection != 'r' && selection != 'R');
 
@@ -127,3 +223,18 @@ int main(){
 		}
 	} while (selection != 'q' && selection != 'Q');
 }
+
+
+// void viewWG(){
+// 	// view WorkGrounds names
+// 	for (int i = 0; i < workGrounds.size(); i++){
+// 		cout<<workGrounds[i]->getWgName()<<"\t";
+	
+// 		if( i % 4 == 0)
+// 			out<<endl;
+// 	}
+
+// 	cout<<endl;
+// 	if (workGrounds.size() == 0)
+//   		cout<<"there are no WorkGrounds yet to be viewed\n";
+// }
