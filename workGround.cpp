@@ -121,18 +121,25 @@ bool WorkGround::removeTask(string taskName){
 	} 
 
 	if (taskName != ""){
-		taskNode* cur;
-		taskNode* prev;
-		for(cur = head; cur->task.getTaskName() != taskName; cur = cur->next){
+		taskNode* cur = NULL;
+		taskNode* prev = NULL;
+		for(cur = head; cur != NULL && cur->task.getTaskName() != taskName; cur = cur->next){
 			prev = cur;
 		}
 
-		if (cur != NULL){
+		if (cur != NULL && prev != NULL){
+			cout<<"cur is not null!!!!"<<endl;
 			prev->next = cur->next;
 			delete cur;
 			return true;
 
-		} else
+		} else if (cur != NULL && prev == NULL){
+			// the head is the targeted node
+			taskNode* tmp = cur;
+			head = head->next;
+			delete tmp; 
+			true;
+		} else 
 			false;
 	}
 
