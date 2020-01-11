@@ -15,7 +15,7 @@ Task::Task(){
 
 // constructor
 Task::Task(string ataskName, string aappPath){
-	cout<<"constructor"<<endl;
+	// cout<<"constructor"<<endl;
 	taskName = ataskName;
 	appPath = aappPath;
 	head = NULL;
@@ -32,7 +32,7 @@ Task::~Task(){
 
 // copy constructor
 Task::Task(const Task &toCopy){
-	cout<<"\n copy const \n";
+	// cout<<"\n copy const \n";
 
 	taskName = toCopy.taskName;
 	appPath  = toCopy.appPath;
@@ -50,9 +50,9 @@ Task::Task(const Task &toCopy){
 	if(toCopy.head == NULL){
 		// if toCopy files list is empty
 		head = NULL;
-		cout<<"to copy's head == NULL\n";
+		// cout<<"to copy's head == NULL\n";
 	} else{
-		cout<<"copying the head\n";
+		// cout<<"copying the head\n";
 		// copy the head
 		head = new fileNode;
 		head->fileNickName = toCopy.head->fileNickName;
@@ -177,7 +177,7 @@ string Task::getTaskName(){
 }
 
 bool Task::run(){
-	cout<<"running with " << appPath<<endl;
+	// cout<<"running with " << appPath<<endl;
 
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
