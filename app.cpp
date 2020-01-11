@@ -78,13 +78,13 @@ int main(){
 
 					       			// getting input
 					       			cout<< "specify a name : ";
-					       			getline(cin, wgName);
+					       			cin.ignore();
 					       			getline(cin, wgName);
 					       			cout<< "\nadd a task:\nchoose a task Name : ";
-					       			getline(cin, taskName);
+					       			// cin.ignore();
 					       			getline(cin, taskName);
 					       			cout<< "\nadd the program path (in the form C:\\Program file\\....)\n";
-					       			getline(cin, taskPath);
+					       			cin.ignore();
 					       			getline(cin, taskPath);
 					       			
 					       			// making objects
@@ -114,7 +114,7 @@ int main(){
 								  		cout<<"there are no WorkGrounds yet to be viewed\n";
 
 					       			cout<< "select the WorkGround to modify\ntype its name : ";
-					       			getline(cin, wgName);
+					       			cin.ignore();
 					       			getline(cin, wgName);
 
 					       			// find the WorkGround
@@ -143,7 +143,7 @@ int main(){
 					       					case 'a':
 					       						cout<< "choose a new name for the workGround ( " 
 					       							<< newWG->getWgName() << " ) : \n";
-					       						getline(cin, wgName);
+					       						cin.ignore();
 					       						getline(cin, wgName);
 					       						newWG->renameWorkGround(wgName);
 					       					break;
@@ -152,10 +152,10 @@ int main(){
 					       					case 'b':
 					       						// create the task
 					       					cout<< "\nadd a task:\nchoose a task Name : ";
-					       					getline(cin, taskName);
+					       					cin.ignore();
 					       					getline(cin, taskName);
 					       					cout<< "\nadd the program path (in the form C:\\Program file\\....)\n";
-					       					getline(cin, taskPath);
+					       					cin.ignore();
 					       					getline(cin, taskPath);
 
 					       						// add it to the workground
@@ -169,7 +169,7 @@ int main(){
 					       						// view the workground tasks
 					       						cout<<newWG->wgView()<<endl;
 					       						cout<<"select the task to remove\ntype its name : ";
-					       						getline(cin, taskName);
+					       						cin.ignore();
 					       						getline(cin, taskName);
 
 					       						// remove the task with the name taskName
