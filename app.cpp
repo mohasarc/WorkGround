@@ -60,9 +60,8 @@ int main(){
 
 					       		case 'b':
 					       			// view WorkGrounds content
-					       			for (int i = 0; i < workGrounds.size(); i++){
+					       			for (int i = 0; i < workGrounds.size(); i++)
 					       				cout<<workGrounds[i]->wgView();
-					       			}
 
 					       			if (workGrounds.size() == 0)
 					       				cout<<"there are no WorkGrounds yet to be viewed\n";

@@ -182,20 +182,25 @@ string WorkGround::wgView(){
 	int order = 0;
 
 	if (head != NULL){
-		s = s + "Tasks :\n";
+		s = s + wgName + "\n\tTasks :\n";
 		for (taskNode* cur = head; cur != NULL; cur = cur->next){
 			order++;
-			s = s + "\t" + /*to_string(order) +*/ " - " + cur->task.getTaskName()
+			// string orderstr = order;
+			s = s + "\t" + /*orderstr +*/ " - " + cur->task.getTaskName()
 				  + "\n\t\tApp Path : " + cur->task.getAppPath();
 
 			int size;
 			string* taskFiles = cur->task.getFilesPaths(size);
-			for(int i = 0; i < size; i++){
-				s = s + "\n\t\t + " + taskFiles[i];
+			
+			if (taskFiles != NULL){
+				for(int i = 0; i < size; i++){
+					s = s + "\n\t\t + " + taskFiles[i];
+				}
+
+				delete []taskFiles;
+				taskFiles = NULL;
 			}
 
-			delete []taskFiles;
-			taskFiles = NULL;
 			s = s + "\n";
 		}
 
