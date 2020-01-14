@@ -13,4 +13,8 @@ WorkGround is a windows application that provides the ability to save the the op
 
 ## Contributing
 
+### You're always welcome to contribute
 
+this is an open source project aiming to improve the open source comunity. Therefore, everyone interested is invited to contribute.
+
+### The code explained
