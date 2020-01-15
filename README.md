@@ -23,7 +23,7 @@ this is an open source project aiming to improve the open source comunity. There
 
 ### Progress so far ..
 
-So far the app is a console app. it can show a menu. the user chooses an option and preceeds to another menu and so on. the menu is as follows:
+So far the app is a console app. it can show a menu. the user chooses an option and preceeds to another menu and so on. the menu is as follows: *tick sign indicated completion*
 
 
 > Please select a choice (choose 1, 2, .. etc)
