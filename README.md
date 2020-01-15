@@ -27,10 +27,10 @@ So far the app is a console app. it can show a menu. the user chooses an option 
 
 
 > Please select a choice (choose 1, 2, .. etc)
-> [X] * 1- View and Mpdify WorkGrounds
-> [ ] * 2- Switch current WorkGround
-> [ ] * 3- Choose a default WorkGround
-> [ ] * 4- start automatically after booting up
-> [ ] * 5- other settings
-> [ ] * 6- about
-> [ ] * Q. Quit
+> * [X] 1- View and Mpdify WorkGrounds
+> * [ ] 2- Switch current WorkGround
+> * [ ] 3- Choose a default WorkGround
+> * [ ] 4- start automatically after booting up
+> * [ ] 5- other settings
+> * [ ] 6- about
+> * [ ] Q. Quit
