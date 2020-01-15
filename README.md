@@ -17,9 +17,11 @@ WorkGround is a windows application that provides the ability to save the the op
 
 this is an open source project aiming to improve the open source comunity. Therefore, everyone interested is invited to contribute.
 
-### The cocept explained
+### The main cocept explained
+the main motivation to create this application is to cut down on the time spent reopening the apps and files for specific job and the time spent switching from a "WorkGround" that is the set of tasks for a specific job and another WorkGround for another job. using WorkGround the user can store more than one workground, including all programms that the used uses togather and the files opened in each of them, and switch between them very easily. A real life examole might be of a web developper who switches between working on the graphic desgin of a website and the code developpement for the website, so one workground can have all graphic design tools and the other one can have all programmign tools.
 
 ### How does that work
+
 
 ### Progress so far ..
 
