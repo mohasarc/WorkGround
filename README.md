@@ -1,8 +1,8 @@
 # Overview
 
-WorkGround is a windows application that provides the ability to save the the open windows and files and recover them later on.
+WorkGround is a windows application that saves the currently open workground and provides the ability to reopen them later, even after rebooting.
 
-## WorkGround utilities
+### WorkGround utilities
 
 * Create WorkGround manually
 * Automatically save current open tasks
