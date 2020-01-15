@@ -8,6 +8,14 @@
 using namespace std;
 
 int main();
-void viewWG();
-
+// void mainMenu();
+// void VMWGMenu();
+// void MWGMenu();
+string viewWG(const vector<WorkGround*> wgs, bool elaborated);
+string viewMenu(int which);
+bool addWgTo(vector<WorkGround*> &wgs, string wgName, string taskName, string taskPath);
+string askForWgName();
+string askForWgName(string oldWgName);
+string askForTaskName();
+string askForTaskPath();
 #endif

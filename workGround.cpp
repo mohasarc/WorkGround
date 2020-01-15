@@ -11,7 +11,7 @@ WorkGround::WorkGround(){
 }
 
 WorkGround::WorkGround(string awgName){
-	cout<<"\nwgconst\n";
+	// cout<<"\nwgconst\n";
 	wgName = awgName;
 	head   = NULL;
 }
@@ -95,7 +95,7 @@ bool WorkGround::addTask(Task task){
 	// 	return false;
 	// }
 
-	cout<<"ading Task\n";
+	// cout<<"ading Task\n";
 
 	if(head != NULL){
 		// traverse till the last node
