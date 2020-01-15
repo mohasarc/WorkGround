@@ -43,3 +43,12 @@ through View and modify WorkGround is used to add a new WorkGround and modify ex
 > * [X] d- Modify a WorkGround
 > * [X] e- Remove a WorkGround
 > * [X] r- Return to previous menu
+
+under choice d there is another menu
+
+> select one
+> * [X] a - rename WorkGround
+> * [X] b - add a task
+> * [X] c - remove a task
+> * [ ] d - modify a task
+> * [X] r - return to the previous menu
