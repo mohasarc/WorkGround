@@ -34,3 +34,12 @@ So far the app is a console app. it can show a menu. the user chooses an option 
 > * [ ] 5- other settings
 > * [ ] 6- about
 > * [ ] Q. Quit
+
+through View and modify WorkGround is used to add a new WorkGround and modify existing ones as well as all tasks inside them. it has the following list: 
+> Please select a choice (choose a, b, .. etc)
+> * [X] a- View WorkGrounds (siplified)
+> * [X] b- View WorkGrounds (elaborated)
+> * [X] c- Add a WorkGround
+> * [X] d- Modify a WorkGround
+> * [X] e- Remove a WorkGround
+> * [X] r- Return to previous menu
