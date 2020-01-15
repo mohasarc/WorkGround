@@ -32,5 +32,5 @@ Please select a choice (choose 1, 2, .. etc)
  4. start automatically after booting up (not yet)
  5. other settings (not yet)
  6. about (not yet)
- Q. Quit (not yet)
+ * Q. Quit (not yet)
 
