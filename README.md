@@ -25,6 +25,7 @@ this is an open source project aiming to improve the open source comunity. There
 
 So far the app is a console app. it can show a menu. the user chooses an option and preceeds to another menu and so on. the menu is as follows:
 
+> Blockquote
 Please select a choice (choose 1, 2, .. etc)
  * 1- View and Mpdify WorkGrounds (implemented)
  * 2- Switch current WorkGround (not yet)
@@ -33,4 +34,4 @@ Please select a choice (choose 1, 2, .. etc)
  * 5- other settings (not yet)
  * 6- about (not yet)
  * Q. Quit (not yet)
-
+> Blockquote
