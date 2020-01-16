@@ -179,15 +179,24 @@ string WorkGround::getWgName(){
 
 string WorkGround::wgView(){
 	string s = "";
+	string p = "";
 	int order = 0;
 
 	if (head != NULL){
 		s = s + wgName + "\n\tTasks :\n";
 		for (taskNode* cur = head; cur != NULL; cur = cur->next){
 			order++;
+
+			for (int i = 0; i < cur->task.getAppPath().length(); i++){
+				p += cur->task.getAppPath()[i];
+
+				if( i % 30 == 0 && i != 0)
+					p += "\n\t\t\t   ";
+			}
+
 			// string orderstr = order;
 			s = s + "\t" + /*orderstr +*/ " - " + cur->task.getTaskName()
-				  + "\n\t\tApp Path : " + cur->task.getAppPath();
+				  + "\n\t\tApp Path : " + p;
 
 			int size;
 			string* taskFiles = cur->task.getFilesPaths(size);

@@ -17,7 +17,8 @@ int main(){
 		cout<< viewMenu(0);
 
 		// getting the selection
-		cin>>selection;
+		cin.get(selection);
+		cin.ignore(256, '\n');
 
 		// evaluate the selection
 		switch(selection){
@@ -29,7 +30,8 @@ int main(){
 				cout<< viewMenu(1);
 
 				// getting selection
-				cin>>selection;
+				cin.get(selection);
+				cin.ignore(256, '\n');
 
 				//************************//
 				// Modify workground Menu //
@@ -77,7 +79,8 @@ int main(){
 							cout<<viewMenu(2);
 
 							// getting selection
-							cin>>selection;
+							cin.get(selection);
+							cin.ignore(256, '\n');
 							switch(selection){
 							case 'a': //rename WorkGround
 								wgName = askForWgName(newWG->getWgName());
@@ -102,15 +105,15 @@ int main(){
 								newWG->removeTask(taskName);
 							break;
 
-							// case 'd': //modify a task
-								// 	// view the workground tasks
-								// 	cout<<newWG->wgView()<<endl;
-								// 	cout<<"select the task to modify\ntype its name : ";
-								// 	getline(cin, taskName);
+							case 'd': //modify a task
+									// view the workground tasks
+									cout<<newWG->wgView()<<endl;
+									cout<<"select the task to modify\ntype its name : ";
+									getline(cin, taskName);
 
-								// 	// get the task with the name taskName to modify it
+									// get the task with the name taskName to modify it
 
-							// break;
+							break;
 							}
 						}while(selection != 'r' && selection != 'R');
 					}
@@ -153,37 +156,49 @@ string viewMenu(int which){
 	string theMenu = "";
 	switch(which){
 		case 0:
-			theMenu = string("Please select a choice (choose 1, 2, .. etc)\n") +
-		    		"1- View and Mpdify WorkGrounds\n" +
-		    		"2- Switch current WorkGround\n" +
-		    		"3- Choose a default WorkGround\n" +
-		    		"4- start automatically after booting up\n" +
-		    		"5- other settings\n" +
-		    		"6- about\n" +
-		    		"Q- Quit\n";
+			theMenu = string("\n--------------------------------------------------\n") +
+							   "                  THE MAIN MENU                   \n" +
+							   "--------------------------------------------------\n" +
+		    				   "|| 1- View and Mpdify WorkGrounds               ||\n" +
+		    				   "|| 2- Switch current WorkGround                 ||\n" +
+		    				   "|| 3- Choose a default WorkGround               ||\n" +
+		    				   "|| 4- start automatically after booting up      ||\n" +
+		    				   "|| 5- other settings                            ||\n" +
+		    				   "|| 6- about                                     ||\n" +
+		    				   "|| Q- Quit                                      ||\n" +
+		    				   "--------------------------------------------------\n" +
+		    				   "Please select a choice (choose 1, 2, .. etc) : ";
 
 		    return theMenu;
 		break;
 
 		case 1:
-			theMenu = string("Please select a choice (choose a, b, .. etc)\n") +
-					"a- View WorkGrounds (siplified)\n" +
-					"b- View WorkGrounds (elaborated)\n" +
-					"c- Add a WorkGround\n" +
-					"d- Modify a WorkGround\n" +
-					"e- Remove a WorkGround\n" +
-					"r- Return to previous menu\n";
+			theMenu = string("\n--------------------------------------------------\n") +
+							   "           VIEW AND MODIFY WORKGROUNDS            \n" +
+							   "--------------------------------------------------\n" +
+							   "|| a- View WorkGrounds (siplified)              ||\n" +
+							   "|| b- View WorkGrounds (elaborated)             ||\n" +
+							   "|| c- Add a WorkGround                          ||\n" +
+							   "|| d- Modify a WorkGround                       ||\n" +
+							   "|| e- Remove a WorkGround                       ||\n" +
+							   "|| r- Return to previous menu                   ||\n" + 
+							   "--------------------------------------------------\n" +
+							   "Please select a choice (choose a, b, .. etc) : ";
 
 			return theMenu;
 		break;
 
 		case 2:
-			theMenu = string("select one\n") +
-					"a - rename WorkGround\n" +
-					"b - add a task\n" +
-					"c - remove a task\n" +
-					"d - modify a task\n" +
-					"r - return to the previous menu\n";
+			theMenu = string("\n--------------------------------------------------\n") +
+							   "                 MODIFY A WORKGROUND              \n" +
+							   "--------------------------------------------------\n" +
+							   "|| a - rename WorkGround                        ||\n" +
+							   "|| b - add a task                               ||\n" +
+							   "|| c - remove a task                            ||\n" +
+							   "|| d - modify a task                            ||\n" +
+							   "|| r - return to the previous menu              ||\n" + 
+							   "--------------------------------------------------\n" +
+							   "Please select a choice (choose a, b, .. etc) : ";
 
 			return theMenu;
 		break;
@@ -199,28 +214,32 @@ string viewWG(const vector<WorkGround*> wgs, bool elaborated){
 
 	if (!elaborated){
 		// view WorkGrounds' names
-		wgInfoTmp = "";
+		wgInfoTmp = string("\n--------------------------------------------------\n") +
+						     "                  WORKGROUNDS LIST                \n" +
+						     "--------------------------------------------------\n";
 
 		if (wgs.size() <= 0)
-			return "there are no WorkGrounds yet to be viewed\n";
-
-		for (int i = 0; i < wgs.size(); i++){
-			wgInfoTmp += wgs[i]->getWgName() + "\t";
+			wgInfoTmp += "there are no WorkGrounds yet to be viewed\n";
+		else
+			for (int i = 0; i < wgs.size(); i++){
+				wgInfoTmp += wgs[i]->getWgName() + "\t";
 		
-			if( i % 4 == 0)
-				wgInfoTmp += "\n";
-		}
-		return wgInfoTmp;
+				if( i % 4 == 0)
+					wgInfoTmp += "\n";
+			}
 
+		return wgInfoTmp;
 	} else { 
 		// view WorkGrounds' details
-		wgInfoTmp = "";
+		wgInfoTmp = string("\n--------------------------------------------------\n") +
+						     "                  WORKGROUNDS LIST                \n" +
+						     "--------------------------------------------------\n";
 
 		if (wgs.size() <= 0)
-			return "there are no WorkGrounds yet to be viewed\n";
-
-		for (int i = 0; i < wgs.size(); i++)
-			wgInfoTmp += wgs[i]->wgView();
+			wgInfoTmp += "there are no WorkGrounds yet to be viewed\n";
+		else 
+			for (int i = 0; i < wgs.size(); i++)
+				wgInfoTmp += wgs[i]->wgView();
 		return wgInfoTmp;
 	}
 }
@@ -238,7 +257,6 @@ string askForWgName(){
 	string wgName = "";
 
 	cout<< "specify the workground name : ";
-	cin.ignore();
 	getline(cin, wgName);
 	cout<<"\n";
 
@@ -254,17 +272,26 @@ string askForWgName(string oldWgName){
 string askForTaskName(){
 	string taskName = "";
 	cout<< "choose a task Name : ";
-	cin.ignore();
 	getline(cin, taskName);
 	cout<<"\n";
 
 	return taskName;
 }
+
 string askForTaskPath(){
 	string taskPath = "";
 	cout<< "add the program path (in the form C:\\Program file\\....)\nThe path:";
-	cin.ignore();
 	getline(cin, taskPath);
+
+	// parsing the path
+	taskPath.insert(0, 1,'\"');
+	taskPath.insert(taskPath.end(), 1,'\"');
+	for (int i = 0; i < taskPath.length(); i++){
+		if(taskPath[i] == '\\'){
+			taskPath.insert((i), 1, '\\');
+			i++;
+		}
+	}
 
 	return taskPath;
 }

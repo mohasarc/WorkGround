@@ -217,13 +217,22 @@ bool Task::run(){
 string* Task::getFilesPaths(int &size){
 	string* pathArr = new string[fileNo];
 	int i = 0;
-	string s = "";
+	string pathFormatted = "";
+
 
 	if (head != NULL){
 		for (fileNode* cur = head; cur != NULL; cur = cur->next){
+
+			for (int i = 0; i < cur->filePath.length(); i++){
+				pathFormatted += cur->filePath[i];
+
+				if( i % 30 == 0 && 1 != 0)
+					pathFormatted += "\n\t\t\t   ";
+			}
+
 			pathArr[i] = cur->fileNickName 
 						 + " : " 
-						 + cur->filePath ;
+						 + pathFormatted ;
 			i++;
 		}
 
