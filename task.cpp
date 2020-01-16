@@ -147,11 +147,18 @@ bool Task::removeFile(string afileNickName){
 	if (afileNickName != ""){
 		fileNode* cur;
 		fileNode* prev;
-		for(cur = head; cur->fileNickName != afileNickName; cur = cur->next){
+		for(cur = head; cur != NULL && cur->fileNickName != afileNickName; cur = cur->next){
 			prev = cur;
 		}
 
-		if (cur != NULL){
+		cout<<afileNickName<<endl;
+
+		if (cur == head){ // the head is the one to be deleted
+			// cout<<"head to be deleted\n";
+			head = head->next;
+			delete cur;
+		} else if (cur != NULL){
+			// cout<<"cur is not null\n";
 			prev->next = cur->next;
 			delete cur;
 			fileNo--;
@@ -247,4 +254,8 @@ string Task::getAppPath(){
 	return appPath;
 }
 
+bool Task::renameTask(string ataskName){
+	taskName = ataskName;
+	return true;
+}
 //
