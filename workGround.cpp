@@ -218,3 +218,13 @@ string WorkGround::wgView(){
 
 	return "The Work Ground is empty\n";
 }
+
+//
+bool WorkGround::getTask(string taskName, Task* &theTask){
+	for(taskNode* cur = head; cur != NULL; cur = cur->next)
+		if(cur->task.getTaskName() == taskName){
+			theTask = &cur->task;
+			return true;
+		}
+	return false;
+}

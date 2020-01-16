@@ -14,8 +14,13 @@ int main();
 string viewWG(const vector<WorkGround*> wgs, bool elaborated);
 string viewMenu(int which);
 bool addWgTo(vector<WorkGround*> &wgs, string wgName, string taskName, string taskPath);
-string askForWgName();
-string askForWgName(string oldWgName);
-string askForTaskName();
-string askForTaskPath();
+// string askForWgName();
+// string askForWgName(string oldWgName);
+// string askForTaskName();
+// string askForTaskPath();
+
+string askForName(int which);
+string askForPath(int which);
+string askForName(int which, string oldName);
+string askForPath(int which, string oldPath);
 #endif

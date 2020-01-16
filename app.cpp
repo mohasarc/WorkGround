@@ -4,11 +4,13 @@ int main(){
 	// variables
 	vector<WorkGround*> workGrounds;
 	char selection = '\n';
-	WorkGround* newWG;
-	Task* newTask;
-	string wgName;
-	string taskName;
-	string taskPath;
+	WorkGround* tmpWG;
+	Task* tmpTask;
+	string wgNameStr;
+	string taskNameStr;
+	string fileNameStr;
+	string pathStr;
+	bool successOper;
 
 	// the main program
 	do{
@@ -46,31 +48,31 @@ int main(){
 				break;
 
 				case 'c': // add a workground
-					wgName = askForWgName();
-					taskName = askForTaskName();
-					taskPath = askForTaskPath();
-					addWgTo(workGrounds, wgName, taskName, taskPath);
+					wgNameStr = askForName(0);
+					taskNameStr = askForName(1);
+					pathStr = askForPath(0);
+					addWgTo(workGrounds, wgNameStr, taskNameStr, pathStr);
 				break;
 
 				case 'd':
 					//************************//
 					// Modify workground Menu //
 					//************************//
-					wgName = "";
+					wgNameStr = "";
 
 					// view WorkGrounds' names
 					cout<< viewWG(workGrounds, 0);
 
 					cout<< "select the WorkGround to modify\n";
-					wgName = askForWgName();
+					wgNameStr = askForName(0);
 
 					// find the WorkGround
 					for (int i = 0; i < workGrounds.size(); i++){
-						if (workGrounds[i]->getWgName() == wgName)
-							newWG = workGrounds[i];
+						if (workGrounds[i]->getWgName() == wgNameStr)
+							tmpWG = workGrounds[i];
 					}
 
-					if (!newWG){
+					if (!tmpWG){
 						cout<<"There are no workgrounds just yet!\n";
 				   		break;
 					} else {
@@ -83,36 +85,69 @@ int main(){
 							cin.ignore(256, '\n');
 							switch(selection){
 							case 'a': //rename WorkGround
-								wgName = askForWgName(newWG->getWgName());
-								newWG->renameWorkGround(wgName);
+								wgNameStr = askForName(0, tmpWG->getWgName());
+								tmpWG->renameWorkGround(wgNameStr);
 							break;
 	      					
 							case 'b': //add a task
-								taskName = askForTaskName();
-								taskPath = askForTaskPath();
+								taskNameStr = askForName(1);
+								pathStr = askForPath(0);
 								// create task and add it to workground
-								newTask = new Task(taskName, taskPath);
-								newWG->addTask(*newTask);
+								tmpTask = new Task(taskNameStr, pathStr);
+								tmpWG->addTask(*tmpTask);
 							break;
 
 							case 'c': //remove a task
 								// view the workground tasks
-								cout<<newWG->wgView()<<endl;
+								cout<<tmpWG->wgView()<<endl;
 								cout<<"select the task to remove\n";
-								taskName = askForTaskName();
+								taskNameStr = askForName(1);
 
-								// remove the task with the name taskName
-								newWG->removeTask(taskName);
+								// remove the task with the name taskNameStr
+								tmpWG->removeTask(taskNameStr);
 							break;
 
 							case 'd': //modify a task
-									// view the workground tasks
-									cout<<newWG->wgView()<<endl;
+									cout<<tmpWG->wgView()<<endl;
 									cout<<"select the task to modify\ntype its name : ";
-									getline(cin, taskName);
+									// get the task with the name taskNameStr to modify it
+									taskNameStr = askForName(1);
+									successOper = tmpWG->getTask(taskNameStr, tmpTask);
 
-									// get the task with the name taskName to modify it
+									if(!successOper)
+										break;
 
+									do {
+										selection = '\n';
+										cout<<viewMenu(3);
+
+										// getting selection
+										cin.get(selection);
+										cin.ignore(256, '\n');
+										switch(selection){
+										case 'a': // rename a task
+											taskNameStr = askForName(1, tmpTask->getTaskName());
+											tmpTask->renameTask(taskNameStr);
+										break;
+
+										case 'b': // add a file
+											pathStr = askForPath(1);
+											fileNameStr = askForName(2);
+											tmpTask->addFile(pathStr, fileNameStr);
+										break;
+
+										case 'c': // remove a file
+											fileNameStr = askForName(2);
+											successOper = tmpTask->removeFile(fileNameStr);
+											cout<<successOper;
+										break;
+
+										case 'd':
+											pathStr = askForPath(0, tmpTask->getAppPath());
+											tmpTask->changeApp(pathStr);
+										break;
+										}
+									}while(selection != 'r' && selection != 'R');
 							break;
 							}
 						}while(selection != 'r' && selection != 'R');
@@ -124,9 +159,12 @@ int main(){
 			} while (selection != 'r' && selection != 'R');
 		break;
 
-		// case '2': 
+		// case '2': //Start a workground
+		// 	cout<< viewWG(workGrounds, 0);
+		// 	wgNameStr = askForName(0);
 
-
+		// 	// find the workground obj
+		// 	for(int i = 0; i < )
 		// break;
 
 		// case '3': 
@@ -160,7 +198,7 @@ string viewMenu(int which){
 							   "                  THE MAIN MENU                   \n" +
 							   "--------------------------------------------------\n" +
 		    				   "|| 1- View and Mpdify WorkGrounds               ||\n" +
-		    				   "|| 2- Switch current WorkGround                 ||\n" +
+		    				   "|| 2- Start a workground                        ||\n" +
 		    				   "|| 3- Choose a default WorkGround               ||\n" +
 		    				   "|| 4- start automatically after booting up      ||\n" +
 		    				   "|| 5- other settings                            ||\n" +
@@ -196,6 +234,21 @@ string viewMenu(int which){
 							   "|| b - add a task                               ||\n" +
 							   "|| c - remove a task                            ||\n" +
 							   "|| d - modify a task                            ||\n" +
+							   "|| r - return to the previous menu              ||\n" + 
+							   "--------------------------------------------------\n" +
+							   "Please select a choice (choose a, b, .. etc) : ";
+
+			return theMenu;
+		break;
+
+		case 3:
+			theMenu = string("\n--------------------------------------------------\n") +
+							   "                    MODIFY A TASK                 \n" +
+							   "--------------------------------------------------\n" +
+							   "|| a - rename task                              ||\n" +
+							   "|| b - add a file                               ||\n" +
+							   "|| c - remove a file                            ||\n" +
+							   "|| d - change app path                          ||\n" +
 							   "|| r - return to the previous menu              ||\n" + 
 							   "--------------------------------------------------\n" +
 							   "Please select a choice (choose a, b, .. etc) : ";
@@ -253,45 +306,99 @@ bool addWgTo(vector<WorkGround*> &wgs, string wgName, string taskName, string ta
 	wgs.push_back(newWG);
 }
 
-string askForWgName(){
-	string wgName = "";
+// string askForWgName(){
+// 	string wgName = "";
 
-	cout<< "specify the workground name : ";
-	getline(cin, wgName);
+// 	cout<< "specify the workground name : ";
+// 	getline(cin, wgName);
+// 	cout<<"\n";
+
+// 	return wgName;
+// }
+
+// string askForWgName(string oldWgName){
+// 	string wgName = "";
+// 	cout<< "Old name: " + oldWgName + "\n";
+// 	return askForWgName();
+// }
+
+// string askForTaskName(){
+// 	string taskName = "";
+// 	cout<< "choose a task Name : ";
+// 	getline(cin, taskName);
+// 	cout<<"\n";
+
+// 	return taskName;
+// }
+
+// string askForTaskName(string oldTaskName){
+// 	string taskName = "";
+// 	cout<< "Old name: " + oldTaskName + "\n";
+// 	return askForTaskName();
+// }
+
+// string askForTaskPath(){
+// 	string taskPath = "";
+// 	cout<< "add a path (in the form C:\\Program file\\....)\nThe path:";
+// 	getline(cin, taskPath);
+
+// 	// parsing the path
+// 	taskPath.insert(0, 1,'\"');
+// 	taskPath.insert(taskPath.end(), 1,'\"');
+// 	for (int i = 0; i < taskPath.length(); i++){
+// 		if(taskPath[i] == '\\'){
+// 			taskPath.insert((i), 1, '\\');
+// 			i++;
+// 		}
+// 	}
+
+// 	return taskPath;
+// }
+
+string askForName(int which){
+	string name = "";
+
+	switch(which){
+		case 0: cout<< "specify the workground name : "; break;
+		case 1: cout<< "choose a task Name : "; break;
+		case 2: cout<< "choose a file nick name : "; break;
+	}
+	
+	getline(cin, name);
 	cout<<"\n";
-
-	return wgName;
+	return name;
 }
 
-string askForWgName(string oldWgName){
-	string wgName = "";
-	cout<< "Old name: " + oldWgName + "\n";
-	return askForWgName();
+string askForName(int which, string oldName){
+	cout<< "Old name: " + oldName + "\n";
+	return askForName(which);
 }
 
-string askForTaskName(){
-	string taskName = "";
-	cout<< "choose a task Name : ";
-	getline(cin, taskName);
-	cout<<"\n";
 
-	return taskName;
-}
+string askForPath(int which){
+	string path = "";
 
-string askForTaskPath(){
-	string taskPath = "";
-	cout<< "add the program path (in the form C:\\Program file\\....)\nThe path:";
-	getline(cin, taskPath);
+	switch(which){
+		case 0: cout<< "add a task path (in the form C:\\Program file\\....)\nThe path:"; break;
+		case 1: cout<< "add a file path (in the form C:\\Program file\\....)\nThe path:"; break;
+	}
+	
+	getline(cin, path);
 
 	// parsing the path
-	taskPath.insert(0, 1,'\"');
-	taskPath.insert(taskPath.end(), 1,'\"');
-	for (int i = 0; i < taskPath.length(); i++){
-		if(taskPath[i] == '\\'){
-			taskPath.insert((i), 1, '\\');
+	path.insert(0, 1,'\"');
+	path.insert(path.end(), 1,'\"');
+	for (int i = 0; i < path.length(); i++){
+		if(path[i] == '\\'){
+			path.insert((i), 1, '\\');
 			i++;
 		}
 	}
 
-	return taskPath;
+	return path;
+}
+
+string askForPath(int which, string oldPath){
+	cout<< "Old path: " + oldPath + "\n";
+	return askForPath(which);
 }

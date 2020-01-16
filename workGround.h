@@ -18,6 +18,7 @@ public:
 	bool removeTask(string taskNickName);
 	bool renameWorkGround(string wgName);
 	bool run();
+	bool getTask(string taskName, Task* &theTask);
 	string getWgName();
 	string wgView();
 private:
