@@ -159,13 +159,20 @@ int main(){
 			} while (selection != 'r' && selection != 'R');
 		break;
 
-		// case '2': //Start a workground
-		// 	cout<< viewWG(workGrounds, 0);
-		// 	wgNameStr = askForName(0);
+		case '2': //Start a workground
+			cout<< viewWG(workGrounds, 0);
+			wgNameStr = askForName(0);
 
-		// 	// find the workground obj
-		// 	for(int i = 0; i < )
-		// break;
+			// find the workground obj
+			tmpWG = NULL;
+			for(int i = 0; i < workGrounds.size(); i++){
+				if(workGrounds[i]->getWgName() == wgNameStr)
+					tmpWG = workGrounds[i];
+			}
+
+			if(tmpWG)
+				tmpWG->run();
+		break;
 
 		// case '3': 
 

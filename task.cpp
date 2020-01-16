@@ -214,7 +214,7 @@ bool Task::run(){
 		&pi
 		);
 
-	WaitForSingleObject(pi.hProcess, INFINITE);
+	// WaitForSingleObject(pi.hProcess, INFINITE);
 	CloseHandle( pi.hProcess );
 	CloseHandle( pi.hThread );
 
