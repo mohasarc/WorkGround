@@ -312,56 +312,6 @@ bool addWgTo(vector<WorkGround*> &wgs, string wgName, string taskName, string ta
 
 	wgs.push_back(newWG);
 }
-
-// string askForWgName(){
-// 	string wgName = "";
-
-// 	cout<< "specify the workground name : ";
-// 	getline(cin, wgName);
-// 	cout<<"\n";
-
-// 	return wgName;
-// }
-
-// string askForWgName(string oldWgName){
-// 	string wgName = "";
-// 	cout<< "Old name: " + oldWgName + "\n";
-// 	return askForWgName();
-// }
-
-// string askForTaskName(){
-// 	string taskName = "";
-// 	cout<< "choose a task Name : ";
-// 	getline(cin, taskName);
-// 	cout<<"\n";
-
-// 	return taskName;
-// }
-
-// string askForTaskName(string oldTaskName){
-// 	string taskName = "";
-// 	cout<< "Old name: " + oldTaskName + "\n";
-// 	return askForTaskName();
-// }
-
-// string askForTaskPath(){
-// 	string taskPath = "";
-// 	cout<< "add a path (in the form C:\\Program file\\....)\nThe path:";
-// 	getline(cin, taskPath);
-
-// 	// parsing the path
-// 	taskPath.insert(0, 1,'\"');
-// 	taskPath.insert(taskPath.end(), 1,'\"');
-// 	for (int i = 0; i < taskPath.length(); i++){
-// 		if(taskPath[i] == '\\'){
-// 			taskPath.insert((i), 1, '\\');
-// 			i++;
-// 		}
-// 	}
-
-// 	return taskPath;
-// }
-
 string askForName(int which){
 	string name = "";
 
