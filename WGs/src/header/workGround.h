@@ -13,13 +13,13 @@ public:
 	WorkGround(const WorkGround &toCopy);
 	~WorkGround();
 	void operator=(const WorkGround &rhs);
+	bool renameWorkGround(const string wgName);
 	bool addTask(Task atask);
-	bool removeTask(string taskNickName);
-	bool renameWorkGround(string wgName);
-	bool run();
-	bool getTask(string taskName, Task* &theTask);
+	bool removeTask(const string taskNickName);
+	Task* WorkGround::findTask(const string taskName);
 	string getWgName();
 	string wgView();
+	bool run();
 private:
 struct taskNode{
 	Task task;
