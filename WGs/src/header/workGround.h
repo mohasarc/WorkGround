@@ -3,7 +3,6 @@
 
 #ifndef WORKGROUND_H
 #define WORKGROUND_H
-#include <string>
 #include "task.h"
 using namespace std;
 

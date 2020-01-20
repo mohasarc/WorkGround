@@ -1,10 +1,10 @@
-#include "app.h"
+#include "..\header\app.h"
 
 int main(){
 	// variables
 	vector<WorkGround*> workGrounds;
 	char selection = '\n';
-	WorkGround* tmpWG;
+	WorkGround* tmpWG = NULL;
 	Task* tmpTask;
 	string wgNameStr;
 	string taskNameStr;
@@ -311,6 +311,8 @@ bool addWgTo(vector<WorkGround*> &wgs, string wgName, string taskName, string ta
 	newWG->addTask(*newTask);
 
 	wgs.push_back(newWG);
+
+	return true;
 }
 string askForName(int which){
 	string name = "";

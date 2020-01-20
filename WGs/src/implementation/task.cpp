@@ -1,10 +1,39 @@
 // author : Mohammed S. Yaseen
 // date   : 5/1/2020
 
-#include <bits/stdc++.h>
-#include "task.h"
+//#include <bits/stdc++.h>
+#include "..\header\task.h"
 #include <windows.h>
 #include <iostream>
+
+bool static runTask(const char* cmd) {
+	
+	STARTUPINFOA si;
+	memset(&si, 0, sizeof(STARTUPINFO));
+	si.cb = sizeof(STARTUPINFO);
+	si.wShowWindow = 0;
+
+	PROCESS_INFORMATION pi;
+	memset(&pi, 0, sizeof(PROCESS_INFORMATION));
+
+	if (!CreateProcessA(
+		NULL,
+		(LPSTR)cmd,
+		NULL,  //lpProcessAttributes
+		NULL,  //lpThreadAttributes
+		FALSE, //bInheritHandles
+		DETACHED_PROCESS | CREATE_NO_WINDOW,
+		NULL,  //lpEnvironment 
+		NULL,  //lpCurrentDirectory
+		&si,   //lpStartupInfo
+		&pi    //lpProcessInformation
+	))
+	{
+		return false;
+	}
+
+	return true;
+}
 
 Task::Task(){
 	taskName = "";
@@ -145,8 +174,8 @@ bool Task::removeFile(string afileNickName){
 	}
 
 	if (afileNickName != ""){
-		fileNode* cur;
-		fileNode* prev;
+		fileNode* cur = NULL;
+		fileNode* prev = NULL;
 		for(cur = head; cur != NULL && cur->fileNickName != afileNickName; cur = cur->next){
 			prev = cur;
 		}
@@ -184,13 +213,6 @@ string Task::getTaskName(){
 }
 
 bool Task::run(){
-	// cout<<"running with " << appPath<<endl;
-
-	STARTUPINFO si;
-	PROCESS_INFORMATION pi;
-	ZeroMemory(&si, sizeof(si));
-	ZeroMemory(&pi, sizeof(pi));
-	bool processSuccess = false;
 
 	string cmdCommandStr = appPath;
 	if(head != NULL){
@@ -198,42 +220,24 @@ bool Task::run(){
 			cmdCommandStr += " " + cur->filePath;
 	}
 
-	char cmdCommandChr[cmdCommandStr.length() + 1];
-	strcpy(cmdCommandChr, cmdCommandStr.c_str());
-
-	processSuccess = CreateProcessA(
-		NULL,
-		cmdCommandChr,
-		NULL,
-		NULL,
-		false,
-		0,
-		NULL,
-		NULL,
-		&si,
-		&pi
-		);
-
-	// WaitForSingleObject(pi.hProcess, INFINITE);
-	CloseHandle( pi.hProcess );
-	CloseHandle( pi.hThread );
-
-	return processSuccess;
+	const char* cmdCommandChar = cmdCommandStr.c_str();
+	runTask(cmdCommandChar);
+	return true;
 }
 
 string* Task::getFilesPaths(int &size){
 	string* pathArr = new string[fileNo];
-	int i = 0;
+	unsigned i = 0;
 	string pathFormatted = "";
 
 
 	if (head != NULL){
 		for (fileNode* cur = head; cur != NULL; cur = cur->next){
 
-			for (int i = 0; i < cur->filePath.length(); i++){
-				pathFormatted += cur->filePath[i];
+			for (unsigned j = 0; j < cur->filePath.length(); j++){
+				pathFormatted += cur->filePath[j];
 
-				if( i % 30 == 0 && 1 != 0)
+				if( j % 30 == 0 && 1 != 0)
 					pathFormatted += "\n\t\t\t   ";
 			}
 
