@@ -91,31 +91,31 @@ void WorkGround::operator=(const WorkGround &rhs){
 }
 
 bool WorkGround::addTask(Task task){
-	// if(task == NULL){
-	// 	return false;
-	// }
-
-	// cout<<"ading Task\n";
-
-	if(head != NULL){
-		// traverse till the last node
-		taskNode* last;
-		for(last = head; last->next != NULL; last = last->next);
-		taskNode* tmp = new taskNode;
-		tmp->task = task;
-		tmp->next = NULL;
-		last->next = tmp;
-		return true;
-
-	} else {
-		head = new taskNode;
-		head->task = task;
-		head->next = NULL;
-		return true;
+	taskNode* last = NULL;
+	if (task.getTaskName() == "") {
+		return false;
 	}
+
+	// traverse till the last node
+	for (taskNode* cur = head; cur != NULL; cur = cur->next) {
+		last = cur;
+		if (cur->task.getTaskName() == task.getTaskName()) {
+			return false;
+		}
+	}
+
+	taskNode* tmp = new taskNode;
+	tmp->task = task;
+	tmp->next = NULL;
+
+	if (last != NULL)
+		last->next = tmp;
+	else
+		head = tmp;
+	return true;
 }
 
-bool WorkGround::removeTask(string taskName){
+bool WorkGround::removeTask(const string taskName){
 	if (head == NULL){
 		return false;
 	} 
@@ -146,7 +146,7 @@ bool WorkGround::removeTask(string taskName){
 	return false;
 }
 
-bool WorkGround::renameWorkGround(string awgName){
+bool WorkGround::renameWorkGround(const string awgName){
 	if (awgName != ""){
 		wgName = awgName;
 		return true;
@@ -220,11 +220,13 @@ string WorkGround::wgView(){
 }
 
 //
-bool WorkGround::getTask(string taskName, Task* &theTask){
+Task* WorkGround::findTask(const string taskName){
+	Task* tmpTask;
+
 	for(taskNode* cur = head; cur != NULL; cur = cur->next)
 		if(cur->task.getTaskName() == taskName){
-			theTask = &cur->task;
-			return true;
+			tmpTask = &cur->task;
+			return tmpTask;
 		}
-	return false;
+	return NULL;
 }
