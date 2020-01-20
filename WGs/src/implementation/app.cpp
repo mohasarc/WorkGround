@@ -5,7 +5,7 @@ int main(){
 	vector<WorkGround*> workGrounds;
 	char selection = '\n';
 	WorkGround* tmpWG = NULL;
-	Task* tmpTask;
+	Task* tmpTask = NULL;
 	string wgNameStr;
 	string taskNameStr;
 	string fileNameStr;
