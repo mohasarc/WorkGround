@@ -1,5 +1,7 @@
 # Overview
 
+[![CodeFactor](https://www.codefactor.io/repository/github/mohasarc/workground/badge/master)](https://www.codefactor.io/repository/github/mohasarc/workground/overview/master)
+
 WorkGround is a windows application that saves the currently open workground and provides the ability to reopen them later, even after rebooting.
 
 ### WorkGround utilities
