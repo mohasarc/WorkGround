@@ -159,9 +159,7 @@ bool WorkGround::run(){
 	bool successReport = true;
 	bool enteredLoop   = false;
 	if(head != NULL){
-		cout<<"head != NULL"<<endl;
 		for (taskNode* cur = head; cur != NULL; cur = cur->next){
-			cout<<"\n trying to run\t" << cur->task.getTaskName()<<endl;
 			successReport = successReport && cur->task.run();
 			enteredLoop   = true;
 		}

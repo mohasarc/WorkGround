@@ -3,8 +3,26 @@
 int main(){
 	// variables
 	WGList* wgs = new WGList();
-	//wgs.addWg("wg1");
-	//wgs.addTask("wg1", "t1", "A path");
+	wgs->addWg("wg1");
+	wgs->addWg("wg2");
+	wgs->addWg("wg3");
+	wgs->addWg("wg4");
+	wgs->addWg("wg5");
+	wgs->addWg("wg6");
+	wgs->addWg("wg7");
+	wgs->addWg("wg8");
+	wgs->addWg("wg9");
+	wgs->addWg("wg10");
+	wgs->addWg("wg11");
+	wgs->addWg("wg12");
+	wgs->addWg("wg13");
+	wgs->addWg("wg14");
+
+	wgs->addTask("wg1", "t1", "\"C:\\Program Files (x86)\\Adobe\\Acrobat Reader DC\\Reader\\AcroRd32.exe\"");
+	wgs->renameWg("wg1", "wg2");
+	cout<<wgs->viewWG();
+	cout<<wgs->viewWgElab();
+	wgs->runWG("wg1");
 	//Task t1;
 
 	//vector<WorkGround*> workGrounds;

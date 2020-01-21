@@ -2,7 +2,7 @@
 #define APP_H
 
 #include <iostream>
-#include "wglist.h"
+#include "WGList.h"
 //using namespace std;
 
 //string viewMenu(int which);

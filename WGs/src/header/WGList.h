@@ -12,11 +12,10 @@ using namespace std;
 class WGList{
 public:
 	WGList();
-	WGList(string aname);
 	~WGList();
 	WGList(const WGList& toCopy);
 	void operator=(WGList& rhs);
-	/*string viewWG();
+	string viewWG();
 	string viewWgElab();
 	bool addWg(const string wgName);
 	bool removeWg(const string wgName);
@@ -27,10 +26,10 @@ public:
 	bool addFile(const string wgName, const string taskName, const string filaName, const string filePath);
 	bool removeFile(const string wgName, const string taskName, const string filaName);
 	bool renameFile(const string wgName, const string taskName, const string oldFilaName, const string newFileName);
+	bool runWG(const string wgName);
 	WorkGround* findWg(string wgName);
-	Task* findTask(string wgName, string taskName);*/
+	Task* findTask(string wgName, string taskName);
 private:
 	vector<WorkGround*> wgs;
-	string name;
 };
 #endif

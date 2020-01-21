@@ -258,12 +258,15 @@ bool Task::renameTask(string ataskName){
 }
 
 bool Task::renameFile(string oldFileName, string newFileName) {
+	for (fileNode* cur = head; cur != NULL; cur = cur->next)
+		if (cur->fileNickName == newFileName)
+			return false; // new name has been used before
+
 	for (fileNode* cur = head; cur != NULL; cur = cur->next) {
 		if (cur->fileNickName == oldFileName) {
 			cur->fileNickName = newFileName;
 			return true;
 		}
 	}
-
 	return false;
 }

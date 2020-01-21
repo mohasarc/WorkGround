@@ -136,11 +136,13 @@
   <ItemGroup>
     <ClInclude Include="src\header\app.h" />
     <ClInclude Include="src\header\task.h" />
+    <ClInclude Include="src\header\WGList.h" />
     <ClInclude Include="src\header\workGround.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\implementation\app.cpp" />
     <ClCompile Include="src\implementation\task.cpp" />
+    <ClCompile Include="src\implementation\WGList.cpp" />
     <ClCompile Include="src\implementation\workGround.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
