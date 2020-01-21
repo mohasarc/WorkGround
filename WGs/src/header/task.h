@@ -18,6 +18,7 @@ bool addFile(string afilePath, string afileNickName);
 bool removeFile(string afileNickName);
 bool changeApp(string aappPath);
 bool renameTask(string ataskName);
+bool renameFile(string oldFileName, string newFileName);
 string* getFilesPaths(int &size);
 string getAppPath();
 string getTaskName();

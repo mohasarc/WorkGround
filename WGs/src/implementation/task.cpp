@@ -142,30 +142,29 @@ void Task::operator=(const Task &rhs){
 }
 
 bool Task::addFile(string afilePath, string afileNickName){
+	fileNode* last = NULL;
+
 	if(afilePath == "" | afileNickName == ""){
 		return false;
 	}
 
-	if(head != NULL){
-		// traverse till the last node
-		fileNode* last;
-		for(last = head; last->next != NULL; last = last->next);
-		fileNode* tmp = new fileNode;
-		tmp->fileNickName = afileNickName;
-		tmp->filePath = afilePath;
-		tmp->next = NULL;
-		last->next = tmp;
-		fileNo++;
-		return true;
-
-	} else {
-		head = new fileNode;
-		head->fileNickName = afileNickName;
-		head->filePath = afilePath;
-		head->next = NULL;
-		fileNo++;
-		return true;
+	// traverse till the last node
+	for (fileNode* cur = head; cur != NULL; cur = cur->next) {
+		last = cur;
+		if (cur->filePath == afilePath | cur->fileNickName == afileNickName)
+			return false;
 	}
+
+	fileNode* tmp = new fileNode;
+	tmp->fileNickName = afileNickName;
+	tmp->filePath = afilePath;
+	tmp->next = NULL;
+	if (last != NULL)
+		last->next = tmp;
+	else
+		head = tmp;
+	fileNo++;
+	return true;
 }
 
 bool Task::removeFile(string afileNickName){
@@ -180,19 +179,14 @@ bool Task::removeFile(string afileNickName){
 			prev = cur;
 		}
 
-		cout<<afileNickName<<endl;
-
 		if (cur == head){ // the head is the one to be deleted
-			// cout<<"head to be deleted\n";
 			head = head->next;
 			delete cur;
 		} else if (cur != NULL){
-			// cout<<"cur is not null\n";
 			prev->next = cur->next;
 			delete cur;
 			fileNo--;
 			return true;
-
 		} else
 			false;
 	} else 
@@ -262,4 +256,14 @@ bool Task::renameTask(string ataskName){
 	taskName = ataskName;
 	return true;
 }
-//
+
+bool Task::renameFile(string oldFileName, string newFileName) {
+	for (fileNode* cur = head; cur != NULL; cur = cur->next) {
+		if (cur->fileNickName == oldFileName) {
+			cur->fileNickName = newFileName;
+			return true;
+		}
+	}
+
+	return false;
+}

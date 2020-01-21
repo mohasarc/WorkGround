@@ -16,7 +16,7 @@ public:
 	bool renameWorkGround(const string wgName);
 	bool addTask(Task atask);
 	bool removeTask(const string taskNickName);
-	Task* WorkGround::findTask(const string taskName);
+	Task* findTask(const string taskName);
 	string getWgName();
 	string wgView();
 	bool run();
