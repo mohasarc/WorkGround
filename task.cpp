@@ -38,15 +38,6 @@ Task::Task(const Task &toCopy){
 	appPath  = toCopy.appPath;
 	fileNo   = toCopy.fileNo;
 
-	// delete all current nodes
-	// if (head != NULL)
-	// 	while(head != NULL){
-	// 		cout<<"deleting "<< head->fileNickName<<endl;
-	// 		fileNode* tmp = head;
-	// 		head = head->next;
-	// 		delete tmp;
-	// 	}
-
 	if(toCopy.head == NULL){
 		// if toCopy files list is empty
 		head = NULL;
