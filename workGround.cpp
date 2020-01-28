@@ -27,13 +27,6 @@ WorkGround::~WorkGround(){
 WorkGround::WorkGround(const WorkGround &toCopy){
 	wgName = toCopy.wgName;
 
-	// delete all current nodes
-	while(head){
-		taskNode* tmp = head;
-		head = head->next;
-		delete tmp;
-	}
-
 	if(toCopy.head == NULL){
 		// if toCopy tasks list is empty
 		head = NULL;
