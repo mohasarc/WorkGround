@@ -193,7 +193,8 @@ string WorkGround::wgView(){
 			}
 
 			// string orderstr = order;
-			s = s + "\t" + /*orderstr +*/ " - " + cur->task.getTaskName()
+			string orderS = std::to_string(order);
+			s = s + "\t" + orderS + " - " + cur->task.getTaskName()
 				  + "\n\t\tApp Path : " + p;
 
 			int size;
@@ -226,5 +227,10 @@ Task* WorkGround::findTask(const string taskName){
 			tmpTask = &cur->task;
 			return tmpTask;
 		}
+<<<<<<< HEAD
 	return NULL;
 }
+=======
+	return false;
+}
+>>>>>>> af37970046b44b88662dc215c12cfd4bddeb7ac6

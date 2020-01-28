@@ -23,6 +23,8 @@ int main(){
 	cout<<wgs->viewWG();
 	cout<<wgs->viewWgElab();
 	wgs->runWG("wg1");
+
+
 	//Task t1;
 
 	//vector<WorkGround*> workGrounds;
