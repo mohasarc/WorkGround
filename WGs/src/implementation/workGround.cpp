@@ -177,6 +177,15 @@ string WorkGround::getWgName(){
 		return "Error: the WorkGround has no name.";
 }
 
+//toString Method for changing int to string for concatenation purposes
+std::string toString(auto &i){
+   std::stringstream ss;
+   ss << i;
+
+   return ss.str();
+}
+
+
 string WorkGround::wgView(){
 	string s = "";
 	string p = "";
@@ -195,7 +204,7 @@ string WorkGround::wgView(){
 			}
 
 			// string orderstr = order;
-			s = s + "\t" + /*orderstr +*/ " - " + cur->task.getTaskName()
+			s = s + "\t" + toString(order) +  " - " + cur->task.getTaskName()
 				  + "\n\t\tApp Path : " + p;
 
 			int size;
