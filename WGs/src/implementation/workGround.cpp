@@ -195,7 +195,8 @@ string WorkGround::wgView(){
 			}
 
 			// string orderstr = order;
-			s = s + "\t" + /*orderstr +*/ " - " + cur->task.getTaskName()
+			string orderS = to_String(order);
+			s = s + "\t" + orderS +  " - " + cur->task.getTaskName()
 				  + "\n\t\tApp Path : " + p;
 
 			int size;
