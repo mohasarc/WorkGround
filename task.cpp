@@ -63,7 +63,6 @@ Task::Task(const Task &toCopy){
 		if(prev != NULL)
 			prev->next = NULL;
 	}
-
 }
 
 void Task::operator=(const Task &rhs){
@@ -217,7 +216,6 @@ string* Task::getFilesPaths(int &size){
 	int i = 0;
 	string pathFormatted = "";
 
-
 	if (head != NULL){
 		for (fileNode* cur = head; cur != NULL; cur = cur->next){
 
@@ -249,4 +247,3 @@ bool Task::renameTask(string ataskName){
 	taskName = ataskName;
 	return true;
 }
-//
