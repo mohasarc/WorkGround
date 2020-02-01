@@ -67,15 +67,6 @@ Task::Task(const Task &toCopy){
 	appPath  = toCopy.appPath;
 	fileNo   = toCopy.fileNo;
 
-	// delete all current nodes
-	// if (head != NULL)
-	// 	while(head != NULL){
-	// 		cout<<"deleting "<< head->fileNickName<<endl;
-	// 		fileNode* tmp = head;
-	// 		head = head->next;
-	// 		delete tmp;
-	// 	}
-
 	if(toCopy.head == NULL){
 		// if toCopy files list is empty
 		head = NULL;
@@ -101,7 +92,6 @@ Task::Task(const Task &toCopy){
 		if(prev != NULL)
 			prev->next = NULL;
 	}
-
 }
 
 void Task::operator=(const Task &rhs){
@@ -223,7 +213,6 @@ string* Task::getFilesPaths(int &size){
 	string* pathArr = new string[fileNo];
 	unsigned i = 0;
 	string pathFormatted = "";
-
 
 	if (head != NULL){
 		for (fileNode* cur = head; cur != NULL; cur = cur->next){
