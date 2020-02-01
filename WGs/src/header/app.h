@@ -15,4 +15,5 @@ string askForName(int which);
 string askForPath(int which);
 string askForName(int which, string oldName);
 string askForPath(int which, string oldPath);
+static bool switchWg(string wgRunning, string wgToRun);
 #endif

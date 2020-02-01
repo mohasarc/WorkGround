@@ -1,8 +1,9 @@
 #include "..\header\app.h"
 
+vector<WorkGround*> workGrounds;
+
 int main(){
 	// variables
-	vector<WorkGround*> workGrounds;
 	char selection = '\n';
 	WorkGround* tmpWG = NULL;
 	Task* tmpTask = NULL;
@@ -94,7 +95,9 @@ int main(){
 								pathStr = askForPath(0);
 								// create task and add it to workground
 								tmpTask = new Task(taskNameStr, pathStr);
+								cout << tmpWG;
 								tmpWG->addTask(*tmpTask);
+								cout << "I am here ";
 							break;
 
 							case 'c': //remove a task
@@ -147,15 +150,24 @@ int main(){
 											tmpTask->changeApp(pathStr);
 										break;
 										}
+								
 									}while(selection != 'r' && selection != 'R');
 							break;
+
+
 							}
 						}while(selection != 'r' && selection != 'R');
 					}
-
 					selection = '\n';
 					break;
+					case 'z':
+						string wgToCloseName, wgToRunName;
+						wgToCloseName = askForName(0);
+						wgToRunName = askForName(0);
+						switchWg(wgToCloseName, wgToRunName);
+					break;
 				}
+				
 			} while (selection != 'r' && selection != 'R');
 		break;
 
@@ -197,6 +209,7 @@ int main(){
 	} while (selection != 'q' && selection != 'Q');
 }
 
+
 string viewMenu(int which){
 	string theMenu = "";
 	switch(which){
@@ -227,6 +240,7 @@ string viewMenu(int which){
 							   "|| d- Modify a WorkGround                       ||\n" +
 							   "|| e- Remove a WorkGround                       ||\n" +
 							   "|| r- Return to previous menu                   ||\n" + 
+							   "|| z- Switch WorkGround                         ||\n" +
 							   "--------------------------------------------------\n" +
 							   "Please select a choice (choose a, b, .. etc) : ";
 
@@ -360,4 +374,24 @@ string askForPath(int which){
 string askForPath(int which, string oldPath){
 	cout<< "Old path: " + oldPath + "\n";
 	return askForPath(which);
+}
+
+static bool switchWg(string wgToClose, string wgToRun) {
+	WorkGround* wgToCloseTask = NULL;
+	WorkGround* wgToRunTask = NULL;
+	for (int z = 0; z < workGrounds.size(); z++) {
+		if (workGrounds[z]->getWgName() == wgToClose) {
+			wgToCloseTask = workGrounds[z];
+		}
+		if (workGrounds[z]->getWgName() == wgToRun) {
+			wgToRunTask = workGrounds[z];
+		}
+
+	}
+	wgToCloseTask->close();
+	if (wgToRunTask != NULL) {
+		wgToRunTask->run();
+		return true;
+	}
+	return false;
 }
