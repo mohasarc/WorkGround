@@ -150,11 +150,8 @@ int main(){
 											tmpTask->changeApp(pathStr);
 										break;
 										}
-								
 									}while(selection != 'r' && selection != 'R');
 							break;
-
-
 							}
 						}while(selection != 'r' && selection != 'R');
 					}
@@ -167,7 +164,6 @@ int main(){
 						switchWg(wgToCloseName, wgToRunName);
 					break;
 				}
-				
 			} while (selection != 'r' && selection != 'R');
 		break;
 
@@ -386,7 +382,6 @@ static bool switchWg(string wgToClose, string wgToRun) {
 		if (workGrounds[z]->getWgName() == wgToRun) {
 			wgToRunTask = workGrounds[z];
 		}
-
 	}
 	wgToCloseTask->close();
 	if (wgToRunTask != NULL) {
