@@ -4,6 +4,7 @@
 #ifndef WORKGROUND_H
 #define WORKGROUND_H
 #include "task.h"
+#include <vector>
 using namespace std;
 
 class WorkGround{
@@ -20,6 +21,8 @@ public:
 	bool getTask(string taskName, Task* &theTask);
 	string getWgName();
 	string wgView();
+	vector<string> getTaskPath();
+	bool close();
 private:
 struct taskNode{
 	Task task;

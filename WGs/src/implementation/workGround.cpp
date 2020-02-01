@@ -213,7 +213,6 @@ string WorkGround::wgView(){
 	return "The Work Ground is empty\n";
 }
 
-//
 bool WorkGround::getTask(string taskName, Task* &theTask){
 	for(taskNode* cur = head; cur != NULL; cur = cur->next)
 		if(cur->task.getTaskName() == taskName){
@@ -221,4 +220,32 @@ bool WorkGround::getTask(string taskName, Task* &theTask){
 			return true;
 		}
 	return false;
+}
+
+vector<string> WorkGround::getTaskPath() {
+	taskNode* cur = head;
+	vector<string> taskPaths;
+	for (; cur != NULL; cur = cur->next) {
+		taskPaths.push_back(cur->task.getAppPath());
+	}
+	return taskPaths;
+}
+
+bool WorkGround::close() {
+	string taskName, taskNamePath;
+	string killName;
+	int index = 0;
+	taskNode* cur = head;
+	
+	for (; cur != NULL; cur = cur->next) {
+		taskNamePath = cur->task.getAppPath();
+		for (int j = 0; j < taskNamePath.length(); j++) {
+			if (taskNamePath[j] == '\\')
+				index = j + 1;
+		}
+		taskName = taskNamePath.substr(index, taskNamePath.length() - 2);
+		killName = "taskkill /IM " + taskName;
+		system(killName.c_str());
+	}
+	return true;
 }
