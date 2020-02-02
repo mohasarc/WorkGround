@@ -32,7 +32,8 @@ string WGList::viewWG() {
 	return wgInfoTmp;
 }
 
-string WGList::viewWgElab() {
+string WGList::viewWgElab(string wgName) {
+	bool found = false;
 	string wgInfoTmp;
 	// view WorkGrounds' details
 	wgInfoTmp = string("\n--------------------------------------------------\n") +
@@ -41,8 +42,18 @@ string WGList::viewWgElab() {
 	if (wgs.size() <= 0)
 		wgInfoTmp += "\nThere are no WorkGrounds yet to be viewed\n";
 	else
-		for (int i = 0; i < wgs.size(); i++)
-			wgInfoTmp += wgs[i]->wgView();
+		for (int i = 0; i < wgs.size() && !found; i++) {
+			if (wgName == "*") { // view all
+				wgInfoTmp += wgs[i]->wgView();
+
+			} else if (wgs[i]->getWgName() == wgName) {
+				wgInfoTmp += wgs[i]->wgView();
+				found = true;
+			}
+		}
+	if (!found && wgName != "*") {
+		wgInfoTmp += "\n There is no WorkGround with the name : " + wgName + "\n";
+	}
 	return wgInfoTmp;
 }
 
@@ -209,7 +220,6 @@ istream& operator>>(istream& in, WGList& retrieved) {
 	int wgNo = 0;
 	in >> wgNo;
 
-	//cout << "wg no : " << wgNo<<endl;
 	WorkGround* tmp;
 	for (int i = 0; i < wgNo; i++) {
 		tmp = new WorkGround();

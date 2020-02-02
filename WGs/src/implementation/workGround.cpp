@@ -219,7 +219,6 @@ string WorkGround::wgView(){
 	return "The Work Ground is empty\n";
 }
 
-//
 Task* WorkGround::findTask(const string taskName){
 	Task* tmpTask;
 
@@ -247,12 +246,8 @@ istream& operator>>(istream& in, WorkGround& retrieved) {
 	in >> retrieved.wgName;
 	in >> taskNo;
 	
-	//cout << "Workground : " << retrieved.wgName <<endl;
-	//cout << "task no : " << taskNo << endl;
-
 	Task* tmp;
 	for (int i = 0; i < taskNo; i++) {
-		//cout << "from task loop, i = "<< i << endl;
 		tmp = new Task();
 		in >> *tmp;
 		retrieved.addTask(*tmp);

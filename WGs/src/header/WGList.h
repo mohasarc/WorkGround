@@ -16,7 +16,7 @@ public:
 	WGList(const WGList& toCopy);
 	void operator=(WGList& rhs);
 	string viewWG();
-	string viewWgElab();
+	string viewWgElab(string wgName);
 	bool addWg(const string wgName);
 	bool removeWg(const string wgName);
 	bool renameWg(const string oldWgName, const string newWgName);

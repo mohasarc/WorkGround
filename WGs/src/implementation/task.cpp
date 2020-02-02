@@ -277,11 +277,6 @@ istream& operator>>(istream& in, Task& retrieved) {
 	in >> retrieved.appPath;
 	in >> fileNo;
 
-	cout << "task Name : " << retrieved.taskName<<endl;
-	cout << "app path : " << retrieved.appPath << endl;
-	cout << "file no : " << retrieved.fileNo << endl;
-
-
 	for (int i = 0; i < fileNo; i++) {
 		string fileName, filePath;
 		in >> fileName;
