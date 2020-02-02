@@ -3,8 +3,6 @@
 
 //#include <bits/stdc++.h>
 #include "..\header\task.h"
-#include <windows.h>
-#include <iostream>
 
 bool static runTask(const char* cmd) {
 	

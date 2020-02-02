@@ -5,6 +5,8 @@
 #define TASK_H
 
 #include <string>
+#include <windows.h>
+#include <iostream>
 using namespace std;
 
 class Task{
