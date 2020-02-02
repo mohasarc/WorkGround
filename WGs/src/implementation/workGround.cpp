@@ -7,12 +7,14 @@ using namespace std;
 
 WorkGround::WorkGround(){
 	wgName = "";
+	taskNo = 0;
 	head   = NULL;
 }
 
 WorkGround::WorkGround(string awgName){
 	// cout<<"\nwgconst\n";
 	wgName = awgName;
+	taskNo = 0;
 	head   = NULL;
 }
 
@@ -26,6 +28,7 @@ WorkGround::~WorkGround(){
 
 WorkGround::WorkGround(const WorkGround &toCopy){
 	wgName = toCopy.wgName;
+	taskNo = toCopy.taskNo;
 
 	if(toCopy.head == NULL){
 		// if toCopy tasks list is empty
@@ -52,6 +55,7 @@ WorkGround::WorkGround(const WorkGround &toCopy){
 
 void WorkGround::operator=(const WorkGround &rhs){
 	wgName = rhs.wgName;
+	taskNo = rhs.taskNo;
 
 	// delete all current nodes
 	while(head){
@@ -105,6 +109,7 @@ bool WorkGround::addTask(Task task){
 		last->next = tmp;
 	else
 		head = tmp;
+	taskNo++;
 	return true;
 }
 
@@ -121,9 +126,10 @@ bool WorkGround::removeTask(const string taskName){
 		}
 
 		if (cur != NULL && prev != NULL){
-			cout<<"cur is not null!!!!"<<endl;
+			//cout<<"cur is not null!!!!"<<endl;
 			prev->next = cur->next;
 			delete cur;
+			taskNo--;
 			return true;
 
 		} else if (cur != NULL && prev == NULL){
@@ -131,9 +137,10 @@ bool WorkGround::removeTask(const string taskName){
 			taskNode* tmp = cur;
 			head = head->next;
 			delete tmp; 
-			true;
+			taskNo--;
+			return true;
 		} else 
-			false;
+			return false;
 	}
 
 	return false;
@@ -222,4 +229,26 @@ Task* WorkGround::findTask(const string taskName){
 		}
 
 	return NULL;
+}
+
+ostream& operator<<(ostream& out, const WorkGround& toSave) {
+	out << toSave.wgName << "\n" << toSave.taskNo;
+	
+	WorkGround::taskNode* cur;
+	for (cur = toSave.head; cur != NULL; cur = cur->next) {
+		out << cur->task;
+	}
+	out << endl;
+	return out;
+}
+istream& operator>>(istream& in, WorkGround& retrieved) {
+	in >> retrieved.wgName;
+	in >> retrieved.taskNo;
+
+	for (int i = 0; i < retrieved.taskNo; i++) {
+		Task tmp;
+		in >> tmp;
+		retrieved.addTask(tmp);
+	}
+	return in;
 }

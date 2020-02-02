@@ -20,6 +20,8 @@ public:
 	string getWgName();
 	string wgView();
 	bool run();
+	friend ostream& operator<<(ostream& out, const WorkGround& toSave);
+	friend istream& operator>>(istream& in, WorkGround& retrieved);
 private:
 struct taskNode{
 	Task task;
@@ -27,6 +29,7 @@ struct taskNode{
 };
 
 string wgName;
+int taskNo;
 taskNode* head;
 };
 
