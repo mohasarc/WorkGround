@@ -194,3 +194,27 @@ Task* WGList::findTask(string wgName, string taskName) {
 		return tmpTask;
 	}
 }
+
+ostream& operator<<(ostream& out, const WGList& toSave) {
+	out << toSave.wgs.size();
+
+	for (int i = 0; i < toSave.wgs.size(); i++) {
+		out << "\n" << *toSave.wgs[i];
+	}
+	out << endl;
+	return out;
+}
+
+istream& operator>>(istream& in, WGList& retrieved) {
+	int wgNo = 0;
+	in >> wgNo;
+
+	//cout << "wg no : " << wgNo<<endl;
+	WorkGround* tmp;
+	for (int i = 0; i < wgNo; i++) {
+		tmp = new WorkGround();
+		in >> *tmp;
+		retrieved.wgs.push_back(tmp);
+	}
+	return in;
+}

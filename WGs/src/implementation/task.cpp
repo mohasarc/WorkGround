@@ -260,24 +260,29 @@ bool Task::renameFile(string oldFileName, string newFileName) {
 // Write the member variables to stream object
 ostream& operator<<(ostream& out, const Task& toSave) {
 	out << toSave.taskName << "\n" << toSave.appPath << "\n"
-		<< toSave.fileNo << "\n";
+		<< toSave.fileNo;
 	// adding files
 	Task::fileNode* cur;
 	for (cur = toSave.head; cur != NULL; cur = cur->next) {
 		out << "\n" << cur->fileNickName;
 		out << "\n" << cur->filePath;
 	}
-	out << endl;
 	return out;
 }
 
 // Read data from stream object and fill in member variables
 istream& operator>>(istream& in, Task& retrieved) {
+	int fileNo = 0;
 	in >> retrieved.taskName;
 	in >> retrieved.appPath;
-	in >> retrieved.fileNo;
+	in >> fileNo;
 
-	for (int i = 0; i < retrieved.fileNo; i++) {
+	cout << "task Name : " << retrieved.taskName<<endl;
+	cout << "app path : " << retrieved.appPath << endl;
+	cout << "file no : " << retrieved.fileNo << endl;
+
+
+	for (int i = 0; i < fileNo; i++) {
 		string fileName, filePath;
 		in >> fileName;
 		in >> filePath;

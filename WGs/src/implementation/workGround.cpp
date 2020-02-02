@@ -236,19 +236,25 @@ ostream& operator<<(ostream& out, const WorkGround& toSave) {
 	
 	WorkGround::taskNode* cur;
 	for (cur = toSave.head; cur != NULL; cur = cur->next) {
-		out << cur->task;
+		out << "\n" << cur->task;
 	}
-	out << endl;
 	return out;
 }
-istream& operator>>(istream& in, WorkGround& retrieved) {
-	in >> retrieved.wgName;
-	in >> retrieved.taskNo;
 
-	for (int i = 0; i < retrieved.taskNo; i++) {
-		Task tmp;
-		in >> tmp;
-		retrieved.addTask(tmp);
+istream& operator>>(istream& in, WorkGround& retrieved) {
+	int taskNo = 0;
+	in >> retrieved.wgName;
+	in >> taskNo;
+	
+	//cout << "Workground : " << retrieved.wgName <<endl;
+	//cout << "task no : " << taskNo << endl;
+
+	Task* tmp;
+	for (int i = 0; i < taskNo; i++) {
+		//cout << "from task loop, i = "<< i << endl;
+		tmp = new Task();
+		in >> *tmp;
+		retrieved.addTask(*tmp);
 	}
 	return in;
 }

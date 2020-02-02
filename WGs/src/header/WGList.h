@@ -29,6 +29,8 @@ public:
 	bool runWG(const string wgName);
 	WorkGround* findWg(string wgName);
 	Task* findTask(string wgName, string taskName);
+	friend ostream& operator<<(ostream& out, const WGList& toSave);
+	friend istream& operator>>(istream& in, WGList& retrieved);
 private:
 	vector<WorkGround*> wgs;
 };
