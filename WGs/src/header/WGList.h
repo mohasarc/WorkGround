@@ -20,6 +20,7 @@ public:
 	bool addWg(const string wgName);
 	bool removeWg(const string wgName);
 	bool renameWg(const string oldWgName, const string newWgName);
+	bool switchWg(string wgRunning, string wgToRun);
 	bool addTask(const string wgName, const string taskName, const string taskPath);
 	bool removeTask(const string wgName, const string taskName);
 	bool renameTask(const string wgName, const string oldTaskName, const string newTaskName);

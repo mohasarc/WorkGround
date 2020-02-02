@@ -228,3 +228,22 @@ istream& operator>>(istream& in, WGList& retrieved) {
 	}
 	return in;
 }
+
+bool WGList::switchWg(string wgToClose, string wgToRun) {
+	WorkGround* wgToCloseTask = NULL;
+	WorkGround* wgToRunTask = NULL;
+	for (int z = 0; z < wgs.size(); z++) {
+		if (wgs[z]->getWgName() == wgToClose) {
+			wgToCloseTask = wgs[z];
+		}
+		if (wgs[z]->getWgName() == wgToRun) {
+			wgToRunTask = wgs[z];
+		}
+	}
+	wgToCloseTask->close();
+	if (wgToRunTask != NULL) {
+		wgToRunTask->run();
+		return true;
+	}
+	return false;
+}
