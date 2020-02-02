@@ -3,12 +3,16 @@
 
 #include <iostream>
 #include "WGList.h"
-//using namespace std;
+#include <fstream>
+#include "..\external libraries\ezOptionParser.hpp"
 
-//string viewMenu(int which);
-//bool addWgTo(vector<WorkGround*> &wgs, string wgName, string taskName, string taskPath);
-//string askForName(int which);
-//string askForPath(int which);
-//string askForName(int which, string oldName);
-//string askForPath(int which, string oldPath);
+using namespace ez;
+
+template <typename T>
+bool saveToFile(T data, string fileName, string ext);
+bool readFile(string fileName, string ext, string& data);
+//bool readFile(string fileName, string ext, WGList* data);
+//bool saveObjToFile(WGList data, string fileName, string ext);
+void Usage(ezOptionParser& opt);
+
 #endif
