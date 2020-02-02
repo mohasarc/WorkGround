@@ -202,8 +202,7 @@ bool Task::run(){
 	}
 
 	const char* cmdCommandChar = cmdCommandStr.c_str();
-	runTask(cmdCommandChar);
-	return true;
+	return runTask(cmdCommandChar);
 }
 
 string* Task::getFilesPaths(int &size){
