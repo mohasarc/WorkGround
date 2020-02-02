@@ -1,7 +1,6 @@
 // author : Mohammed S. Yaseen
 // date   : 5/1/2020
 
-//#include <bits/stdc++.h>
 #include "..\header\task.h"
 
 bool static runTask(const char* cmd) {
@@ -256,4 +255,33 @@ bool Task::renameFile(string oldFileName, string newFileName) {
 		}
 	}
 	return false;
+}
+
+// Write the member variables to stream object
+ostream& operator<<(ostream& out, const Task& toSave) {
+	out << toSave.taskName << "\n" << toSave.appPath << "\n"
+		<< toSave.fileNo << "\n";
+	// adding files
+	Task::fileNode* cur;
+	for (cur = toSave.head; cur != NULL; cur = cur->next) {
+		out << "\n" << cur->fileNickName;
+		out << "\n" << cur->filePath;
+	}
+	out << endl;
+	return out;
+}
+
+// Read data from stream object and fill in member variables
+istream& operator>>(istream& in, Task& retrieved) {
+	in >> retrieved.taskName;
+	in >> retrieved.appPath;
+	in >> retrieved.fileNo;
+
+	for (int i = 0; i < retrieved.fileNo; i++) {
+		string fileName, filePath;
+		in >> fileName;
+		in >> filePath;
+		retrieved.addFile(filePath, fileName);
+	}
+	return in;
 }

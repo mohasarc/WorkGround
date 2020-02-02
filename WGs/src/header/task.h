@@ -7,6 +7,8 @@
 #include <string>
 #include <windows.h>
 #include <iostream>
+#include <fstream>
+
 using namespace std;
 
 class Task{
@@ -25,6 +27,8 @@ string* getFilesPaths(int &size);
 string getAppPath();
 string getTaskName();
 bool run();
+friend ostream& operator<<(ostream& out, const Task& toSave);
+friend istream& operator>>(istream& in, Task& retrieved);
 
 private:
 struct fileNode{
