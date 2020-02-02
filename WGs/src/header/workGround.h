@@ -4,6 +4,7 @@
 #ifndef WORKGROUND_H
 #define WORKGROUND_H
 #include "task.h"
+#include <vector>
 using namespace std;
 
 class WorkGround{
@@ -22,6 +23,8 @@ public:
 	bool run();
 	friend ostream& operator<<(ostream& out, const WorkGround& toSave);
 	friend istream& operator>>(istream& in, WorkGround& retrieved);
+	vector<string> getTaskPath();
+	bool close();
 private:
 struct taskNode{
 	Task task;

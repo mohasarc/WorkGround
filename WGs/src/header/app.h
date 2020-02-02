@@ -13,7 +13,6 @@ bool store();
 bool init();
 vector<string> parseStrs(vector<string> strs);
 void Usage(ezOptionParser& opt);
-
 // Global Variables
 WGList wgs;
 
