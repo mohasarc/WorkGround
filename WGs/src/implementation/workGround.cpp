@@ -209,6 +209,7 @@ string WorkGround::wgView(){
 				taskFiles = NULL;
 			}
 
+			p = "";
 			s = s + "\n";
 		}
 
