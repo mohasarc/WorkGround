@@ -1,10 +1,11 @@
 # Overview
 
-<img align="right" width="200" src="./img.png">
+<img align="right" width="150" src="./img.png">
 
-WorkGround (wg) is a console tool that helps saving the ![Image By : https://www.flaticon.com/authors/nikita-golubev][logo]
-currently open programs and files as a WorkGround and provides
-the ability to reopen all of them later with only one command.
+WorkGround (wg) is a console tool that helps saving the currently open programs and files as a WorkGround and provides the ability to reopen all of them later with only one command.
+
+
+
 
 # The main cocept explained
 The main motivation for making this tool is to cut down on the time spent reopening programs and files that are usually used togather. Also, to make it easier to get back to work after restarting the PC for updates or after the "blue death screen".
