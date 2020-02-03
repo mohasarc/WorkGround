@@ -10,13 +10,11 @@ The main motivation for making this tool is to cut down on the time spent reopen
 # Real life example
 Let's take, for example, a CS student, who studies math sometimes and develops c++ apps othertimes. So when studying math he would open the WorkGround named MATH102 which opens a calculus book on a pdf reader, professor leonard youtube channel,and the homework website on the browser, and maybe a scientific calculator program as well. However, when coding, he would switch to the WorkGround called CODETIME which would open VSCODE and his github page and c++ docs page on the browser and some music on media player.
 
-Here wg makes all this happen with only one command :
-
-`wg switch MATH102 CODETIME`
+Here wg makes all this happen with only one command : `wg switch MATH102 CODETIME`
 
 # Usage
-- `wg add wgName taskName taskPath`           \\ adds a task (Program) to a WorkGround
-- `wg add wgName taskName fileName filePath`  \\ adds a file to be opened with the specified task (program)
+- `wg add wgName taskName taskPath`           \\\\ adds a task (Program) to a WorkGround
+- `wg add wgName taskName fileName filePath`  \\\\ adds a file to be opened with the specified task (program)
 - `wg run wgName`
 - `wg swich currentWG otherWG`
 
