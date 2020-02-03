@@ -2,6 +2,7 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/mohasarc/workground/badge/master)](https://www.codefactor.io/repository/github/mohasarc/workground/overview/master)
 
+![Image By : https://www.flaticon.com/authors/nikita-golubev][logo]
 WorkGround (wg) is a console tool that helps saving the currently open programs and files as a WorkGround and provides the ability to reopen all of them later with only one command.
 
 # The main cocept explained
@@ -22,3 +23,6 @@ Here wg makes all this happen with only one command : `wg switch MATH102 CODETIM
 If you are interested in the project's idea and have some feedback please drop them by on the issues page. Also if you are a developper interested in contributing to the project please do a pull request :)
 
 *Note : to learn more about our progress please make sure to check [Project](https://github.com/mohasarc/WorkGround/projects/1) page as well as [Issues](https://github.com/mohasarc/WorkGround/issues) page.*
+
+<!--   -->
+[logo]: https://github.com/mohasarc/WorkGround/blob/master/img.png "Tmp Logo"
