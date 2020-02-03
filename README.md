@@ -5,7 +5,7 @@
 WorkGround (wg) is a console tool that helps saving the currently open programs and files as a WorkGround and provides the ability to reopen all of them later with only one command.
 
 # The main cocept explained
-The main motivation for making this tool is to cut down on the time spent reopening programs and files that are usually used togather. Also, to make it easier to get back to work after restarting the PC for "updates" or after the "blue death screen".
+The main motivation for making this tool is to cut down on the time spent reopening programs and files that are usually used togather. Also, to make it easier to get back to work after restarting the PC for updates or after the "blue death screen".
 
 # Real life example
 Let's take, for example, a CS student, who studies math sometimes and develops c++ apps othertimes. So when studying math he would open the WorkGround named MATH102 which opens a calculus book on a pdf reader, professor leonard youtube channel,and the homework website on the browser, and maybe a scientific calculator program as well. However, when coding, he would switch to the WorkGround called CODETIME which would open VSCODE and his github page and c++ docs page on the browser and some music on media player.
