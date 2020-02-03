@@ -2,55 +2,23 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/mohasarc/workground/badge/master)](https://www.codefactor.io/repository/github/mohasarc/workground/overview/master)
 
-WorkGround is a windows application that saves the currently open workground and provides the ability to reopen them later, even after rebooting.
+WorkGround (wg) is a console tool that helps saving the currently open programs and files as a WorkGround and provides the ability to reopen all of them later with only one command.
 
-### WorkGround utilities
+# The main cocept explained
+The main motivation for making this tool is to cut down on the time spent reopening programs and files that are usually used togather. Also, to make it easier to get back to the work after restarting the PC for updates or after the blue death screen.
 
-* Create WorkGround manually
-* Automatically save current open tasks
-* Switch between WorkGrounds
+# Real life example
+Let's take, for example, a CS student, who studies math sometimes and develops c++ apps othertimes. So when studying math he would open the WorkGround named MATH102 which opens a calculus book on a pdf reader, professor leonard youtube channel,and the homework website on the browser, and maybe a scientific calculator program as well. However, when coding, he would switch to the WorkGround called CODETIME which would open VSCODE and his github page and c++ docs page on the browser and some music on media player.
 
+Here wg makes all this happen with only one command :
 
-## Contributing
+`wg switch MATH102 CODETIME`
 
-### You're always welcome to contribute
+# Usage
+- `wg add wgName taskName taskPath`           \\ adds a task (Program) to a WorkGround
+- `wg add wgName taskName fileName filePath`  \\ adds a file to be opened with the specified task (program)
+- `wg run wgName`
+- `wg swich currentWG otherWG`
 
-this is an open source project aiming to improve the open source comunity. Therefore, everyone interested is invited to contribute.
-
-### The main cocept explained
-the main motivation to create this application is to cut down on the time spent reopening the apps and files for specific job and the time spent switching from a "WorkGround" that is the set of tasks for a specific job and another WorkGround for another job. using WorkGround the user can store more than one workground, including all programms that the used uses togather and the files opened in each of them, and switch between them very easily. A real life examole might be of a web developper who switches between working on the graphic desgin of a website and the code developpement for the website, so one workground can have all graphic design tools and the other one can have all programmign tools.
-
-### How does that work
-
-
-### Progress so far ..
-
-So far the app is a console app. it can show a menu. the user chooses an option and preceeds to another menu and so on. the menu is as follows: *tick sign indicated completion*
-
-
-> Please select a choice (choose 1, 2, .. etc)
-> * [X] 1- View and Mpdify WorkGrounds
-> * [ ] 2- Switch current WorkGround
-> * [ ] 3- Choose a default WorkGround
-> * [ ] 4- start automatically after booting up
-> * [ ] 5- other settings
-> * [ ] 6- about
-> * [ ] Q. Quit
-
-through View and modify WorkGround is used to add a new WorkGround and modify existing ones as well as all tasks inside them. it has the following list: 
-> Please select a choice (choose a, b, .. etc)
-> * [X] a- View WorkGrounds (siplified)
-> * [X] b- View WorkGrounds (elaborated)
-> * [X] c- Add a WorkGround
-> * [X] d- Modify a WorkGround
-> * [X] e- Remove a WorkGround
-> * [X] r- Return to previous menu
-
-under choice d there is another menu
-
-> select one
-> * [X] a - rename WorkGround
-> * [X] b - add a task
-> * [X] c - remove a task
-> * [ ] d - modify a task
-> * [X] r - return to the previous menu
+# Feedback and contribution
+If you are interested in the project's idea and have some feedback please drop them by on the issues page. Also if you are a developper interested in contributing to the project please do a pull request :)
