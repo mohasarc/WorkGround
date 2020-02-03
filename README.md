@@ -1,6 +1,6 @@
 # Overview
 
-<img align="right" width="150" src="./img.png">
+<img align="right" width="100" src="./img.png">
 
 WorkGround (wg) is a console tool that helps saving the currently open programs and files as a WorkGround and provides the ability to reopen all of them later with only one command.
 
