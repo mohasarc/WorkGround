@@ -2,8 +2,9 @@
 
 [![CodeFactor](https://www.codefactor.io/repository/github/mohasarc/workground/badge/master)](https://www.codefactor.io/repository/github/mohasarc/workground/overview/master)
 
-![Image By : https://www.flaticon.com/authors/nikita-golubev][logo]
-WorkGround (wg) is a console tool that helps saving the currently open programs and files as a WorkGround and provides the ability to reopen all of them later with only one command.
+WorkGround (wg) is a console tool that helps saving the ![Image By : https://www.flaticon.com/authors/nikita-golubev][logo]
+currently open programs and files as a WorkGround and provides
+the ability to reopen all of them later with only one command.
 
 # The main cocept explained
 The main motivation for making this tool is to cut down on the time spent reopening programs and files that are usually used togather. Also, to make it easier to get back to work after restarting the PC for updates or after the "blue death screen".
@@ -25,4 +26,4 @@ If you are interested in the project's idea and have some feedback please drop t
 *Note : to learn more about our progress please make sure to check [Project](https://github.com/mohasarc/WorkGround/projects/1) page as well as [Issues](https://github.com/mohasarc/WorkGround/issues) page.*
 
 <!--   -->
-[logo]: https://github.com/mohasarc/WorkGround/blob/master/img.png "Tmp Logo"
+[logo]: https://github.com/mohasarc/WorkGround/blob/master/img.png "Image By : https://www.flaticon.com/authors/nikita-golubev"
