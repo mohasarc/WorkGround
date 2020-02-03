@@ -20,3 +20,5 @@ Here wg makes all this happen with only one command : `wg switch MATH102 CODETIM
 
 # Feedback and contribution
 If you are interested in the project's idea and have some feedback please drop them by on the issues page. Also if you are a developper interested in contributing to the project please do a pull request :)
+
+*Note : to learn more about our progress please make sure to check [Project](https://github.com/mohasarc/WorkGround/projects/1) page as well as [Issues](https://github.com/mohasarc/WorkGround/issues) page.*
