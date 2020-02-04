@@ -51,7 +51,7 @@ string WGList::viewWgElab(string wgName) {
 				found = true;
 			}
 		}
-	if (!found && wgName != "*") {
+	if (!found && wgName != "*" && wgs.size() > 0) {
 		wgInfoTmp += "\n There is no WorkGround with the name : " + wgName + "\n";
 	}
 	return wgInfoTmp;
