@@ -9,6 +9,7 @@ int main(int argc, const char* argv[]) {
 	string taskNameTmp = "";
 	string fileNameTmp = "";
 	string pathTmp = "";
+	bool success = false;
 
 	// add app info
 	opt.overview = "WorkGround app.";
@@ -72,6 +73,16 @@ int main(int argc, const char* argv[]) {
 		0, // Delimiter if expecting multiple args.
 		"To run the specifired WorkGround.", // Help description.
 		"run" // Flag token.
+	);
+
+	opt.add(
+		"", // Default.
+		2, // Required?
+		4, // Number of args expected.
+		',', // Delimiter if expecting multiple args.
+		"Display usage instructions.", // Help description.
+		"remove",     // Flag token. 
+		"rm"  // Flag token.
 	);
 
 	// parse the input
@@ -169,17 +180,50 @@ int main(int argc, const char* argv[]) {
 			parsedStrs = parseStrs(strs[0]);
 			if (parsedStrs.size() > 0) {
 				wgNameTmp = parsedStrs[0];
-				bool success = wgs.runWG(wgNameTmp);
+				success = wgs.runWG(wgNameTmp);
 				if (success)
-					cout << "The WorkGround \"" << wgNameTmp << "\" was run successfully";
+					cout << "The WorkGround \"" << wgNameTmp << "\" was run successfully" << endl;
 				else
-					cout << "Oops! there was a problem running the WorkGround \"" << wgNameTmp << "\"";
+					cout << "Oops! there was a problem running the WorkGround \"" << wgNameTmp << "\"" << endl;
 			}
 		}
-
 	}
-	
 
+	// Remove WG, Task, or File
+	opt.get("remove")->getMultiStrings(strs);
+	if (opt.isSet("remove")) {
+		init();
+		if (strs.size() > 0) {
+			parsedStrs = parseStrs(strs[0]);
+			if (parsedStrs.size() > 1) { // at least 2 args
+				if (parsedStrs[0] == "-wg") {
+					success = wgs.removeWg(parsedStrs[1]);
+					if (success)
+						cout << "The WorkGround \"" << parsedStrs[1] << "\" was removed successfully" << endl;
+					else
+						cout << "Oops! there was a problem removing the WorkGround \"" << parsedStrs[1] << "\""  << endl;
+				}
+				else if (parsedStrs[0] == "-t") {
+					success = wgs.removeTask(parsedStrs[1], parsedStrs[2]);
+					if (success)
+						cout << "The task \"" << parsedStrs[2] << "\" was removed successfully" << endl;
+					else
+						cout << "Oops! there was a problem removing the task \"" << parsedStrs[2] << "\"" << endl;
+				}
+				else if (parsedStrs[0] == "-f") {
+					success = wgs.removeFile(parsedStrs[1], parsedStrs[2], parsedStrs[3]);
+					if (success)
+						cout << "The file \"" << parsedStrs[3] << "\" was removed successfully" << endl;
+					else
+						cout << "Oops! there was a problem removing the file \"" << parsedStrs[3] << "\"" << endl;
+				}
+				else {
+					cout << "Error : Not valid argument. please use -w, -t, or -f to specfy what to delete" << endl;
+				}
+			}
+		}
+	}
+	store();
 	return 0;
 }
 
