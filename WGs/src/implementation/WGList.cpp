@@ -217,11 +217,11 @@ ostream& operator<<(ostream& out, const WGList& toSave) {
 }
 
 istream& operator>>(istream& in, WGList& retrieved) {
-	int wgNo = 0;
-	in >> wgNo;
+	string wgNo;
+	getline(in, wgNo, '\n');
 
 	WorkGround* tmp;
-	for (int i = 0; i < wgNo; i++) {
+	for (int i = 0; i < stoi(wgNo); i++) {
 		tmp = new WorkGround();
 		in >> *tmp;
 		retrieved.wgs.push_back(tmp);

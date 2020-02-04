@@ -251,12 +251,12 @@ ostream& operator<<(ostream& out, const WorkGround& toSave) {
 }
 
 istream& operator>>(istream& in, WorkGround& retrieved) {
-	int taskNo = 0;
-	in >> retrieved.wgName;
-	in >> taskNo;
+	string taskNo;
+	getline(in, retrieved.wgName, '\n');
+	getline(in, taskNo);
 	
 	Task* tmp;
-	for (int i = 0; i < taskNo; i++) {
+	for (int i = 0; i < stoi(taskNo); i++) {
 		tmp = new Task();
 		in >> *tmp;
 		retrieved.addTask(*tmp);

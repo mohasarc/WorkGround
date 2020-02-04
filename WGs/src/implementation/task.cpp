@@ -271,15 +271,15 @@ ostream& operator<<(ostream& out, const Task& toSave) {
 
 // Read data from stream object and fill in member variables
 istream& operator>>(istream& in, Task& retrieved) {
-	int fileNo = 0;
-	in >> retrieved.taskName;
-	in >> retrieved.appPath;
-	in >> fileNo;
+	string fileNo;
+	getline(in, retrieved.taskName, '\n');
+	getline(in, retrieved.appPath, '\n');
+	getline(in, fileNo);
 
-	for (int i = 0; i < fileNo; i++) {
+	for (int i = 0; i < stoi(fileNo); i++) {
 		string fileName, filePath;
-		in >> fileName;
-		in >> filePath;
+		getline(in, fileName, '\n');
+		getline(in, filePath, '\n');
 		retrieved.addFile(filePath, fileName);
 	}
 	return in;
