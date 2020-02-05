@@ -277,6 +277,7 @@ bool WorkGround::close() {
 	string taskName, taskNamePath;
 	string killName;
 	int index = 0;
+	int sysFeedBack;
 	taskNode* cur = head;
 	
 	for (; cur != NULL; cur = cur->next) {
@@ -287,7 +288,11 @@ bool WorkGround::close() {
 		}
 		taskName = taskNamePath.substr(index, taskNamePath.length() - 2);
 		killName = "taskkill /IM " + taskName;
-		system(killName.c_str());
+		sysFeedBack = system(killName.c_str());
 	}
-	return true;
+
+	if (sysFeedBack == 0)
+		return true;
+	else
+		return false;
 }
