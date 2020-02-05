@@ -229,9 +229,11 @@ istream& operator>>(istream& in, WGList& retrieved) {
 	return in;
 }
 
-bool WGList::switchWg(string wgToClose, string wgToRun) {
+int WGList::switchWg(string wgToClose, string wgToRun) {
 	WorkGround* wgToCloseTask = NULL;
 	WorkGround* wgToRunTask = NULL;
+	bool runSuccess = false;
+	bool closeSuccess = false;
 	for (int z = 0; z < wgs.size(); z++) {
 		if (wgs[z]->getWgName() == wgToClose) {
 			wgToCloseTask = wgs[z];
@@ -240,10 +242,16 @@ bool WGList::switchWg(string wgToClose, string wgToRun) {
 			wgToRunTask = wgs[z];
 		}
 	}
-	wgToCloseTask->close();
-	if (wgToRunTask != NULL) {
-		wgToRunTask->run();
-		return true;
+	if (wgToCloseTask)
+		closeSuccess = wgToCloseTask->close();
+	if (wgToRunTask) {
+		runSuccess = wgToRunTask->run();
 	}
-	return false;
+
+	if (closeSuccess && runSuccess)
+		return 0; // one closed and one run
+	else if (closeSuccess && !runSuccess)
+		return 1;
+	else if (!closeSuccess && !runSuccess)
+		return -1; // did nothing
 }

@@ -20,7 +20,6 @@ public:
 	bool addWg(const string wgName);
 	bool removeWg(const string wgName);
 	bool renameWg(const string oldWgName, const string newWgName);
-	bool switchWg(string wgRunning, string wgToRun);
 	bool addTask(const string wgName, const string taskName, const string taskPath);
 	bool removeTask(const string wgName, const string taskName);
 	bool renameTask(const string wgName, const string oldTaskName, const string newTaskName);
@@ -28,6 +27,7 @@ public:
 	bool removeFile(const string wgName, const string taskName, const string filaName);
 	bool renameFile(const string wgName, const string taskName, const string oldFilaName, const string newFileName);
 	bool runWG(const string wgName);
+	int switchWg(string wgRunning, string wgToRun);
 	WorkGround* findWg(string wgName);
 	Task* findTask(string wgName, string taskName);
 	friend ostream& operator<<(ostream& out, const WGList& toSave);
