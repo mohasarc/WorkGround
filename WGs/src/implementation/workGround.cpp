@@ -277,7 +277,7 @@ bool WorkGround::close() {
 	string taskName, taskNamePath;
 	string killName;
 	int index = 0;
-	int sysFeedBack;
+	int sysFeedBack = -1;
 	taskNode* cur = head;
 	
 	for (; cur != NULL; cur = cur->next) {
