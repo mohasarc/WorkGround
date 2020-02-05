@@ -45,7 +45,8 @@ int main(int argc, const char* argv[]) {
 		1, // Number of args expected.
 		0, // Delimiter if expecting multiple args.
 		"A pointer to a WorkGround or Task name.", // Help description.
-		"view" // Flag token.
+		"view", // Flag token.
+		"ls"
 	);
 
 	opt.add(
@@ -80,9 +81,19 @@ int main(int argc, const char* argv[]) {
 		2, // Required?
 		4, // Number of args expected.
 		',', // Delimiter if expecting multiple args.
-		"Display usage instructions.", // Help description.
+		"Remove a wg, a task, or a file.", // Help description.
 		"remove",     // Flag token. 
 		"rm"  // Flag token.
+	);
+
+	opt.add(
+		"", // Default.
+		2, // Required?
+		2, // Number of args expected.
+		',', // Delimiter if expecting multiple args.
+		"Switch workgrounds.", // Help description.
+		"switch",  // Flag token. 
+		"sw"  // Flag token.
 	);
 
 	// parse the input
@@ -223,6 +234,29 @@ int main(int argc, const char* argv[]) {
 			}
 		}
 	}
+
+	opt.get("switch")->getMultiStrings(strs);
+	if (opt.isSet("switch")) {
+		init();
+
+		if (strs.size() > 0) {
+			parsedStrs = parseStrs(strs[0]);
+			if (parsedStrs.size() > 1) { // needs 2 args at least
+				int feedback = 0;
+				feedback = wgs.switchWg(parsedStrs[0], parsedStrs[1]);
+
+				switch (feedback) {
+				case -1: cout << "Oops! there was a problem switching the WorkGrounds \"" << parsedStrs[0] << " and " << parsedStrs[1] << "\"" << endl;
+				break;
+				case 0: cout << "WorkGrounds \"" << parsedStrs[0] << " and " << parsedStrs[1] << "\" were switched run successfully" << endl;
+				break;
+				case 1: cout << "WorkGround " << parsedStrs[0] << " has been closed successfully. however, couldn't find WorkGround " << parsedStrs[1] << endl;
+				break;
+				}
+			}
+		}
+	}
+
 	store();
 	return 0;
 }
