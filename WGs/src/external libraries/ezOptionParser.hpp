@@ -1776,7 +1776,6 @@ OptionGroup * ezOptionParser::get(const char * name) {
 };
 /* ################################################################### */
 void ezOptionParser::getUsage(std::string & usage, int width, Layout layout) {
-
   usage.append(overview);
   usage.append("\n\n");
   usage.append("USAGE: ");
@@ -1813,17 +1812,19 @@ void ezOptionParser::getUsageDescriptions(std::string & usage, int width, Layout
   std::vector<std::string> sortedOpts;
   // Sort first flag of each group with other groups.
   std::sort(stringPtrs.begin(), stringPtrs.end(), CmpOptStringPtr);
+
    for(i=0; i < (long int)groups.size(); ++i) {
     //printf("DEBUG:%d: %d %d %s\n", __LINE__, i, stringPtrToIndexMap[stringPtrs[i]], stringPtrs[i]->c_str());
     k = stringPtrToIndexMap[stringPtrs[i]];
     opts.clear();
-    for(j=0; j < groups[k]->flags.size()-1; ++j) {
-      opts.append(*groups[k]->flags[j]);
-      opts.append(", ");
+
+       for(j=0; j < groups[k]->flags.size()-1; ++j) {
+          opts.append(*groups[k]->flags[j]);
+          opts.append(", ");
       
-      if ((long int)opts.size() > width)
-        opts.append("\n");
-    }
+          if ((long int)opts.size() > width)
+          opts.append("\n");
+       }
     // The last flag. No need to append comma anymore.
     opts.append( *groups[k]->flags[j] );
     
@@ -1836,10 +1837,10 @@ void ezOptionParser::getUsageDescriptions(std::string & usage, int width, Layout
         opts.append("ARGn]");
       }
     }
-      
+    
     sortedOpts.push_back(opts);
   }  
-  
+
   // Each option group will use this to build multiline help description.
   std::list<std::string*> desc; 
   // Number of whitespaces from start of line to description (interleave layout) or
@@ -1866,14 +1867,12 @@ void ezOptionParser::getUsageDescriptions(std::string & usage, int width, Layout
       maxlen = sortedOpts[i].size();
       
     int pad = gutter + maxlen;
-    helpwidth = width - pad;        
+    helpwidth = width - pad;
     
     // All the following split-fu could be optimized by just using substring (offset, length) tuples, but just to get it done, we'll do some not-too expensive string copying.
     SplitDelim(groups[k]->help, '\n', desc);
     // Split lines longer than allowable help width.
-    for(insertionIter=desc.begin(), cIter=insertionIter++; 
-        cIter != desc.end(); 
-        cIter=insertionIter++) {
+    for(insertionIter=desc.begin(), cIter=insertionIter++; insertionIter != desc.end(); cIter=insertionIter++) {
       if ((long int)((*cIter)->size()) > helpwidth) {
         // Get pointer to next string to insert new strings before it.
         std::string *rem = *cIter;

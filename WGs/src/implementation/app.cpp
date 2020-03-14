@@ -13,8 +13,8 @@ int main(int argc, const char* argv[]) {
 
 	// add app info
 	opt.overview = "WorkGround app.";
-	opt.syntax = "complete first second [OPTIONS] in1 [... inN] out";
-	opt.example = "complete a b -f --list 1,2,3 --list 4,5,6,7,8 -s string -int -2147483648,2147483647 -ulong 9223372036854775807 -float 3.40282e+038 -double 1.79769e+308 f1 f2 f3 f4 f5 f6 fout\n\n";
+	opt.syntax = "wg first second [OPTIONS] in1 [... inN] out";
+	opt.example = "wg a b -f --list 1,2,3 --list 4,5,6,7,8 -s string -int -2147483648,2147483647 -ulong 9223372036854775807 -float 3.40282e+038 -double 1.79769e+308 f1 f2 f3 f4 f5 f6 fout\n\n";
 	opt.footer = "WorkGround 1.0.0  Copyright (C) 2020 \nThis program is free and without warranty licensed with MIT licese.\n";
 
 	// create options
@@ -68,42 +68,44 @@ int main(int argc, const char* argv[]) {
 	);
 
 	opt.add(
-		"", // Default.
-		1, // Required?
-		1, // Number of args expected.
-		0, // Delimiter if expecting multiple args.
-		"To run the specifired WorkGround.", // Help description.
-		"run" // Flag token.
+		"",	// Default.
+		1,	// Required?
+		1,	// Number of args expected.
+		0,	// Delimiter if expecting multiple args.
+		"To run the specifired WorkGround.",	// Help description.
+		"run"	// Flag token.
 	);
 
 	opt.add(
-		"", // Default.
-		2, // Required?
-		4, // Number of args expected.
-		',', // Delimiter if expecting multiple args.
-		"Remove a wg, a task, or a file.", // Help description.
-		"remove",     // Flag token. 
-		"rm"  // Flag token.
+		"",		// Default.
+		2,		// Required?
+		4,		// Number of args expected.
+		',',	// Delimiter if expecting multiple args.
+		"Remove a wg, a task, or a file.",	// Help description.
+		"remove",	// Flag token. 
+		"rm"	// Flag token.
 	);
 
 	opt.add(
-		"", // Default.
-		2, // Required?
-		2, // Number of args expected.
-		',', // Delimiter if expecting multiple args.
-		"Switch workgrounds.", // Help description.
-		"switch",  // Flag token. 
-		"sw"  // Flag token.
+		"",	// Default.
+		2,	// Required?
+		2,	// Number of args expected.
+		',',	// Delimiter if expecting multiple args.
+		"Switch workgrounds.",	// Help description.
+		"switch",	// Flag token. 
+		"sw"	// Flag token.
 	);
 
 	// parse the input
 	opt.parse(argc, argv);
 
-	// run option
+	//****************************
+	//	Options' Implementations
+	//****************************
+
 	// Help Option
 	if (opt.isSet("-h")) {
-		cout << "in isset";
-		//Usage(opt);
+		Usage(opt);
 		return 1;
 	}
 
@@ -112,13 +114,13 @@ int main(int argc, const char* argv[]) {
 	if (opt.isSet("pt")) {
 		for (unsigned i = 0; i < strs.size(); i++) {
 			if (strs[i][0] != "") {
-				 //save the name in the pointer
+				 // save the name in the pointer
 				saveToFile(strs[i][0], PT_FILE_NAME, EXT);
 				cout << "pt = " << strs[i][0] << endl;
 			}
 		}
 
-		// if only pt show its value
+		// if only pt, show its value
 		if (strs.size() < 1) {
 			string ptValue;
 			readFile(PT_FILE_NAME, EXT, ptValue);
@@ -129,9 +131,9 @@ int main(int argc, const char* argv[]) {
 	
 	// View WorkGrounds Option
 	opt.get("view")->getMultiStrings(strs);
-	if (opt.isSet("-elab")) { // view elaborately
+	if (opt.isSet("-elab")) {	// view elaborately
 		if (opt.isSet("view")) {
-			init(); // retrieving stored data
+			init();	// retrieving stored data
 			if(strs.size() > 0 )
 				for (int i = 0; i < strs[0].size(); i++) {
 					if (strs[0][i] != "" && strs[0][i] != "pt") {
@@ -148,7 +150,7 @@ int main(int argc, const char* argv[]) {
 	}
 	else { // view just wg names
 		if (opt.isSet("view")) {
-			init(); // retrieving stored data
+			init();	// retrieving stored data
 			cout << wgs.viewWG();
 		}
 	}
@@ -156,10 +158,10 @@ int main(int argc, const char* argv[]) {
 	// Add option
 	opt.get("add")->getMultiStrings(strs);
 	if (opt.isSet("add")) {
-		init(); // retrieving stored data
+		init();	// retrieving stored data
 		if (strs.size() > 0) {
 			parsedStrs = parseStrs(strs[0]);
-			if (parsedStrs.size() >= 3) { // least number of args = 3
+			if (parsedStrs.size() >= 3) {	// least number of args = 3
 				wgNameTmp = parsedStrs[0];
 				taskNameTmp = parsedStrs[1];
 				parsedStrs.size() > 3 ? fileNameTmp = parsedStrs[2] : fileNameTmp = "";
@@ -173,14 +175,13 @@ int main(int argc, const char* argv[]) {
 					wgs.addTask(wgNameTmp, taskNameTmp, pathTmp);
 					cout << "Task " << taskNameTmp << " was added" << endl;
 				}
-				else if (parsedStrs.size() == 4) { // create and add file
+				else if (parsedStrs.size() == 4) {	// create and add file
 					wgs.addFile(wgNameTmp, taskNameTmp, fileNameTmp, pathTmp);
 					cout << "File " << fileNameTmp << " was added" << endl;
 				}
 			}
-
 		}
-		store(); // store changes
+		store();	// store changes
 	}
 
 	// Run WorkGround Option
@@ -201,12 +202,15 @@ int main(int argc, const char* argv[]) {
 	}
 
 	// Remove WG, Task, or File
+	// this function checks whether the entered command is a remive command
+	// and firstly it stores the arguments into strs then according to them
+	// it performs the required functionality
 	opt.get("remove")->getMultiStrings(strs);
 	if (opt.isSet("remove")) {
 		init();
 		if (strs.size() > 0) {
-			parsedStrs = parseStrs(strs[0]);
-			if (parsedStrs.size() > 1) { // at least 2 args
+			parsedStrs = parseStrs(strs[0]);	// it gats the value of pt argument and replaces pt with it
+			if (parsedStrs.size() > 1) {		// at least 2 args
 				if (parsedStrs[0] == "-wg") {
 					success = wgs.removeWg(parsedStrs[1]);
 					if (success)
@@ -234,14 +238,14 @@ int main(int argc, const char* argv[]) {
 			}
 		}
 	}
-
+	
 	opt.get("switch")->getMultiStrings(strs);
 	if (opt.isSet("switch")) {
 		init();
 
 		if (strs.size() > 0) {
 			parsedStrs = parseStrs(strs[0]);
-			if (parsedStrs.size() > 1) { // needs 2 args at least
+			if (parsedStrs.size() > 1) {	// needs 2 args at least
 				int feedback = 0;
 				feedback = wgs.switchWg(parsedStrs[0], parsedStrs[1]);
 
@@ -298,7 +302,6 @@ bool store() {
 	_wmkdir(DATA_DIR.c_str());
 	SetFileAttributes(DATA_DIR.c_str(), FILE_ATTRIBUTE_HIDDEN);
 
-
 	// open out stream
 	std::ofstream file(DATA_DIR_S + DATA_FILE_NAME);
 	file << wgs;
@@ -330,7 +333,6 @@ vector<string> parseStrs(vector<string> strs) {
 			}
 			else {
 				result.push_back(strs[i]);
-
 			}
 		}
 	}
