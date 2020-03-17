@@ -158,6 +158,7 @@ bool WorkGround::renameWorkGround(const string awgName){
 bool WorkGround::run(){
 	bool successReport = true;
 	bool enteredLoop   = false;
+
 	if(head != NULL){
 		for (taskNode* cur = head; cur != NULL; cur = cur->next){
 			successReport = successReport && cur->task.run();

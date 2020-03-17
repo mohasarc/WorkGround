@@ -25,6 +25,7 @@ public:
 	friend istream& operator>>(istream& in, WorkGround& retrieved);
 	vector<string> getTaskPath();
 	bool close();
+	bool hTerminate();
 private:
 struct taskNode{
 	Task task;
