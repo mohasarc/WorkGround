@@ -3,7 +3,7 @@
 
 #include "..\header\task.h"
 
-bool static runTask(const char* cmd) {
+bool static runTask(const char* cmd, PROCESS_INFORMATION &pInfo) {
 	
 	STARTUPINFOA si;
 	memset(&si, 0, sizeof(STARTUPINFO));
@@ -20,7 +20,7 @@ bool static runTask(const char* cmd) {
 		NULL,  //lpThreadAttributes
 		FALSE, //bInheritHandles
 		DETACHED_PROCESS | CREATE_NO_WINDOW,
-		NULL,  //lpEnvironment 
+		NULL,  //lpEnvironment
 		NULL,  //lpCurrentDirectory
 		&si,   //lpStartupInfo
 		&pi    //lpProcessInformation
@@ -29,6 +29,7 @@ bool static runTask(const char* cmd) {
 		return false;
 	}
 
+	pInfo = pi;	// returning the process information
 	return true;
 }
 
@@ -202,7 +203,7 @@ bool Task::run(){
 	}
 
 	const char* cmdCommandChar = cmdCommandStr.c_str();
-	return runTask(cmdCommandChar);
+	return runTask(cmdCommandChar, pInfo);
 }
 
 string* Task::getFilesPaths(int &size){
