@@ -20,9 +20,9 @@ int main(int argc, const char* argv[]) {
 	// create options
 	opt.add(
 		"", // Default.
-		0, // Required?
-		0, // Number of args expected.
-		0, // Delimiter if expecting multiple args.
+		0,	// Required?
+		0,	// Number of args expected.
+		0,	// Delimiter if expecting multiple args.
 		"Display usage instructions.", // Help description.
 		"-h",     // Flag token. 
 		"-help",  // Flag token.
@@ -32,18 +32,18 @@ int main(int argc, const char* argv[]) {
 
 	opt.add(
 		"", // Default.
-		0, // Required?
-		1, // Number of args expected.
-		0, // Delimiter if expecting multiple args.
+		0,	// Required?
+		1,	// Number of args expected.
+		0,	// Delimiter if expecting multiple args.
 		"A pointer to a WorkGround or Task name.", // Help description.
 		"pt" // Flag token.
 	);
 
 	opt.add(
 		"", // Default.
-		0, // Required?
-		1, // Number of args expected.
-		0, // Delimiter if expecting multiple args.
+		0,	// Required?
+		1,	// Number of args expected.
+		0,	// Delimiter if expecting multiple args.
 		"A pointer to a WorkGround or Task name.", // Help description.
 		"view", // Flag token.
 		"ls"
@@ -51,18 +51,18 @@ int main(int argc, const char* argv[]) {
 
 	opt.add(
 		"", // Default.
-		0, // Required?
-		0, // Number of args expected.
-		0, // Delimiter if expecting multiple args.
+		0,	// Required?
+		0,	// Number of args expected.
+		0,	// Delimiter if expecting multiple args.
 		"To view elaborately.", // Help description.
 		"-elab" // Flag token.
 	);
 
 	opt.add(
-		"", // Default.
-		3, // Required?
-		4, // Number of args expected.
-		',', // Delimiter if expecting multiple args.
+		"",		// Default.
+		3,		// Required?
+		4,		// Number of args expected.
+		',',	// Delimiter if expecting multiple args.
 		"to add tasks to WorkGrounds or files to tasks.", // Help description.
 		"add" // Flag token.
 	);
@@ -87,9 +87,9 @@ int main(int argc, const char* argv[]) {
 	);
 
 	opt.add(
-		"",	// Default.
-		2,	// Required?
-		2,	// Number of args expected.
+		"",		// Default.
+		2,		// Required?
+		2,		// Number of args expected.
 		',',	// Delimiter if expecting multiple args.
 		"Switch workgrounds.",	// Help description.
 		"switch",	// Flag token. 
