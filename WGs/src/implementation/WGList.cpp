@@ -234,6 +234,8 @@ int WGList::switchWg(string wgToClose, string wgToRun) {
 	WorkGround* wgToRunTask = NULL;
 	bool runSuccess = false;
 	bool closeSuccess = false;
+
+	// finding the workground to close and the one to open
 	for (int z = 0; z < wgs.size(); z++) {
 		if (wgs[z]->getWgName() == wgToClose) {
 			wgToCloseTask = wgs[z];
@@ -243,9 +245,10 @@ int WGList::switchWg(string wgToClose, string wgToRun) {
 		}
 	}
 	if (wgToCloseTask)
-		closeSuccess = wgToCloseTask->close();
+		closeSuccess = wgToCloseTask->close();		// should be changed to hTerminate
 	if (wgToRunTask) {
 		runSuccess = wgToRunTask->run();
+
 	}
 
 	if (closeSuccess && runSuccess)
@@ -254,4 +257,29 @@ int WGList::switchWg(string wgToClose, string wgToRun) {
 		return 1;
 	else if (!closeSuccess && !runSuccess)
 		return -1; // did nothing
+}
+
+// ****************************************
+// Functions to comunicate with wgbgservice
+// ****************************************
+
+// To store a currently active wg in memory
+bool WGList::storeToMem(HANDLE hPipe, WorkGround activeWG) {
+
+}
+
+// To retrieve a workground from memory to be terminated
+bool WGList::retrieveFromMem(HANDLE hPipe, string wgName, WorkGround& WGtoTerminate) {
+
+}
+
+// To start wgbgservice if not already active
+bool WGList::startService() {
+
+}
+
+// To create file and connect to service pipe
+// returns a handle to the file to be written to
+bool WGList::connect(HANDLE &hPipe) {
+
 }

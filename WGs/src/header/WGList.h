@@ -4,7 +4,8 @@
 #ifndef WGLIST_H
 #define WGLIST_H
 
-#include <vector> 
+#include <vector>
+#include <Windows.h>
 #include "task.h"
 #include "WorkGround.h"
 using namespace std;
@@ -30,6 +31,10 @@ public:
 	int switchWg(string wgRunning, string wgToRun);
 	WorkGround* findWg(string wgName);
 	Task* findTask(string wgName, string taskName);
+	bool storeToMem(HANDLE hPipe, WorkGround activeWG);
+	bool retrieveFromMem(HANDLE hPipe, string wgName, WorkGround& WGtoTerminate);
+	bool startService();
+	bool connect(HANDLE& hPipe);
 	friend ostream& operator<<(ostream& out, const WGList& toSave);
 	friend istream& operator>>(istream& in, WGList& retrieved);
 private:
