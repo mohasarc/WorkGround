@@ -26,6 +26,8 @@ public:
 	vector<string> getTaskPath();
 	bool close();
 	bool hTerminate();
+	void setID(int id);
+	int getID();
 private:
 struct taskNode{
 	Task task;
@@ -34,6 +36,7 @@ struct taskNode{
 
 string wgName;
 int taskNo;
+int wgID;
 taskNode* head;
 };
 
