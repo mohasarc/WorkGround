@@ -7,6 +7,10 @@
 ##################
 experiment.cpp
 test.cpp
+experimentService.cpp
+notes.txt
+win32-named-pipes-example-master.zip
+./win32-named-pipes-example-master/
 
 #executables
 *.exe
