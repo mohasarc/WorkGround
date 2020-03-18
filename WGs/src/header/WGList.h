@@ -5,11 +5,8 @@
 #define WGLIST_H
 
 #include <vector>
-#include <Windows.h>
 #include "task.h"
 #include "WorkGround.h"
-#include <tlhelp32.h>
-#include <tchar.h>
 #include <map>
 using namespace std;
 
@@ -35,11 +32,6 @@ public:
 	WorkGround* findWg(string wgName);
 	Task* findTask(string wgName, string taskName);
 	int generateWGID();
-	bool storeToMem(HANDLE hPipe, WorkGround activeWG);
-	bool retrieveFromMem(HANDLE hPipe, string wgName, WorkGround& WGtoTerminate);
-	bool startService();
-	bool connect(HANDLE& hPipe);
-	bool IsProcessRunning(const TCHAR* const executableName);
 	friend ostream& operator<<(ostream& out, const WGList& toSave);
 	friend istream& operator>>(istream& in, WGList& retrieved);
 private:
