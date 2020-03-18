@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <iostream>
 #include <fstream>
+#include <vector>
 #include "../WGs/src/header/workGround.h"
 using namespace std;
 
@@ -27,24 +28,24 @@ int main()
     DWORD dwszInputBuffer = sizeof(szInputBuffer);
     DWORD dwszOutputBuffer = sizeof(szOutputBuffer);
     // Read OPcode Local Variables
-    bool bReadFile;
-    int* opBuffer;
+    bool bReadFile = false;
+    bool bConnectNamedPipe = false;
+    int* opBuffer = 0;
     DWORD dwNoBytesRead;
-    bool bConnectNamedPipe;
     // Read WorkGround Local Variables
-    WorkGround* wgBuffer;
+    WorkGround* wgBuffer = 0;
     // Retrieve WorkGround Local Variables
-    WorkGround* toRetrieveBuffer;
-    int* wgIDBuffer;
-    bool bWriteFile;
-    bool bFlushFileBuffer;
+    WorkGround* toRetrieveBuffer = 0;
+    bool bWriteFile = false;
+    bool bFlushFileBuffer = false;
+    int* wgIDBuffer = 0;
     DWORD dwNoBytesWrite;
 
 
     while (1) {
         // Create wgbgservice named pipe - STEP 1
         hNamedPipe = CreateNamedPipe(
-            TEXT("\\\\.\\pipe\\wgbgservice"),
+            TEXT("\\\\.\\pipe\\wgbgserviceTest11"),
             PIPE_ACCESS_DUPLEX,
             PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT,
             PIPE_UNLIMITED_INSTANCES,
@@ -119,15 +120,15 @@ int main()
             case(DELETE_WG):
                 // Find WorkGround & Remove it
                 for (int i = 0; i < activeWGs.size(); i++) {
-                    if (activeWGs[i].getID == *wgIDBuffer)
-                        activeWGs.erase(activeWGs.begin + i);
+                    if (activeWGs[i].getID() == *wgIDBuffer)
+                        activeWGs.erase(activeWGs.begin() + i);
                 }
                 break;
 
             case(RETRIEVE_WG):
                 // Find WorkGround
                 for (WorkGround i : activeWGs) {
-                    if (i.getID == *wgIDBuffer)
+                    if (i.getID() == *wgIDBuffer)
                         toRetrieveBuffer = &i;
                 }
                 // Write WorkGround
