@@ -1,16 +1,17 @@
 #ifndef APP_H
 #define APP_H
-#include <tlhelp32.h>
 #include <tchar.h>
 #include <Windows.h>
 #include "workGround.h"
+#include <tlhelp32.h>
 
 // Functions
-bool static storeToMem(HANDLE hPipe, WorkGround activeWG);
-bool static retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate);
-bool static startService();
-bool static connect(HANDLE& hPipe);
-bool static IsProcessRunning(const TCHAR* const executableName);
+extern bool storeToMem(HANDLE hPipe, WorkGround activeWG);
+extern bool retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate);
+extern bool startService();
+extern bool connect(HANDLE& hPipe);
+extern bool sendOpCode(HANDLE hPipe, int opCode);
+extern bool IsProcessRunning(const TCHAR* const executableName);
 
 // constantss
 const int DELETE_WG = 0;
