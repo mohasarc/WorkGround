@@ -26,7 +26,7 @@ string WGList::viewWG() {
 	else
 		for (int i = 0; i < wgs.size(); i++) {
 			wgInfoTmp += wgs[i]->getWgName() + " ( " + to_string(wgs[i]->getID()) + " ) " + "\t";
-			if (i != 0 && i % itemPerLine == 0) // to print a number of items per line
+			if (i != 0 && (i + 1) % itemPerLine == 0) // to print a number of items per line
 				wgInfoTmp += "\n";
 		}
 	return wgInfoTmp;
@@ -262,16 +262,22 @@ int WGList::switchWg(string wgToClose, string wgToRun) {
 
 int WGList::generateWGID() {
 	map<int, string> wgsMap;
+	cout << "generate ID is called " << endl;
+	cout << "size is " << wgs.size() << endl;
+	if (wgs.size() == 0)
+		return 0;
 
 	for (int i = 0; i < wgs.size(); i++) {
+		cout << "adding the key " << wgs[i]->getID() << endl;
 		wgsMap[wgs[i]->getID()] = wgs[i]->getWgName();
 	}
 
-	for (int j = 0; j < wgs.size(); j++) {
+	for (int j = 0; j <= wgs.size(); j++) {
 		pair<map<int, string>::iterator, bool> mapReturn;
 		mapReturn = wgsMap.insert(pair<int, string>(j, "test"));
 
 		if (mapReturn.second == true) {
+			cout << "id is : " << j << endl;
 			return j;
 		}
 	}

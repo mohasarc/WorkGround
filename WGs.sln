@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WGs", "WGs\WGs.vcxproj", "{2FDAFD48-7D7B-4F16-B9B1-373D86CC0211}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wgbgService", "wgbgService\wgbgService.vcxproj", "{E92149ED-0E41-41D6-9483-03B401C46B51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{2FDAFD48-7D7B-4F16-B9B1-373D86CC0211}.Release|x64.Build.0 = Release|x64
 		{2FDAFD48-7D7B-4F16-B9B1-373D86CC0211}.Release|x86.ActiveCfg = Release|Win32
 		{2FDAFD48-7D7B-4F16-B9B1-373D86CC0211}.Release|x86.Build.0 = Release|Win32
+		{E92149ED-0E41-41D6-9483-03B401C46B51}.Debug|x64.ActiveCfg = Debug|x64
+		{E92149ED-0E41-41D6-9483-03B401C46B51}.Debug|x64.Build.0 = Debug|x64
+		{E92149ED-0E41-41D6-9483-03B401C46B51}.Debug|x86.ActiveCfg = Debug|Win32
+		{E92149ED-0E41-41D6-9483-03B401C46B51}.Debug|x86.Build.0 = Debug|Win32
+		{E92149ED-0E41-41D6-9483-03B401C46B51}.Release|x64.ActiveCfg = Release|x64
+		{E92149ED-0E41-41D6-9483-03B401C46B51}.Release|x64.Build.0 = Release|x64
+		{E92149ED-0E41-41D6-9483-03B401C46B51}.Release|x86.ActiveCfg = Release|Win32
+		{E92149ED-0E41-41D6-9483-03B401C46B51}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
