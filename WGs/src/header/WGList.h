@@ -8,6 +8,8 @@
 #include <Windows.h>
 #include "task.h"
 #include "WorkGround.h"
+#include <tlhelp32.h>
+#include <tchar.h>
 using namespace std;
 
 class WGList{
@@ -35,6 +37,7 @@ public:
 	bool retrieveFromMem(HANDLE hPipe, string wgName, WorkGround& WGtoTerminate);
 	bool startService();
 	bool connect(HANDLE& hPipe);
+	bool IsProcessRunning(const TCHAR* const executableName);
 	friend ostream& operator<<(ostream& out, const WGList& toSave);
 	friend istream& operator>>(istream& in, WGList& retrieved);
 private:
