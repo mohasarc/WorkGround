@@ -242,7 +242,7 @@ Task* WorkGround::findTask(const string taskName){
 //}
 
 ostream& operator<<(ostream& out, const WorkGround& toSave) {
-	out << toSave.wgName << "\n" << toSave.taskNo;
+	out << toSave.wgName << "\n" << toSave.taskNo << "\n" << toSave.wgID;
 	
 	WorkGround::taskNode* cur;
 	for (cur = toSave.head; cur != NULL; cur = cur->next) {
@@ -253,9 +253,12 @@ ostream& operator<<(ostream& out, const WorkGround& toSave) {
 
 istream& operator>>(istream& in, WorkGround& retrieved) {
 	string taskNo;
+	string wgIDStr;
 	getline(in, retrieved.wgName, '\n');
 	getline(in, taskNo);
-	
+	getline(in, wgIDStr);
+	retrieved.wgID = stoi(wgIDStr);
+
 	Task* tmp;
 	for (int i = 0; i < stoi(taskNo); i++) {
 		tmp = new Task();
@@ -296,4 +299,16 @@ bool WorkGround::close() {
 		return true;
 	else
 		return false;
+}
+
+bool WorkGround::hTerminate() {		// implement later
+	return false;
+} 
+
+void WorkGround::setID(int id) {
+	wgID = id;
+}
+
+int WorkGround::getID() {
+	return wgID;
 }
