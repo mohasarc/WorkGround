@@ -237,7 +237,7 @@ int WGList::switchWg(string wgToCloseName, string wgToRunName) {
 	bool runSuccess = false;
 	bool closeSuccess = false;
 	
-	HANDLE hPipe;
+	HANDLE hPipe = 0;
 	bool bconnect = false;
 	WorkGround wgToTerminate;	// includes memory data
 
@@ -258,7 +258,7 @@ int WGList::switchWg(string wgToCloseName, string wgToRunName) {
 
 	// retrieve the WorkGround to close
 	// retrieved data including the tasks handles
-	retrieveFromMem(hPipe, wgToClose->getID, wgToTerminate);
+	retrieveFromMem(hPipe, wgToClose->getID(), wgToTerminate);
 
 	if (wgToClose)
 		closeSuccess = wgToTerminate.hTerminate();
