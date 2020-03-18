@@ -10,6 +10,7 @@
 #include "WorkGround.h"
 #include <tlhelp32.h>
 #include <tchar.h>
+#include <map>
 using namespace std;
 
 class WGList{
@@ -33,6 +34,7 @@ public:
 	int switchWg(string wgRunning, string wgToRun);
 	WorkGround* findWg(string wgName);
 	Task* findTask(string wgName, string taskName);
+	int generateWGID();
 	bool storeToMem(HANDLE hPipe, WorkGround activeWG);
 	bool retrieveFromMem(HANDLE hPipe, string wgName, WorkGround& WGtoTerminate);
 	bool startService();
