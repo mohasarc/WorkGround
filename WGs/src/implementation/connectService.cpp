@@ -6,9 +6,8 @@
 #include "..\header\connectService.h"
 
 // To store a currently active wg in memory
-bool static storeToMem(HANDLE hPipe, WorkGround activeWG) {
+bool storeToMem(HANDLE hPipe, WorkGround activeWG) {
 	// Local Variables
-	int* opCode = &STORE_WG;
 	WorkGround* wgBuffer = &activeWG;
 	DWORD wgBufferSize = sizeof(activeWG);
 	DWORD dwNoBytesWrite;
@@ -35,7 +34,7 @@ bool static storeToMem(HANDLE hPipe, WorkGround activeWG) {
 }
 
 // To retrieve a workground from memory to be terminated
-bool static retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate) {
+bool retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate) {
 	// Local Variables
 	WorkGround* wgBuffer;
 	DWORD wgBufferSize = sizeof(WorkGround);
@@ -89,7 +88,7 @@ bool static retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate) {
 }
 
 // To start wgbgservice if not already active
-bool static startService() {
+bool startService() {
 	// run the server if not run already
 	BOOL bIsRunning;
 	BOOL bCreateProcess;
@@ -156,11 +155,11 @@ bool sendOpCode(HANDLE hPipe,int opCode) {
 
 // To create file and connect to service pipe
 // returns a handle to the file to be written to
-bool static connect(HANDLE& hPipe) {
+bool connect(HANDLE& hPipe) {
 
 	// CreateFile for pipe
 	hPipe = CreateFile(
-		TEXT("\\\\.\\pipe\\wgbgservice"),
+		TEXT("\\\\.\\pipe\\wgbgserviceTest11"),
 		GENERIC_READ | GENERIC_WRITE,
 		0,
 		NULL,
@@ -181,7 +180,7 @@ bool static connect(HANDLE& hPipe) {
 }
 
 // Checks whether a process with executableName is already running
-bool static IsProcessRunning(const TCHAR* const executableName) {
+bool IsProcessRunning(const TCHAR* const executableName) {
 	PROCESSENTRY32 entry;
 	entry.dwSize = sizeof(PROCESSENTRY32);
 
