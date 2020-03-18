@@ -7,6 +7,7 @@
 #include <vector>
 #include "task.h"
 #include "WorkGround.h"
+#include "connectService.h"
 #include <map>
 using namespace std;
 

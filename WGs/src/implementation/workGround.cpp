@@ -302,7 +302,16 @@ bool WorkGround::close() {
 }
 
 bool WorkGround::hTerminate() {		// implement later
-	return false;
+	bool success = true;
+
+	if (taskNo <= 0)
+		return false;
+
+	for (taskNode* cur = head; cur != NULL; cur = cur->next) {
+		success = success && cur->task.hTerminate();
+	}
+
+	return success;
 } 
 
 void WorkGround::setID(int id) {

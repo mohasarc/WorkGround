@@ -206,6 +206,23 @@ bool Task::run(){
 	return runTask(cmdCommandChar, pInfo);
 }
 
+bool Task::hTerminate() {
+	DWORD exitCode;
+	HANDLE processhndl = OpenProcess(PROCESS_ALL_ACCESS, false, pInfo.dwProcessId);
+	if (GetExitCodeProcess(processhndl, &exitCode)) {
+		cout << "Successfully got exit code : " << exitCode << endl;
+	}
+	else {
+		cout << "Getting exit code failed : " << GetLastError() << endl;
+	}
+
+	if (TerminateProcess(processhndl, (UINT)exitCode)) {
+		cout << "Procces terminated" << endl;
+		return true;
+	}
+	return false;
+}
+
 string* Task::getFilesPaths(int &size){
 	string* pathArr = new string[fileNo];
 	unsigned i = 0;

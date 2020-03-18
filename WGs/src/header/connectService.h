@@ -3,7 +3,7 @@
 #include <tlhelp32.h>
 #include <tchar.h>
 #include <Windows.h>
-#include "src/header/workGround.h"
+#include "workGround.h"
 
 // Functions
 bool static storeToMem(HANDLE hPipe, WorkGround activeWG);
@@ -13,7 +13,8 @@ bool static connect(HANDLE& hPipe);
 bool static IsProcessRunning(const TCHAR* const executableName);
 
 // constantss
-const int RETRIEVE_WG = 0;
-const int STORE_WG = 1;
-
+const int DELETE_WG = 0;
+const int RETRIEVE_WG = 1;
+const int STORE_WG = 2;
+const int SEND_ID = 3;
 #endif

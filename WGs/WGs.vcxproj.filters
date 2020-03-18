@@ -27,6 +27,9 @@
     <ClInclude Include="src\header\WGList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="connectService.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\implementation\app.cpp">
@@ -39,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\implementation\WGList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="connectService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

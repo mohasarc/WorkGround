@@ -27,7 +27,7 @@ string* getFilesPaths(int &size);
 string getAppPath();
 string getTaskName();
 bool run();
-bool hTerminate();		// to implement
+bool hTerminate();
 friend ostream& operator<<(ostream& out, const Task& toSave);
 friend istream& operator>>(istream& in, Task& retrieved);
 

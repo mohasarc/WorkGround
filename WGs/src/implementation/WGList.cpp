@@ -230,26 +230,41 @@ istream& operator>>(istream& in, WGList& retrieved) {
 	return in;
 }
 
-int WGList::switchWg(string wgToClose, string wgToRun) {
-	WorkGround* wgToCloseTask = NULL;
-	WorkGround* wgToRunTask = NULL;
+int WGList::switchWg(string wgToCloseName, string wgToRunName) {
+	// Local Variables
+	WorkGround* wgToClose = NULL;
+	WorkGround* wgToRun = NULL;
 	bool runSuccess = false;
 	bool closeSuccess = false;
+	
+	HANDLE hPipe;
+	bool bconnect = false;
+	WorkGround wgToTerminate;	// includes memory data
 
 	// finding the workground to close and the one to open
 	for (int z = 0; z < wgs.size(); z++) {
-		if (wgs[z]->getWgName() == wgToClose) {
-			wgToCloseTask = wgs[z];
+		if (wgs[z]->getWgName() == wgToCloseName) {
+			wgToClose = wgs[z];
 		}
-		if (wgs[z]->getWgName() == wgToRun) {
-			wgToRunTask = wgs[z];
-		}
+		if (wgs[z]->getWgName() == wgToRunName) {
+			wgToRun = wgs[z];
+		}		
 	}
-	if (wgToCloseTask)
-		closeSuccess = wgToCloseTask->close();		// should be changed to hTerminate
-	if (wgToRunTask) {
-		runSuccess = wgToRunTask->run();
 
+	// Run and Connect to wgbgservice
+	if (startService()) {
+		bconnect = connect(hPipe);
+	}
+
+	// retrieve the WorkGround to close
+	// retrieved data including the tasks handles
+	retrieveFromMem(hPipe, wgToClose->getID, wgToTerminate);
+
+	if (wgToClose)
+		closeSuccess = wgToTerminate.hTerminate();
+	if (wgToRun) {
+		runSuccess = wgToRun->run();
+		storeToMem(hPipe, *wgToRun);	// storing the data of active WorkGround to memory
 	}
 
 	if (closeSuccess && runSuccess)

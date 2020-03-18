@@ -3,32 +3,33 @@
 // ****************************************
 // Author : Mohammed S. Yaseen
 // Date	  :	18/03/2020
-
-#include "connectService.h"
+#include "..\header\connectService.h"
 
 // To store a currently active wg in memory
 bool static storeToMem(HANDLE hPipe, WorkGround activeWG) {
 	// Local Variables
+	int* opCode = &STORE_WG;
 	WorkGround* wgBuffer = &activeWG;
 	DWORD wgBufferSize = sizeof(activeWG);
 	DWORD dwNoBytesWrite;
 	bool bWriteFile;
 
+	// write OPCode
+	sendOpCode(hPipe, STORE_WG);
+
+	// Write WorkGround object
 	bWriteFile = WriteFile(
 		hPipe,
 		wgBuffer,
 		wgBufferSize,
 		&dwNoBytesWrite,
-		NULL
-	);
-	if (!bWriteFile)
-	{
-		cout << "WriteFile Failed & Error No - " << GetLastError() << endl;
+		NULL );
+
+	if (!bWriteFile) {
+		cout << "Writing WG Failed & Error No - " << GetLastError() << endl;
 		return false;
-	}
-	else
-	{
-		cout << "WriteFile succeeded" << endl;
+	} else {
+		cout << "Writing WG succeeded" << endl;
 		return true;
 	}
 }
@@ -41,6 +42,9 @@ bool static retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate) {
 	DWORD dwNoBytesRead;
 	bool bReadFile;
 
+	// Send OPcode
+	sendOpCode(hPipe, SEND_ID);
+
 	// send WorkGround id
 	int* wgIDBuffer = &wgID;
 	DWORD wgIDBufferSize = sizeof(wgID);
@@ -52,18 +56,18 @@ bool static retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate) {
 		wgIDBuffer,
 		wgIDBufferSize,
 		&dwNoBytesWrite,
-		NULL
-	);
-	if (!bWriteFile)
-	{
+		NULL );
+
+	if (!bWriteFile){
 		cout << "WriteFile wgID Failed & Error No - " << GetLastError() << endl;
 		return false;
-	}
-	else
-	{
+	} else {
 		cout << "WriteFile wgID succeeded" << endl;
 		return true;
 	}
+
+	// Send OPcode
+	sendOpCode(hPipe, RETRIEVE_WG);
 
 	// ReadFile: retrieve the WorkGround
 	bReadFile = ReadFile(
@@ -71,17 +75,17 @@ bool static retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate) {
 		wgBuffer,
 		wgBufferSize,
 		&dwNoBytesRead,
-		NULL
-	);
-	if (!bReadFile)
-	{
+		NULL );
+	if (!bReadFile) {
 		cout << "ReadFile wg Failed & Error No - " << GetLastError() << endl;
-	}
-	else
-	{
+	} else {
 		cout << "success wg reading" << endl;
 		WGtoTerminate = *wgBuffer;
 	}
+
+	sendOpCode(hPipe, DELETE_WG);
+
+	return bWriteFile && bReadFile;
 }
 
 // To start wgbgservice if not already active
@@ -125,6 +129,28 @@ bool static startService() {
 			return true;
 		else
 			return false;
+	}
+}
+
+// To send the OPCode value to wgbgservice
+bool sendOpCode(HANDLE hPipe,int opCode) {
+	int* opCodeBuffer = &opCode;
+	DWORD dwNoBytesWrite;
+	bool
+	bWriteFile = WriteFile(
+		hPipe,
+		opCodeBuffer,
+		sizeof(opCode),
+		&dwNoBytesWrite,
+		NULL);
+
+	if (!bWriteFile) {
+		cout << "WriteFile wgID Failed & Error No - " << GetLastError() << endl;
+		return false;
+	}
+	else {
+		cout << "WriteFile wgID succeeded" << endl;
+		return true;
 	}
 }
 

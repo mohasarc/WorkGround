@@ -1,20 +1,187 @@
-// wgbgService.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// wgbgService.cpp : This is the background service for WG
+// Author : Mohammed S. Yaseen
+// Date   : 18/03/2020
 
+#include <string>
+#include <windows.h>
 #include <iostream>
+#include <fstream>
+#include "../WGs/src/header/workGround.h"
+using namespace std;
+
+// constantss
+const int DELETE_WG = 0;
+const int RETRIEVE_WG = 1;
+const int STORE_WG = 2;
+const int SEND_ID = 3;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    // Local Variables
+    int opCode;
+    vector<WorkGround> activeWGs;
+    // Create named Pipe Variables
+    HANDLE hNamedPipe;
+    char* szInputBuffer;
+    char* szOutputBuffer;
+    DWORD dwszInputBuffer = sizeof(szInputBuffer);
+    DWORD dwszOutputBuffer = sizeof(szOutputBuffer);
+    // Read OPcode Local Variables
+    bool bReadFile;
+    int* opBuffer;
+    DWORD dwNoBytesRead;
+    bool bConnectNamedPipe;
+    // Read WorkGround Local Variables
+    WorkGround* wgBuffer;
+    // Retrieve WorkGround Local Variables
+    WorkGround* toRetrieveBuffer;
+    int* wgIDBuffer;
+    bool bWriteFile;
+    bool bFlushFileBuffer;
+    DWORD dwNoBytesWrite;
+
+
+    while (1) {
+        // Create wgbgservice named pipe - STEP 1
+        hNamedPipe = CreateNamedPipe(
+            TEXT("\\\\.\\pipe\\wgbgservice"),
+            PIPE_ACCESS_DUPLEX,
+            PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT,
+            PIPE_UNLIMITED_INSTANCES,
+            dwszOutputBuffer,
+            dwszInputBuffer,
+            0,
+            NULL
+        );
+
+        if (hNamedPipe == INVALID_HANDLE_VALUE)
+        {
+            cout << "wgbgservice named pipe Creation Failed & Error No - " << GetLastError() << endl;
+        }
+        else
+        {
+            cout << "wgbgservice named pipe Creation Succeeded" << endl;
+        }
+
+        // Connect to wgbgservice named pipe - STEP 2
+        bConnectNamedPipe = ConnectNamedPipe(
+            hNamedPipe,
+            NULL);
+
+        if (!bConnectNamedPipe)
+        {
+            cout << "NamePipe Connection Failed & Error No - " << GetLastError() << endl;
+        }
+        else
+        {
+            cout << "Connected Successfuly" << endl;
+            cout << "Waiting for opCode..." << endl;
+        }
+
+        // Read OPcode - STEP 3
+        bReadFile = ReadFile(
+            hNamedPipe,
+            opBuffer,
+            sizeof(int),
+            &dwNoBytesRead,
+            NULL
+        );
+        if (!bReadFile)
+        {
+            cout << "Reading OPcode Failed & Error No - " << GetLastError() << endl;
+        }
+        else
+        {
+            cout << "OPcode read successfuly" << endl;
+            opCode = *opBuffer;
+            switch (opCode)
+            {
+            case(STORE_WG):
+                // Read WorkGround
+                bReadFile = ReadFile(
+                    hNamedPipe,
+                    wgBuffer,
+                    sizeof(WorkGround),
+                    &dwNoBytesRead,
+                    NULL
+                );
+                if (!bReadFile)
+                {
+                    cout << "Reading WG Failed & Error No - " << GetLastError() << endl;
+                }
+                else
+                {
+                    cout << "WG read successfuly" << endl;
+                    activeWGs.push_back(*wgBuffer); // storing the workground in memory
+                }
+                break;
+            
+            case(DELETE_WG):
+                // Find WorkGround & Remove it
+                for (int i = 0; i < activeWGs.size(); i++) {
+                    if (activeWGs[i].getID == *wgIDBuffer)
+                        activeWGs.erase(activeWGs.begin + i);
+                }
+                break;
+
+            case(RETRIEVE_WG):
+                // Find WorkGround
+                for (WorkGround i : activeWGs) {
+                    if (i.getID == *wgIDBuffer)
+                        toRetrieveBuffer = &i;
+                }
+                // Write WorkGround
+                bWriteFile = WriteFile(
+                    hNamedPipe,
+                    toRetrieveBuffer,
+                    sizeof(toRetrieveBuffer),
+                    &dwNoBytesWrite,
+                    NULL
+                );
+
+                if (!bWriteFile) {
+                    cout << "Writing WG Failed & Error No - " << GetLastError() << endl;
+                } else {
+                    cout << "Writing WG Succeeded" << endl;
+                }
+
+                // Flush FileBuffer
+                bFlushFileBuffer = FlushFileBuffers(hNamedPipe);
+                if (!bFlushFileBuffer) {
+                    cout << "FlushFile Buffer Failed & Error No - " << GetLastError() << endl;
+                } else {
+                    cout << "FlushFile Buffer Succeeded" << endl;
+                }
+                break;
+
+            case(SEND_ID):
+                // Read WGID
+                bReadFile = ReadFile(
+                    hNamedPipe,
+                    wgIDBuffer,
+                    sizeof(int),
+                    &dwNoBytesRead,
+                    NULL);
+
+                if (!bReadFile)
+                    cout << "Reading WGID Failed & Error No - " << GetLastError() << endl;
+                else
+                    cout << "WG read successfuly" << endl;
+                break;
+
+            default:
+                // Do Nothing
+                break;
+            }
+        }
+    }
+    
+    // disconnect Pipe - STEP 6
+    DisconnectNamedPipe(hNamedPipe);
+
+    // Close handle - STEP 7
+    CloseHandle(hNamedPipe);
+
+    //system("PAUSE");
+    return 0;
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
