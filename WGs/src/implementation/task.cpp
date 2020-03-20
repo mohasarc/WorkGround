@@ -315,6 +315,7 @@ istream& operator>>(istream& in, Task& retrieved) {
 	return in;
 }
 
+// To serialize a Task object into a string
 bool Task::serialize(Task toSerialize, string& serialized) {
 	serialized += toSerialize.taskName + "\n";
 	serialized += toSerialize.appPath + "\n";
@@ -332,6 +333,7 @@ bool Task::serialize(Task toSerialize, string& serialized) {
 	return true;
 }
 
+// To deserialize a string of Task information into a Task object
 bool Task::deserialize(stringstream &toDeserialize, Task& deserialized) {
 	string fileNo;
 	string dwProcessId;
