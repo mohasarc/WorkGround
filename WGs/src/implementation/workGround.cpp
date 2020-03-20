@@ -279,7 +279,7 @@ vector<string> WorkGround::getTaskPath() {
 	return taskPaths;
 }
 
-bool WorkGround::close() {
+bool WorkGround::close() {	// Depricated // Not reliable
 	string taskName, taskNamePath;
 	string killName;
 	int index = 0;
@@ -303,7 +303,7 @@ bool WorkGround::close() {
 		return false;
 }
 
-bool WorkGround::hTerminate() {		// implement later
+bool WorkGround::hTerminate() {
 	bool success = true;
 
 	if (taskNo <= 0)
