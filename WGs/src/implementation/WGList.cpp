@@ -176,10 +176,20 @@ bool WGList::renameFile(const string wgName, const string taskName, const string
 
 bool WGList::runWG(const string wgName) {
 	WorkGround* tmpWg = findWg(wgName);
+	bool bconnect = false;
+	HANDLE hPipe = 0;
 	if (tmpWg == NULL)
 		return false;
 	else {
-		return tmpWg->run();
+		bool bRun = tmpWg->run();
+		if (bRun) {
+			// Run and Connect to wgbgservice
+			if (startService()) {
+				bconnect = connect(hPipe);
+			}
+			storeToMem(hPipe, *tmpWg);	// storing the data of active WorkGround to memory
+		}
+		return bRun;
 	}
 }
 
@@ -274,6 +284,36 @@ int WGList::switchWg(string wgToCloseName, string wgToRunName) {
 	else if (!closeSuccess && !runSuccess)
 		return -1; // did nothing
 }
+
+//void WGList::test() {
+//	HANDLE hPipe = 0;
+//	// Run and Connect to wgbgservice
+//	if (startService()) {
+//		bool bconnect = connect(hPipe);
+//	}
+//
+//	WorkGround *wgToClose = wgs[0];
+//	WorkGround wgToTerminate;
+//	WorkGround *wgToRun = wgs[1];
+//	// retrieve the WorkGround to close
+//	// retrieved data including the tasks handles
+//	//cout << "workGround id : " << wgToRun->getID() << endl;
+//	storeToMem(hPipe, *wgToRun);
+//
+//	connect(hPipe);
+//	//cout << "workGround id : " << wgToClose->getID() << endl;
+//	storeToMem(hPipe, *wgToClose);
+//
+//	connect(hPipe);
+//	retrieveFromMem(hPipe, wgToClose->getID(), wgToTerminate);
+//
+//	//if (wgToClose)
+//	//	bool closeSuccess = wgToTerminate.hTerminate();
+//	//if (wgToRun) {
+//	//	bool runSuccess = wgToRun->run();
+//	//	storeToMem(hPipe, *wgToRun);	// storing the data of active WorkGround to memory
+//	//}
+//}
 
 int WGList::generateWGID() {
 	map<int, string> wgsMap;

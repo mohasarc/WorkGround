@@ -35,6 +35,7 @@ public:
 	int generateWGID();
 	friend ostream& operator<<(ostream& out, const WGList& toSave);
 	friend istream& operator>>(istream& in, WGList& retrieved);
+	void test();
 private:
 	vector<WorkGround*> wgs;
 };

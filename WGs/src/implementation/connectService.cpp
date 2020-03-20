@@ -8,10 +8,22 @@
 // To store a currently active wg in memory
 bool storeToMem(HANDLE hPipe, WorkGround activeWG) {
 	// Local Variables
-	WorkGround* wgBuffer = &activeWG;
-	DWORD wgBufferSize = sizeof(activeWG);
+	string serializedWG = "";
+	char* serializedWGBuff = new char[BUFSIZE];
+	DWORD serializedWGBuffSize = BUFSIZE;
 	DWORD dwNoBytesWrite;
 	bool bWriteFile;
+
+	// Serialize the workground
+	WorkGround::serialize(activeWG, serializedWG);
+	// Initialize the buffer
+	for (int i = 0; i < BUFSIZE; i++) {
+		if (i < serializedWG.size()) {
+			serializedWGBuff[i] = serializedWG.at(i);
+		}
+		else
+			serializedWGBuff[i] = '\n';
+	}
 
 	// write OPCode
 	sendOpCode(hPipe, STORE_WG);
@@ -19,8 +31,8 @@ bool storeToMem(HANDLE hPipe, WorkGround activeWG) {
 	// Write WorkGround object
 	bWriteFile = WriteFile(
 		hPipe,
-		wgBuffer,
-		wgBufferSize,
+		serializedWGBuff,
+		serializedWGBuffSize,
 		&dwNoBytesWrite,
 		NULL );
 
@@ -29,59 +41,84 @@ bool storeToMem(HANDLE hPipe, WorkGround activeWG) {
 		return false;
 	} else {
 		cout << "Writing WG succeeded" << endl;
+		cout << "WG Sent \n" << activeWG.wgView();
 		return true;
+	}
+
+	// Flush FileBuffer
+	bool
+	bFlushFileBuffer = FlushFileBuffers(hPipe);
+	if (!bFlushFileBuffer) {
+		cout << "FlushFile Buffer Failed & Error No - " << GetLastError() << endl;
+	}
+	else {
+		cout << "FlushFile Buffer Succeeded" << endl;
 	}
 }
 
 // To retrieve a workground from memory to be terminated
 bool retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate) {
 	// Local Variables
-	WorkGround* wgBuffer;
-	DWORD wgBufferSize = sizeof(WorkGround);
+	char* serializedWgBuffer = new char[BUFSIZE];
+	DWORD wgBufferSize = BUFSIZE;
 	DWORD dwNoBytesRead;
 	bool bReadFile;
+	string serializedWG;
+	WorkGround *retrievedWg;
 
 	// Send OPcode
 	sendOpCode(hPipe, SEND_ID);
 
 	// send WorkGround id
-	int* wgIDBuffer = &wgID;
 	DWORD wgIDBufferSize = sizeof(wgID);
 	DWORD dwNoBytesWrite;
 	bool bWriteFile;
 
 	bWriteFile = WriteFile(
 		hPipe,
-		wgIDBuffer,
+		&wgID,
 		wgIDBufferSize,
 		&dwNoBytesWrite,
 		NULL );
 
 	if (!bWriteFile){
 		cout << "WriteFile wgID Failed & Error No - " << GetLastError() << endl;
-		return false;
 	} else {
 		cout << "WriteFile wgID succeeded" << endl;
-		return true;
 	}
 
 	// Send OPcode
+	connect(hPipe);	// To tell the service to listen
 	sendOpCode(hPipe, RETRIEVE_WG);
 
 	// ReadFile: retrieve the WorkGround
 	bReadFile = ReadFile(
 		hPipe,
-		wgBuffer,
+		serializedWgBuffer,
 		wgBufferSize,
 		&dwNoBytesRead,
 		NULL );
 	if (!bReadFile) {
 		cout << "ReadFile wg Failed & Error No - " << GetLastError() << endl;
 	} else {
-		cout << "success wg reading" << endl;
-		WGtoTerminate = *wgBuffer;
+
+		serializedWG = "";
+		for (int i = 0; i < BUFSIZE - 1; i++) {
+			if (serializedWgBuffer[i] == '\n' && serializedWgBuffer[i + 1] == '\n')
+				break;
+			serializedWG += serializedWgBuffer[i];
+		}
+
+		stringstream serializedWGSstream(serializedWG);
+		retrievedWg = new WorkGround();
+		WorkGround::deserialize(serializedWGSstream, retrievedWg);
+		WGtoTerminate = *retrievedWg;
+
+		cout << "Success wg reading" << endl;
+		cout << WGtoTerminate.wgView() << endl;
 	}
 
+	connect(hPipe);
 	sendOpCode(hPipe, DELETE_WG);
 
 	return bWriteFile && bReadFile;
@@ -104,7 +141,7 @@ bool startService() {
 	bIsRunning = IsProcessRunning(exeName);
 
 	if (bIsRunning) {
-		cout << "already running";
+		cout << "Already running";
 		return true;
 	}
 	else {
@@ -133,7 +170,8 @@ bool startService() {
 
 // To send the OPCode value to wgbgservice
 bool sendOpCode(HANDLE hPipe,int opCode) {
-	int* opCodeBuffer = &opCode;
+	int locOpCode = opCode;
+	int* opCodeBuffer = &locOpCode;
 	DWORD dwNoBytesWrite;
 	bool
 	bWriteFile = WriteFile(
@@ -144,11 +182,11 @@ bool sendOpCode(HANDLE hPipe,int opCode) {
 		NULL);
 
 	if (!bWriteFile) {
-		cout << "WriteFile wgID Failed & Error No - " << GetLastError() << endl;
+		cout << "WriteFile OPCode Failed & Error No - " << GetLastError() << endl;
 		return false;
 	}
 	else {
-		cout << "WriteFile wgID succeeded" << endl;
+		cout << "WriteFile OPcode succeeded" << endl;
 		return true;
 	}
 }
@@ -156,6 +194,9 @@ bool sendOpCode(HANDLE hPipe,int opCode) {
 // To create file and connect to service pipe
 // returns a handle to the file to be written to
 bool connect(HANDLE& hPipe) {
+
+	// Delay 800 ms not to get error 231 - ERROR_PIPE_BUSY
+	Sleep(800);
 
 	// CreateFile for pipe
 	hPipe = CreateFile(

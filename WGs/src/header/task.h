@@ -8,7 +8,7 @@
 #include <windows.h>
 #include <iostream>
 #include <fstream>
-
+#include <sstream>
 using namespace std;
 
 class Task{
@@ -30,7 +30,8 @@ bool run();
 bool hTerminate();
 friend ostream& operator<<(ostream& out, const Task& toSave);
 friend istream& operator>>(istream& in, Task& retrieved);
-
+bool static serialize(Task toSerialize, string& serialized);
+bool static deserialize(stringstream &toDeserialize, Task& deserialized);
 private:
 struct fileNode{
 	string fileNickName;

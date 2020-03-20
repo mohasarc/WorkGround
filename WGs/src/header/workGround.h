@@ -5,6 +5,7 @@
 #define WORKGROUND_H
 #include "task.h"
 #include <vector>
+#include <sstream>
 using namespace std;
 
 class WorkGround{
@@ -23,6 +24,8 @@ public:
 	bool run();
 	friend ostream& operator<<(ostream& out, const WorkGround& toSave);
 	friend istream& operator>>(istream& in, WorkGround& retrieved);
+	bool static serialize(WorkGround toSerialize, string &serialized);
+	bool static deserialize(stringstream &toDeserialize, WorkGround *deserialized);
 	vector<string> getTaskPath();
 	bool close();
 	bool hTerminate();

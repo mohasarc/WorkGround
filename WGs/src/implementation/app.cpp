@@ -1,4 +1,5 @@
 #include "..\header\app.h"
+#include "..\header\connectService.h"
 
 int main(int argc, const char* argv[]) {
 	// variables
@@ -96,12 +97,29 @@ int main(int argc, const char* argv[]) {
 		"sw"	// Flag token.
 	);
 
+	//opt.add(
+	//	"", // Default.
+	//	0,	// Required?
+	//	1,	// Number of args expected.
+	//	0,	// Delimiter if expecting multiple args.
+	//	"A pointer to a WorkGround or Task name.", // Help description.
+	//	"test", // Flag token.
+	//	"te"
+	//);
+
 	// parse the input
 	opt.parse(argc, argv);
 
 	//****************************
 	//	Options' Implementations
 	//****************************
+
+	//if (opt.isSet("test")) {
+	//	init();	// retrieving stored data
+	//	wgs.test();
+	//	store();
+	//}
+
 
 	// Help Option
 	if (opt.isSet("-h")) {

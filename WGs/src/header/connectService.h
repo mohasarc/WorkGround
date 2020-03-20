@@ -4,6 +4,11 @@
 #include <Windows.h>
 #include "workGround.h"
 #include <tlhelp32.h>
+#include <sstream>
+#include <stdio.h>
+#include <tchar.h>
+#include <strsafe.h>
+#define BUFSIZE 4096
 
 // Functions
 extern bool storeToMem(HANDLE hPipe, WorkGround activeWG);

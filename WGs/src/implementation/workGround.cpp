@@ -29,6 +29,7 @@ WorkGround::~WorkGround(){
 WorkGround::WorkGround(const WorkGround &toCopy){
 	wgName = toCopy.wgName;
 	taskNo = toCopy.taskNo;
+	wgID = toCopy.wgID;
 
 	if(toCopy.head == NULL){
 		// if toCopy tasks list is empty
@@ -56,6 +57,7 @@ WorkGround::WorkGround(const WorkGround &toCopy){
 void WorkGround::operator=(const WorkGround &rhs){
 	wgName = rhs.wgName;
 	taskNo = rhs.taskNo;
+	wgID = rhs.wgID;
 
 	// delete all current nodes
 	while(head){
@@ -320,4 +322,36 @@ void WorkGround::setID(int id) {
 
 int WorkGround::getID() {
 	return wgID;
+}
+
+bool WorkGround::serialize(WorkGround toSerialize, string &serialized) {
+	serialized += toSerialize.wgName 
+			   + "\n" + to_string( toSerialize.taskNo ) 
+			   + "\n" + to_string( toSerialize.wgID );
+
+	WorkGround::taskNode* cur;
+	for (cur = toSerialize.head; cur != NULL; cur = cur->next) {
+		serialized += "\n";
+		Task::serialize(cur->task, serialized);
+	}
+
+	return true;
+}
+
+bool WorkGround::deserialize(stringstream &toDeserialize, WorkGround* deserialized) {
+	string taskNo;
+	string wgIDStr;
+	getline(toDeserialize, deserialized->wgName, '\n');
+	getline(toDeserialize, taskNo);
+	getline(toDeserialize, wgIDStr);
+	deserialized->wgID = stoi(wgIDStr);
+
+	Task* tmp;
+	for (int i = 0; i < stoi(taskNo); i++) {
+		tmp = new Task();
+		Task *temp = new Task();
+		Task::deserialize(toDeserialize, *temp);
+		deserialized->addTask(*temp);
+	}
+	return true;
 }

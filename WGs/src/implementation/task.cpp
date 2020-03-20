@@ -38,6 +38,8 @@ Task::Task(){
 	appPath = "";
 	head = NULL;
 	fileNo = 0;
+	pInfo.dwProcessId = 0;
+	pInfo.dwThreadId = 0;
 }
 
 // constructor
@@ -47,6 +49,8 @@ Task::Task(string ataskName, string aappPath){
 	appPath = aappPath;
 	head = NULL;
 	fileNo = 0;
+	pInfo.dwProcessId = 0;
+	pInfo.dwThreadId = 0;
 }
 
 Task::~Task(){
@@ -64,6 +68,7 @@ Task::Task(const Task &toCopy){
 	taskName = toCopy.taskName;
 	appPath  = toCopy.appPath;
 	fileNo   = toCopy.fileNo;
+	pInfo    = toCopy.pInfo;
 
 	if(toCopy.head == NULL){
 		// if toCopy files list is empty
@@ -96,6 +101,7 @@ void Task::operator=(const Task &rhs){
 	taskName = rhs.taskName;
 	appPath  = rhs.appPath;
 	fileNo   = rhs.fileNo;
+	pInfo    = rhs.pInfo;
 
 	// delete all current nodes
 	while(head){
@@ -295,6 +301,7 @@ istream& operator>>(istream& in, Task& retrieved) {
 	getline(in, retrieved.appPath, '\n');
 	getline(in, fileNo);
 
+	// no need to retrieve file no it increments with each file inclusion
 	for (int i = 0; i < stoi(fileNo); i++) {
 		string fileName, filePath;
 		getline(in, fileName, '\n');
@@ -302,4 +309,42 @@ istream& operator>>(istream& in, Task& retrieved) {
 		retrieved.addFile(filePath, fileName);
 	}
 	return in;
+}
+
+bool Task::serialize(Task toSerialize, string& serialized) {
+	serialized += toSerialize.taskName + "\n";
+	serialized += toSerialize.appPath + "\n";
+	serialized += to_string(toSerialize.fileNo) + "\n";
+	serialized += to_string(toSerialize.pInfo.dwProcessId) + "\n";
+	serialized += to_string(toSerialize.pInfo.dwThreadId);
+
+	// adding files
+	Task::fileNode* cur;
+	for (cur = toSerialize.head; cur != NULL; cur = cur->next) {
+		serialized += "\n" + cur->fileNickName;
+		serialized += "\n" + cur->filePath;
+	}
+
+	return true;
+}
+
+bool Task::deserialize(stringstream &toDeserialize, Task& deserialized) {
+	string fileNo;
+	string dwProcessId;
+	string dwThreadId;
+	getline(toDeserialize, deserialized.taskName, '\n');
+	getline(toDeserialize, deserialized.appPath, '\n');
+	getline(toDeserialize, fileNo, '\n');
+	getline(toDeserialize, dwProcessId, '\n');
+	getline(toDeserialize, dwThreadId, '\n');
+	deserialized.pInfo.dwProcessId = stoi(dwProcessId);
+	deserialized.pInfo.dwThreadId = stoi(dwThreadId);
+
+	for (int i = 0; i < stoi(fileNo); i++) {
+		string fileName, filePath;
+		getline(toDeserialize, fileName, '\n');
+		getline(toDeserialize, filePath, '\n');
+		deserialized.addFile(filePath, fileName);
+	}
+	return true;
 }
