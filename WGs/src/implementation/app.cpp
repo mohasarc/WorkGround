@@ -97,6 +97,16 @@ int main(int argc, const char* argv[]) {
 		"sw"	// Flag token.
 	);
 
+	opt.add(
+		"",		// Default.
+		0,		// Required?
+		0,		// Number of args expected.
+		0,	// Delimiter if expecting multiple args.
+		"Terminate wgbgService (a background service to keep information in the memory).",	// Help description.
+		"terminates",	// Flag token. 
+		"ts"	// Flag token.
+	);
+
 	//opt.add(
 	//	"", // Default.
 	//	0,	// Required?
@@ -127,6 +137,11 @@ int main(int argc, const char* argv[]) {
 		return 1;
 	}
 
+	// Terminate Service
+	if (opt.isSet("terminates")) {
+		wgs.terminateWGBGService();
+	}
+
 	// pt Option
 	opt.get("pt")->getMultiStrings(strs);
 	if (opt.isSet("pt")) {
@@ -144,7 +159,6 @@ int main(int argc, const char* argv[]) {
 			readFile(PT_FILE_NAME, EXT, ptValue);
 			cout << "pt = " << ptValue << endl;
 		}
-		
 	}
 	
 	// View WorkGrounds Option
@@ -277,9 +291,9 @@ int main(int argc, const char* argv[]) {
 				}
 			}
 		}
+		store();
 	}
 
-	store();
 	return 0;
 }
 

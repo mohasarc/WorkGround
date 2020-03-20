@@ -13,10 +13,11 @@
 using namespace std;
 
 // constantss
-const int DELETE_WG = 0;
-const int RETRIEVE_WG = 1;
-const int STORE_WG = 2;
-const int SEND_ID = 3;
+const int DELETE_WG = 100;
+const int SEND_WG_TO_CLIENT = 101;
+const int STORE_WG = 102;
+const int RECIEVE_ID = 103;
+const int TERMINATE_SERVICE = 200;
 
 int main()
 {
@@ -24,7 +25,7 @@ int main()
     int opCode;
     vector<WorkGround> activeWGs;
     // Create named Pipe Variables
-    HANDLE hNamedPipe;
+    HANDLE hNamedPipe = 0;
     char* szInputBuffer;
     char* szOutputBuffer;
     DWORD dwszInputBuffer = sizeof(szInputBuffer);
@@ -32,7 +33,7 @@ int main()
     // Read OPcode Local Variables
     bool bReadFile = false;
     bool bConnectNamedPipe = false;
-    int opBuffer = -1;
+    int requestBuffer = -1;
     DWORD dwNoBytesRead;
     // Read WorkGround Local Variables
     string serializedWG;
@@ -46,11 +47,13 @@ int main()
     bool bFlushFileBuffer = false;
     int wgIDBuffer = 0;
     DWORD dwNoBytesWrite;
+    // wgbgService Local Variables
+    bool exit = false;
 
-    while (1) {
+    while (!exit) {
         // Create wgbgservice named pipe - STEP 1
         hNamedPipe = CreateNamedPipe(
-            TEXT("\\\\.\\pipe\\wgbgserviceTest11"),
+            TEXT("\\\\.\\pipe\\wgbgservice"),
             PIPE_ACCESS_DUPLEX,
             PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE | PIPE_WAIT,
             PIPE_UNLIMITED_INSTANCES,
@@ -82,19 +85,19 @@ int main()
         // Read OPcode - STEP 3
         bReadFile = ReadFile(
             hNamedPipe,
-            &opBuffer,
+            &requestBuffer,
             sizeof(int),
             &dwNoBytesRead,
             NULL
         );
         if (!bReadFile)
         {
-            cout << "Reading OPcode Failed & Error No - " << GetLastError() << endl;
+            cout << "Reading request Failed & Error No - " << GetLastError() << endl;
         }
         else
         {
-            cout << "OPcode read successfuly, OPcode : " << opBuffer << endl;
-            switch (opBuffer)
+            cout << "Request read successfuly, OPcode : " << requestBuffer << endl;
+            switch (requestBuffer)
             {
             //************************
             //       STORE_WG
@@ -109,6 +112,7 @@ int main()
                     &dwNoBytesRead,
                     NULL
                 );
+
                 if (!bReadFile)
                 {
                     cout << "Reading WG Failed & Error No - " << GetLastError() << endl;
@@ -122,6 +126,7 @@ int main()
                             break;
                         serializedWG += serializedWGBuffer[i];
                     }
+                    cout << "the string \n" << serializedWG;
                     stringstream serializedWGStream(serializedWG);
                     WorkGround::deserialize(serializedWGStream, readWG);
                     cout << "WG read successfully " << endl;
@@ -129,9 +134,12 @@ int main()
                     activeWGs.insert(activeWGs.begin() ,*readWG); // storing the workground in memory
                 }
 
-                opBuffer = -1;
+                requestBuffer = -1;
                 break;
             
+            //************************
+            //       DELETE_WG
+            //************************
             case(DELETE_WG):
                 // Find WorkGround & Remove it
                 for (int i = 0; i < activeWGs.size(); i++) {
@@ -139,12 +147,12 @@ int main()
                         activeWGs.erase(activeWGs.begin() + i);
                 }
 
-                opBuffer = -1;
+                requestBuffer = -1;
                 break;
-            //************************
-            //      RETRIEVE_WG
-            //************************
-            case(RETRIEVE_WG):
+            //*****************************
+            //      SEND_WG_TO_CLIENT
+            //*****************************
+            case(SEND_WG_TO_CLIENT):
                 // Find WorkGround
                 for (WorkGround i : activeWGs) {
                     if (i.getID() == wgIDBuffer)
@@ -186,13 +194,13 @@ int main()
                     cout << "FlushFile Buffer Succeeded" << endl;
                 }
 
-                opBuffer = -1;
+                requestBuffer = -1;
                 break;
 
             //************************
-            //      SEND_ID
+            //       RECIEVE_ID
             //************************
-            case(SEND_ID):
+            case(RECIEVE_ID):
                 // Read WGID
                 bReadFile = ReadFile(
                     hNamedPipe,
@@ -206,7 +214,14 @@ int main()
                 else
                     cout << "WGID read successfuly, WGID : " << wgIDBuffer << endl;
                 
-                opBuffer = -1;
+                requestBuffer = -1;
+                break;
+
+            //*************************
+            //    TERMINATE_SERVICE
+            //*************************
+            case (TERMINATE_SERVICE):
+                exit = true;
                 break;
 
             default:

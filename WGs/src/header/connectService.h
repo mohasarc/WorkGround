@@ -15,12 +15,14 @@ extern bool storeToMem(HANDLE hPipe, WorkGround activeWG);
 extern bool retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate);
 extern bool startService();
 extern bool connect(HANDLE& hPipe);
-extern bool sendOpCode(HANDLE hPipe, int opCode);
+extern bool sendRequest(HANDLE hPipe, int opCode);
 extern bool IsProcessRunning(const TCHAR* const executableName);
+extern bool terminateService(HANDLE hPipe);
 
-// constantss
-const int DELETE_WG = 0;
-const int RETRIEVE_WG = 1;
-const int STORE_WG = 2;
-const int SEND_ID = 3;
+// constants
+const int DELETE_WG = 100;
+const int RETRIEVE_WG = 101;
+const int STORE_WG = 102;
+const int SEND_ID = 103;
+const int TERMINATE_SERVICE = 200;
 #endif

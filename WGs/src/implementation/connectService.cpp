@@ -8,13 +8,14 @@
 // To store a currently active wg in memory
 bool storeToMem(HANDLE hPipe, WorkGround activeWG) {
 	// Local Variables
-	string serializedWG = "";
+	string serializedWG;
 	char* serializedWGBuff = new char[BUFSIZE];
 	DWORD serializedWGBuffSize = BUFSIZE;
 	DWORD dwNoBytesWrite;
 	bool bWriteFile;
 
 	// Serialize the workground
+	serializedWG = "";
 	WorkGround::serialize(activeWG, serializedWG);
 	// Initialize the buffer
 	for (int i = 0; i < BUFSIZE; i++) {
@@ -25,8 +26,7 @@ bool storeToMem(HANDLE hPipe, WorkGround activeWG) {
 			serializedWGBuff[i] = '\n';
 	}
 
-	// write OPCode
-	sendOpCode(hPipe, STORE_WG);
+	sendRequest(hPipe, STORE_WG);
 
 	// Write WorkGround object
 	bWriteFile = WriteFile(
@@ -37,11 +37,11 @@ bool storeToMem(HANDLE hPipe, WorkGround activeWG) {
 		NULL );
 
 	if (!bWriteFile) {
-		cout << "Writing WG Failed & Error No - " << GetLastError() << endl;
+		cout << "Storing WG Failed & Error No - " << GetLastError() << endl;
 		return false;
 	} else {
-		cout << "Writing WG succeeded" << endl;
-		cout << "WG Sent \n" << activeWG.wgView();
+		//cout << "Writing WG succeeded" << endl;
+		//cout << "WG Sent \n" << activeWG.wgView();
 		return true;
 	}
 
@@ -52,7 +52,7 @@ bool storeToMem(HANDLE hPipe, WorkGround activeWG) {
 		cout << "FlushFile Buffer Failed & Error No - " << GetLastError() << endl;
 	}
 	else {
-		cout << "FlushFile Buffer Succeeded" << endl;
+		//cout << "FlushFile Buffer Succeeded" << endl;
 	}
 }
 
@@ -67,7 +67,7 @@ bool retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate) {
 	WorkGround *retrievedWg;
 
 	// Send OPcode
-	sendOpCode(hPipe, SEND_ID);
+	sendRequest(hPipe, SEND_ID);
 
 	// send WorkGround id
 	DWORD wgIDBufferSize = sizeof(wgID);
@@ -82,14 +82,14 @@ bool retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate) {
 		NULL );
 
 	if (!bWriteFile){
-		cout << "WriteFile wgID Failed & Error No - " << GetLastError() << endl;
+		cout << "Sending wgID Failed & Error No - " << GetLastError() << endl;
 	} else {
-		cout << "WriteFile wgID succeeded" << endl;
+		//cout << "WriteFile wgID succeeded" << endl;
 	}
 
 	// Send OPcode
 	connect(hPipe);	// To tell the service to listen
-	sendOpCode(hPipe, RETRIEVE_WG);
+	sendRequest(hPipe, RETRIEVE_WG);
 
 	// ReadFile: retrieve the WorkGround
 	bReadFile = ReadFile(
@@ -99,9 +99,9 @@ bool retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate) {
 		&dwNoBytesRead,
 		NULL );
 	if (!bReadFile) {
-		cout << "ReadFile wg Failed & Error No - " << GetLastError() << endl;
+		cout << "Retrieving WorkGround Failed & Error No - " << GetLastError() << endl;
 	} else {
-
+		// Move data from buffer to a string
 		serializedWG = "";
 		for (int i = 0; i < BUFSIZE - 1; i++) {
 			if (serializedWgBuffer[i] == '\n' && serializedWgBuffer[i + 1] == '\n')
@@ -109,17 +109,19 @@ bool retrieveFromMem(HANDLE hPipe, int wgID, WorkGround& WGtoTerminate) {
 			serializedWG += serializedWgBuffer[i];
 		}
 
+		// initialize a string stream with the data from the string
 		stringstream serializedWGSstream(serializedWG);
 		retrievedWg = new WorkGround();
+		// deserialize the data in the string stream
 		WorkGround::deserialize(serializedWGSstream, retrievedWg);
 		WGtoTerminate = *retrievedWg;
 
-		cout << "Success wg reading" << endl;
-		cout << WGtoTerminate.wgView() << endl;
+		//cout << "Success wg reading" << endl;
+		//cout << WGtoTerminate.wgView() << endl;
 	}
 
 	connect(hPipe);
-	sendOpCode(hPipe, DELETE_WG);
+	sendRequest(hPipe, DELETE_WG);
 
 	return bWriteFile && bReadFile;
 }
@@ -141,7 +143,7 @@ bool startService() {
 	bIsRunning = IsProcessRunning(exeName);
 
 	if (bIsRunning) {
-		cout << "Already running";
+		//cout << "Already running";
 		return true;
 	}
 	else {
@@ -168,29 +170,6 @@ bool startService() {
 	}
 }
 
-// To send the OPCode value to wgbgservice
-bool sendOpCode(HANDLE hPipe,int opCode) {
-	int locOpCode = opCode;
-	int* opCodeBuffer = &locOpCode;
-	DWORD dwNoBytesWrite;
-	bool
-	bWriteFile = WriteFile(
-		hPipe,
-		opCodeBuffer,
-		sizeof(opCode),
-		&dwNoBytesWrite,
-		NULL);
-
-	if (!bWriteFile) {
-		cout << "WriteFile OPCode Failed & Error No - " << GetLastError() << endl;
-		return false;
-	}
-	else {
-		cout << "WriteFile OPcode succeeded" << endl;
-		return true;
-	}
-}
-
 // To create file and connect to service pipe
 // returns a handle to the file to be written to
 bool connect(HANDLE& hPipe) {
@@ -200,7 +179,7 @@ bool connect(HANDLE& hPipe) {
 
 	// CreateFile for pipe
 	hPipe = CreateFile(
-		TEXT("\\\\.\\pipe\\wgbgserviceTest11"),
+		TEXT("\\\\.\\pipe\\wgbgservice"),
 		GENERIC_READ | GENERIC_WRITE,
 		0,
 		NULL,
@@ -215,7 +194,30 @@ bool connect(HANDLE& hPipe) {
 	}
 	else
 	{
-		cout << "File Creation Succeded" << endl;
+		//cout << "File Creation Succeded" << endl;
+		return true;
+	}
+}
+
+// To send the OPCode value to wgbgservice
+bool sendRequest(HANDLE hPipe,int requestCode) {
+	int locOpCode = requestCode;
+	int* opCodeBuffer = &locOpCode;
+	DWORD dwNoBytesWrite;
+	bool
+	bWriteFile = WriteFile(
+		hPipe,
+		opCodeBuffer,
+		sizeof(requestCode),
+		&dwNoBytesWrite,
+		NULL);
+
+	if (!bWriteFile) {
+		cout << "Request sending Failed & Error No - " << GetLastError() << endl;
+		return false;
+	}
+	else {
+		//cout << "Request sent successfully" << endl;
 		return true;
 	}
 }
@@ -240,5 +242,15 @@ bool IsProcessRunning(const TCHAR* const executableName) {
 	} while (Process32Next(snapshot, &entry));
 
 	CloseHandle(snapshot);
+	return false;
+}
+
+bool terminateService(HANDLE hPipe) {	// Needs improve (currently is service is not running it will run it then terminate it )
+	const TCHAR* exeName = TEXT("wgbgservice.exe");
+	if (IsProcessRunning(exeName)) {
+		sendRequest(hPipe, TERMINATE_SERVICE);
+		return true;
+	}
+
 	return false;
 }

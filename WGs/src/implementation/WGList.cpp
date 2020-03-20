@@ -337,3 +337,19 @@ int WGList::generateWGID() {
 		}
 	}
 }
+
+bool WGList::terminateWGBGService() {	// problem : if service is already not running it will run it and terminate it
+	HANDLE hPipe = 0;
+	bool bconnect = false;
+	bool bterminate = false;
+	// Run and Connect to wgbgservice
+	if (startService()) {
+		bconnect = connect(hPipe);
+	}
+
+	if (bconnect) {
+		bterminate = terminateService(hPipe);
+	}
+
+	return bterminate;
+}
