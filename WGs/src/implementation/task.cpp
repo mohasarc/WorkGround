@@ -30,6 +30,10 @@ bool static runTask(const char* cmd, PROCESS_INFORMATION &pInfo) {
 	}
 
 	pInfo = pi;	// returning the process information
+
+	// closing handels to prevent leakage
+	CloseHandle(pi.hProcess);
+	CloseHandle(pi.hThread);
 	return true;
 }
 
