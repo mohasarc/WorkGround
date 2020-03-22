@@ -353,3 +353,39 @@ bool WGList::terminateWGBGService() {	// problem : if service is already not run
 
 	return bterminate;
 }
+
+bool WGList::captureWG(string wgName) {
+	cout << "in captureWG fcn\n";
+	vector<string> tasksPaths;
+	bool bCapture = false;
+	string tmpTName;
+	Task *tmpTask;
+	WorkGround *capWG = new WorkGround(wgName);
+	
+	bCapture = capture(tasksPaths);
+	cout << "\nafter capture fcn and " << bCapture;
+	if (!bCapture)
+		return false;
+	else {
+		for (string i : tasksPaths) {
+			tmpTName = extractTaskName(i);
+			tmpTask = new Task(tmpTName, i);
+			capWG->addTask(*tmpTask);
+		}
+
+		cout << capWG->wgView();
+	}
+}
+
+// A helper function for captureWG
+string WGList::extractTaskName(string path) {
+	int last = 0;
+	
+	for (int i = 0; i < path.size(); i++) {
+		if (path.at(i) == '\\') {
+			last = i;
+		}
+	}
+
+	return path.substr((last + 1), (path.size() - last));
+}

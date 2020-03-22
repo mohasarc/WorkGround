@@ -107,6 +107,16 @@ int main(int argc, const char* argv[]) {
 		"ts"	// Flag token.
 	);
 
+	opt.add(
+		"",		// Default.
+		0,		// Required?
+		0,		// Number of args expected.
+		0,	// Delimiter if expecting multiple args.
+		"Capture WorkGround to build a WorkGround out of the applcations currently running",	// Help description.
+		"capture",	// Flag token. 
+		"cap"	// Flag token.
+	);
+
 	//opt.add(
 	//	"", // Default.
 	//	0,	// Required?
@@ -140,6 +150,11 @@ int main(int argc, const char* argv[]) {
 	// Terminate Service
 	if (opt.isSet("terminates")) {
 		wgs.terminateWGBGService();
+	}
+
+	// Capture WorkGround
+	if (opt.isSet("capture")) {
+		wgs.captureWG("a new WG");
 	}
 
 	// pt Option

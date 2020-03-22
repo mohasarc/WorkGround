@@ -8,7 +8,10 @@
 #include <stdio.h>
 #include <tchar.h>
 #include <strsafe.h>
+#include <vector>
+#include <string>
 #define BUFSIZE 4096
+using namespace std;
 
 // Functions
 extern bool storeToMem(HANDLE hPipe, WorkGround activeWG);
@@ -18,6 +21,7 @@ extern bool connect(HANDLE& hPipe);
 extern bool sendRequest(HANDLE hPipe, int opCode);
 extern bool IsProcessRunning(const TCHAR* const executableName);
 extern bool terminateService(HANDLE hPipe);
+extern bool capture(std::vector<string> &paths);
 
 // constants
 const int DELETE_WG = 100;

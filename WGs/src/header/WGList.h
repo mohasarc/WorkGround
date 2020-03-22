@@ -36,6 +36,8 @@ public:
 	friend ostream& operator<<(ostream& out, const WGList& toSave);
 	friend istream& operator>>(istream& in, WGList& retrieved);
 	bool terminateWGBGService();
+	bool captureWG(string wgName);
+	string extractTaskName(string path);
 	//void test();
 private:
 	vector<WorkGround*> wgs;

@@ -1,4 +1,4 @@
-// ****************************************
+﻿// ****************************************
 // Functions to comunicate with wgbgservice
 // ****************************************
 // Author : Mohammed S. Yaseen
@@ -253,4 +253,43 @@ bool terminateService(HANDLE hPipe) {	// Needs improve (currently is service is 
 	}
 
 	return false;
+}
+
+bool capture(std::vector<string> &paths) {
+	cout << "in capture fcn";
+	PROCESSENTRY32 entry;
+	entry.dwSize = sizeof(PROCESSENTRY32);
+
+	const auto snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
+
+	if (!Process32First(snapshot, &entry)) {
+		cout << "\nsnapshot is null\n";
+		CloseHandle(snapshot);
+		return false;
+	}
+
+	do {
+		// create a handle using process id
+		HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION, FALSE, entry.th32ProcessID);
+
+		// getting the path using the process handle
+		DWORD bufferSize = MAX_PATH;
+		TCHAR Pathbuffer[MAX_PATH];
+		QueryFullProcessImageName(hProcess, 0, Pathbuffer, &bufferSize);
+
+		// convert the buffer into a string
+		wstring wsPath(&Pathbuffer[0]); //convert to wstring
+		string sPath(wsPath.begin(), wsPath.end()); //and convert to string.
+
+		string sPathFirstPortion = sPath.substr(0, 11);
+		// execlude system apps1
+		if (sPathFirstPortion != "C:\\Windows\\" && Pathbuffer[0] != 52428) {	// POTENTIAL PROBLEM : windows might not have been installed in drive C:
+			//_tprintf(_T("Active process: %s\n"), Pathbuffer);
+			//cout << sPath << endl;
+			paths.insert(paths.begin(), sPath);
+		}
+	} while (Process32Next(snapshot, &entry));
+
+	CloseHandle(snapshot);
+	return true;
 }
