@@ -22,6 +22,10 @@ extern bool sendRequest(HANDLE hPipe, int opCode);
 extern bool IsProcessRunning(const TCHAR* const executableName);
 extern bool terminateService(HANDLE hPipe);
 extern bool capture(std::vector<string> &paths);
+extern bool parseRange(string range, vector<int> parsedRange);
+extern bool isRange(string range);
+extern bool isInt(string str);
+extern bool partition(string str, char delim);
 
 // constants
 const int DELETE_WG = 100;

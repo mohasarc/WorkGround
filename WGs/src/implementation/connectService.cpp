@@ -293,3 +293,34 @@ bool capture(std::vector<string> &paths) {
 	CloseHandle(snapshot);
 	return true;
 }
+
+bool parseRange(string range, vector<int> parsedRange) {
+
+}
+
+bool isRange(string range) {
+
+}
+
+bool isInt(string str) {
+
+}
+
+vector<string> partition(string str, char delim) {
+	vector<string> partitioned;
+	string part = "";
+	if (str == "")
+		return partitioned;
+
+	for (int i = 0; i < str.size(); i++) {
+		if (str[i] != delim) {
+			part += str[i];
+		}
+		else {
+			partitioned.insert(partitioned.begin(), part);
+			part = "";
+		}
+	}
+
+	return partitioned;
+}

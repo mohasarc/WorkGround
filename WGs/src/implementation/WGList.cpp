@@ -389,3 +389,14 @@ string WGList::extractTaskName(string path) {
 
 	return path.substr((last + 1), (path.size() - last));
 }
+
+// Filter WorkGround function to remove unnecessary tasks
+// mostly used with captureWG
+bool WGList::filterWG(string filterSequence) {
+	// invalid sequence
+	if (filterSequence[0] != '+' && filterSequence[0] != '-')
+		return false;
+
+	int op = 0;
+	filterSequence[0] == '+' ? op = 0 : op = 1;
+}
