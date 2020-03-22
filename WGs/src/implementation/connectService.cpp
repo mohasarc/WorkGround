@@ -303,7 +303,15 @@ bool isRange(string range) {
 }
 
 bool isInt(string str) {
+	if (str == "")
+		return false;
 
+	for (int i = 0; i < str.size(); i++) {
+		if (str[i] < 48 | str[i] > 57)
+			return false;
+	}
+
+	return true;
 }
 
 vector<string> partition(string str, char delim) {
@@ -316,8 +324,8 @@ vector<string> partition(string str, char delim) {
 		if (str[i] != delim) {
 			part += str[i];
 		}
-		else {
-			partitioned.insert(partitioned.begin(), part);
+		if (str[i] == delim | i == str.size() - 1) {
+			partitioned.push_back(part);
 			part = "";
 		}
 	}

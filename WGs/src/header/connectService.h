@@ -25,7 +25,7 @@ extern bool capture(std::vector<string> &paths);
 extern bool parseRange(string range, vector<int> parsedRange);
 extern bool isRange(string range);
 extern bool isInt(string str);
-extern bool partition(string str, char delim);
+extern vector<string> partition(string str, char delim);
 
 // constants
 const int DELETE_WG = 100;
