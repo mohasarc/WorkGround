@@ -298,8 +298,44 @@ bool parseRange(string range, vector<int> parsedRange) {
 
 }
 
-bool isRange(string range) {
+bool isRange(string range, int &leftNumber, int &rightNumber) {
+	// there is not at least a number at the begining and at the end
+	if (!isInt(range[0]) | !isInt(range[range.size() - 1]))
+		return false;
 
+	int hiphenExist = 0;
+	string leftNum = "";
+	string rightNum = "";
+
+	for (char i : range) {
+		// Niether a number nor a -
+		if (!isInt(i) && i != '-')
+			return false;
+		// There is more than one -
+		else if (i == '-' && hiphenExist != 0)
+			return false;
+		// The first - found
+		else if (i == '-' && hiphenExist == 0)
+			hiphenExist++;
+		// Before - add to the left num
+		else if (!hiphenExist)
+			leftNum += i;
+		// After - add to right num
+		else if (hiphenExist)
+			rightNum += i;
+	}
+
+	// If there is no -
+	if (!hiphenExist)
+		return false;
+
+	// Left is larger than right -invalid range-
+	if (stoi(leftNum) > stoi(rightNum))
+		return false;
+
+	leftNumber = stoi(leftNum);
+	rightNumber = stoi(rightNum);
+	return true;
 }
 
 bool isInt(string str) {
@@ -310,6 +346,13 @@ bool isInt(string str) {
 		if (str[i] < 48 | str[i] > 57)
 			return false;
 	}
+
+	return true;
+}
+
+bool isInt(char chr) {
+	if (chr < 48 | chr > 57)
+		return false;
 
 	return true;
 }

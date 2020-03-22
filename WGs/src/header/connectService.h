@@ -25,6 +25,7 @@ extern bool capture(std::vector<string> &paths);
 extern bool parseRange(string range, vector<int> parsedRange);
 extern bool isRange(string range);
 extern bool isInt(string str);
+extern bool isInt(char chr);
 extern vector<string> partition(string str, char delim);
 
 // constants
