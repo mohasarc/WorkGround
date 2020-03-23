@@ -16,10 +16,14 @@ Let's take, for example, a CS student, who studies math sometimes and develops c
 Here wg makes all this happen with only one command : `wg switch MATH102 CODETIME`
 
 # Usage
-- `wg add wgName taskName taskPath`           \\\\ adds a task (Program) to a WorkGround
-- `wg add wgName taskName fileName filePath`  \\\\ adds a file to be opened with the specified task (program)
+- `wg add wgName,taskName,taskPath`           \\\\ adds a task (Program) to a WorkGround
+- `wg add wgName,taskName,fileName,filePath`  \\\\ adds a file to be opened with the specified task (program)
 - `wg run wgName`
-- `wg swich currentWG otherWG`
+- `wg swich currentWG,otherWG`
+- `wg capture wgName`                         \\\\ adds the currently open applications (not system ones) to a workground
+- `wg filter wgName(+1,4-7,12,15)`            \\\\ filters the tasks in the workground by keeping the ones specified 
+                                              \\\\ and delete everything else
+- `wg filter wgName(-1,4-7,12,15)`            \\\\ same as above but deletes the ones specified and keeps everything else
 
 # Feedback and contribution
 If you are interested in the project's idea and have some feedback or you found a bug please file an issue in the issues page. Also if you are a developper interested in contributing to the project please feel free to fork the project play around and do a pull request :)
