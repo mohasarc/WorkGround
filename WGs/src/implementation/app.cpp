@@ -171,7 +171,7 @@ int main(int argc, const char* argv[]) {
 	opt.get("filter")->getMultiStrings(strs);
 	if (opt.isSet("filter")) {
 		parsedStrs = parseStrs(strs[0]);
-		wgs.filterWG(parsedStrs[0], parsedStrs[1]);
+		//wgs.filterWG(parsedStrs[0], parsedStrs[1]);
 		return 0;
 	}
 

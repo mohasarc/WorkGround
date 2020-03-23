@@ -6,7 +6,7 @@
 #include "task.h"
 #include <vector>
 #include <sstream>
-#include "../header/connectService.h"
+#include "sequenceParser.h"
 using namespace std;
 
 class WorkGround{

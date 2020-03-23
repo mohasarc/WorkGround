@@ -135,6 +135,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\header\connectService.h" />
+    <ClInclude Include="src\header\sequenceParser.h" />
+    <ClInclude Include="src\header\atest.h" />
     <ClInclude Include="src\header\app.h" />
     <ClInclude Include="src\header\task.h" />
     <ClInclude Include="src\header\WGList.h" />
@@ -142,6 +144,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\implementation\connectService.cpp" />
+    <ClCompile Include="src\implementation\sequenceParser.cpp" />
+    <ClCompile Include="src\implementation\atest.cpp" />
     <ClCompile Include="src\implementation\app.cpp" />
     <ClCompile Include="src\implementation\task.cpp" />
     <ClCompile Include="src\implementation\WGList.cpp" />

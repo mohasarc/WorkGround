@@ -2,7 +2,7 @@
 #define CONNECTSERVICE_H
 #include <tchar.h>
 #include <Windows.h>
-#include "workGround.h"
+#include "workground.h"
 #include <tlhelp32.h>
 #include <sstream>
 #include <stdio.h>
@@ -23,11 +23,6 @@ extern bool sendRequest(HANDLE hPipe, int opCode);
 extern bool IsProcessRunning(const TCHAR* const executableName);
 extern bool terminateService(HANDLE hPipe);
 extern bool capture(std::vector<string> &paths);
-extern bool parseRange(string sequence, map<int, int>& parsedsequence);
-extern bool isRange(string range, int& leftNumber, int& rightNumber);
-extern bool isInt(string str);
-extern bool isInt(char chr);
-extern vector<string> partition(string str, char delim);
 
 // constants
 const int DELETE_WG = 100;

@@ -392,14 +392,14 @@ string WGList::extractTaskName(string path) {
 
 // Filter WorkGround function to remove unnecessary tasks
 // mostly used with captureWG
-bool WGList::filterWG(string filterSequence, string wgName) {
-	WorkGround* wgToFilter = NULL;
-	// find WorkGround
-	wgToFilter = findWg(wgName);
-
-	// There is no such WG
-	if (!wgToFilter)
-		return false;
-	
-	return wgToFilter->filter(filterSequence);
-}
+//bool WGList::filterWG(string filterSequence, string wgName) {
+//	WorkGround* wgToFilter = NULL;
+//	// find WorkGround
+//	wgToFilter = findWg(wgName);
+//
+//	// There is no such WG
+//	if (!wgToFilter)
+//		return false;
+//	
+	//return wgToFilter->filter(filterSequence);
+//}

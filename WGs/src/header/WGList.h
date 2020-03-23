@@ -6,8 +6,8 @@
 
 #include <vector>
 #include "task.h"
-#include "WorkGround.h"
-#include "connectService.h"
+#include "Workground.h"
+#include "connectservice.h"
 #include <map>
 using namespace std;
 
@@ -38,7 +38,7 @@ public:
 	bool terminateWGBGService();
 	bool captureWG(string wgName);
 	string extractTaskName(string path);
-	bool filterWG(string filterSequence, string wgName);
+	//bool filterWG(string filterSequence, string wgName);
 	//void test();
 private:
 	vector<WorkGround*> wgs;

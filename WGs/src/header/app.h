@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "..\external libraries\ezOptionParser.hpp"
-#include "WGList.h"
+#include "wglist.h"
 using namespace ez;
 
 template <typename T>
