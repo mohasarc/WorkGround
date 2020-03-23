@@ -22,6 +22,7 @@
     <ClCompile Include="wgbgService.cpp" />
     <ClCompile Include="../WGs/src/implementation/workGround.cpp" />
     <ClCompile Include="../WGs/src/implementation/task.cpp" />
+    <ClCompile Include="../WGs/src/implementation/sequenceParser.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
