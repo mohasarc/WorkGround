@@ -268,13 +268,16 @@ int WGList::switchWg(string wgToCloseName, string wgToRunName) {
 
 	// retrieve the WorkGround to close
 	// retrieved data including the tasks handles
-	retrieveFromMem(hPipe, wgToClose->getID(), wgToTerminate);
+	if (bconnect)
+		retrieveFromMem(hPipe, wgToClose->getID(), wgToTerminate);
 
 	if (wgToClose)
 		closeSuccess = wgToTerminate.hTerminate();
 	if (wgToRun) {
 		runSuccess = wgToRun->run();
-		storeToMem(hPipe, *wgToRun);	// storing the data of active WorkGround to memory
+		bconnect = connect(hPipe);
+		if (bconnect)
+			storeToMem(hPipe, *wgToRun);	// storing the data of active WorkGround to memory
 	}
 
 	if (closeSuccess && runSuccess)

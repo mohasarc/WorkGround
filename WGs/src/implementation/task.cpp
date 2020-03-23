@@ -224,6 +224,7 @@ bool Task::run(){
 
 bool Task::hTerminate() {
 	DWORD exitCode;
+	cout << "process id : " << pInfo.dwProcessId << endl;
 	HANDLE processhndl = OpenProcess(PROCESS_ALL_ACCESS, false, pInfo.dwProcessId);
 	if (GetExitCodeProcess(processhndl, &exitCode)) {
 		cout << "Successfully got exit code : " << exitCode << endl;
