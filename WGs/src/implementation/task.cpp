@@ -177,16 +177,22 @@ bool Task::removeFile(string afileNickName){
 			prev = cur;
 		}
 
+		// Not found
+		if (cur == NULL)
+			return false;
+
 		if (cur == head){ // the head is the one to be deleted
 			head = head->next;
 			delete cur;
-		} else if (cur != NULL){
+			fileNo--;
+			return true;
+		} else {
 			prev->next = cur->next;
 			delete cur;
 			fileNo--;
 			return true;
-		} else
-			false;
+		}
+
 	} else 
 		return false;
 }

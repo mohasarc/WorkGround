@@ -331,6 +331,7 @@ int main(int argc, const char* argv[]) {
 				}
 			}
 		}
+		store();
 	}
 	
 	opt.get("switch")->getMultiStrings(strs);
