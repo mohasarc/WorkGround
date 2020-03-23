@@ -195,9 +195,7 @@ bool WGList::runWG(const string wgName) {
 
 WorkGround* WGList::findWg(string wgName) {
 	WorkGround* tmpWG;
-	cout << wgs.size() << endl;
 	for (unsigned i = 0; i < wgs.size(); i++) {
-		cout << wgs[i]->getWgName() << "\t" << wgName << endl;
 		if (wgs[i]->getWgName() == wgName) {
 			tmpWG = wgs[i];
 			return tmpWG;
@@ -319,13 +317,11 @@ int WGList::switchWg(string wgToCloseName, string wgToRunName) {
 
 int WGList::generateWGID() {
 	map<int, string> wgsMap;
-	cout << "generate ID is called " << endl;
-	cout << "size is " << wgs.size() << endl;
+
 	if (wgs.size() == 0)
 		return 0;
 
 	for (int i = 0; i < wgs.size(); i++) {
-		cout << "adding the key " << wgs[i]->getID() << endl;
 		wgsMap[wgs[i]->getID()] = wgs[i]->getWgName();
 	}
 
@@ -334,7 +330,6 @@ int WGList::generateWGID() {
 		mapReturn = wgsMap.insert(pair<int, string>(j, "test"));
 
 		if (mapReturn.second == true) {
-			cout << "id is : " << j << endl;
 			return j;
 		}
 	}
@@ -357,7 +352,6 @@ bool WGList::terminateWGBGService() {	// problem : if service is already not run
 }
 
 bool WGList::captureWG(string wgName) {
-	cout << "in captureWG fcn\n";
 	vector<string> tasksPaths;
 	bool bCapture = false;
 	string tmpTName;
@@ -365,7 +359,7 @@ bool WGList::captureWG(string wgName) {
 	WorkGround *capWG = new WorkGround(wgName);
 	
 	bCapture = capture(tasksPaths);
-	cout << "\nafter capture fcn and " << bCapture;
+
 	if (!bCapture)
 		return false;
 	else {
@@ -404,8 +398,6 @@ bool WGList::filterWG(string filterSequence, string wgName) {
 	// There is no such WG
 	if (!wgToFilter)
 		return false;
-	
-	cout << "found WG" << endl;
 
 	return wgToFilter->filter(filterSequence);
 }

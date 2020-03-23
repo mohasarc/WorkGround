@@ -397,7 +397,6 @@ bool WorkGround::deserialize(stringstream &toDeserialize, WorkGround* deserializ
 bool WorkGround::filter(string filterSequence) {
 	map<int, int> parsedSequence;
 	pair<map<int, int>::iterator, bool> ret;
-
 	bool
 	bParsePange = parseRange(filterSequence.substr(1, filterSequence.size() - 1), parsedSequence);
 
@@ -411,7 +410,6 @@ bool WorkGround::filter(string filterSequence) {
 
 	// These are the tasks to keep
 	if (filterSequence[0] == '+') {
-		cout << "Number of tasks : " << taskNo << endl;
 		removeTaskSequence(parsedSequence);
 	}
 	// These are the tasks to remove
@@ -443,14 +441,11 @@ bool WorkGround::removeTaskSequence(map<int, int> tasksToKeep) {
 		ret = tasksToKeep.insert(pair<int, int>(i, 0));
 		// If could add the number -> it didn't exist then delete the task
 		// at that location
-		cout << i << "\t was or was not added to the map \n";
 		if (ret.second) {
 			tasksToKeep.erase(i);
-			cout << i << "\t is being removed";
+
 			removeTask(i - 1);
-			// Because all indices after i-1 will shift by 1 to the
-			// lower end
-			cout << endl;
+
 			map<int, int> updatedParsedSequence;
 			for (pair<int, int> j : tasksToKeep) {
 				if (i < j.first) {
@@ -459,11 +454,8 @@ bool WorkGround::removeTaskSequence(map<int, int> tasksToKeep) {
 			}
 
 			tasksToKeep = updatedParsedSequence;
-
-			for (pair<int, int> i : tasksToKeep)
-				cout << i.first << "\t";
-
-			cout << endl;
+			// Because all indices after i-1 will shift by 1 to the
+			// lower end
 			i--;
 		}
 	}

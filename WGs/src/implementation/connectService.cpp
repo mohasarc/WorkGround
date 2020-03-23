@@ -256,14 +256,12 @@ bool terminateService(HANDLE hPipe) {	// Needs improve (currently is service is 
 }
 
 bool capture(std::vector<string> &paths) {
-	cout << "in capture fcn";
 	PROCESSENTRY32 entry;
 	entry.dwSize = sizeof(PROCESSENTRY32);
 
 	const auto snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
 
 	if (!Process32First(snapshot, &entry)) {
-		cout << "\nsnapshot is null\n";
 		CloseHandle(snapshot);
 		return false;
 	}

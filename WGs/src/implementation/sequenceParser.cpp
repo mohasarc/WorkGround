@@ -12,11 +12,8 @@ bool parseRange(string sequence, map<int, int>& parsedsequence) {
 	partitions = partition(sequence, ',');
 	int leftOfRange, rightOfRange;
 
-	std::cout << "size of partitions : " << partitions.size();
-
 	// for each partition
 	for (string i : partitions) {
-		std::cout << i << "\t";
 		// If number just add it
 		if (isInt(i))
 			parsedsequence.insert(pair<int, int>(stoi(i), 0));

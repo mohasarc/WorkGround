@@ -177,7 +177,7 @@ int main(int argc, const char* argv[]) {
 		if (bCapture)
 			wgs.viewWgElab(wgName);
 		else
-			cout << "Failed capturing" << endl;
+			cout << "Failed capturing WorkGRound" << endl;
 
 		store();
 		return 0;
@@ -195,12 +195,11 @@ int main(int argc, const char* argv[]) {
 			theSequence = parsedStrs[1];
 
 		if (wgs.filterWG(theSequence, parsedStrs[0])) {
-			cout << "success" << endl;
+			cout << "Succeeded filtering the WorkGround" << endl;
 		}
 		else
-			cout << "failure" << endl;
+			cout << "Failed filtering the WorkGround" << endl;
 
-		cout << parsedStrs[0] << "\t" << theSequence;
 		store();
 		return 0;
 	}
