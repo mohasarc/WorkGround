@@ -22,7 +22,7 @@ Here wg makes all this happen with only one command : `wg switch MATH102 CODETIM
 - `wg swich currentWG,otherWG`
 - `wg capture wgName`                         <span style="color:green">\\\\ adds the currently open applications (not system ones) to a workground</span>
 - `wg filter wgName(+1,4-7,12,15)`            <span style="color:green">\\\\ deletes all tasks in a workground but the ones specified</span>
-- `wg filter wgName(-1,4-7,12,15)`            <span style="color:green">\\\\ same as above but deletes the ones specified and keeps everything else</span>
+- `wg filter wgName(-1,4-7,12,15)`            <span style="color:green"> ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) \\\\ same as above but deletes the ones specified and keeps everything else</span>
 
 # Feedback and contribution
 If you are interested in the project's idea and have some feedback or you found a bug please file an issue in the issues page. Also if you are a developper interested in contributing to the project please feel free to fork the project play around and do a pull request :)
