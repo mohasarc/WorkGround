@@ -16,7 +16,7 @@ Let's take, for example, a CS student, who studies math sometimes and develops c
 Here wg makes all this happen with only one command : `wg switch MATH102 CODETIME`
 
 # Usage
-- `wg add wgName,taskName,taskPath`           \\\\ <span style="color:green">adds a task (Program) to a WorkGround</span>
+- `wg add wgName,taskName,taskPath`           \\\\ <span style="color:red">adds a task (Program) to a WorkGround</span>
 - `wg add wgName,taskName,fileName,filePath`  <span style="color:green">\\\\ adds a file to be opened with the specified task (program)</span>
 - `wg run wgName`
 - `wg swich currentWG,otherWG`
