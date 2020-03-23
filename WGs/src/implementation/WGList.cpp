@@ -195,7 +195,9 @@ bool WGList::runWG(const string wgName) {
 
 WorkGround* WGList::findWg(string wgName) {
 	WorkGround* tmpWG;
+	cout << wgs.size() << endl;
 	for (unsigned i = 0; i < wgs.size(); i++) {
+		cout << wgs[i]->getWgName() << "\t" << wgName << endl;
 		if (wgs[i]->getWgName() == wgName) {
 			tmpWG = wgs[i];
 			return tmpWG;
@@ -373,6 +375,8 @@ bool WGList::captureWG(string wgName) {
 			capWG->addTask(*tmpTask);
 		}
 
+		capWG->setID(generateWGID());
+		wgs.push_back(capWG);
 		cout << capWG->wgView();
 	}
 }
@@ -392,14 +396,16 @@ string WGList::extractTaskName(string path) {
 
 // Filter WorkGround function to remove unnecessary tasks
 // mostly used with captureWG
-//bool WGList::filterWG(string filterSequence, string wgName) {
-//	WorkGround* wgToFilter = NULL;
-//	// find WorkGround
-//	wgToFilter = findWg(wgName);
-//
-//	// There is no such WG
-//	if (!wgToFilter)
-//		return false;
-//	
-	//return wgToFilter->filter(filterSequence);
-//}
+bool WGList::filterWG(string filterSequence, string wgName) {
+	WorkGround* wgToFilter = NULL;
+	// find WorkGround
+	wgToFilter = findWg(wgName);
+
+	// There is no such WG
+	if (!wgToFilter)
+		return false;
+	
+	cout << "found WG" << endl;
+
+	return wgToFilter->filter(filterSequence);
+}

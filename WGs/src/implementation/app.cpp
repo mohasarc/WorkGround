@@ -110,7 +110,7 @@ int main(int argc, const char* argv[]) {
 	opt.add(
 		"",		// Default.
 		0,		// Required?
-		0,		// Number of args expected.
+		1,		// Number of args expected.
 		0,	// Delimiter if expecting multiple args.
 		"Capture WorkGround to build a WorkGround out of the applcations currently running",	// Help description.
 		"capture",	// Flag token. 
@@ -121,7 +121,7 @@ int main(int argc, const char* argv[]) {
 		"",		// Default.
 		2,		// Required?
 		2,		// Number of args expected.
-		',',	// Delimiter if expecting multiple args.
+		'(',	// Delimiter if expecting multiple args.
 		"filter the tasks in a workground.",	// Help description.
 		"filter",	// Flag token. 
 		"fltr"	// Flag token.
@@ -163,15 +163,45 @@ int main(int argc, const char* argv[]) {
 	}
 
 	// Capture WorkGround
+	opt.get("capture")->getMultiStrings(strs);
 	if (opt.isSet("capture")) {
-		wgs.captureWG("a new WG");
+		init();
+		bool bCapture = false;
+		string wgName = "DefaultWG";
+		if (strs.size() > 0) {
+			parsedStrs = parseStrs(strs[0]);
+			wgName = parsedStrs[0];
+		}
+		bCapture = wgs.captureWG(wgName);
+
+		if (bCapture)
+			wgs.viewWgElab(wgName);
+		else
+			cout << "Failed capturing" << endl;
+
+		store();
+		return 0;
 	}
 
 	// Filter Option
 	opt.get("filter")->getMultiStrings(strs);
 	if (opt.isSet("filter")) {
+		init();
 		parsedStrs = parseStrs(strs[0]);
-		//wgs.filterWG(parsedStrs[0], parsedStrs[1]);
+		string theSequence;
+		if (parsedStrs[1].at(parsedStrs[1].size() - 1) == ')')
+			theSequence = parsedStrs[1].substr(0, parsedStrs[1].size() - 1);
+		else
+			theSequence = parsedStrs[1];
+
+		if (wgs.filterWG(theSequence, parsedStrs[0])) {
+			cout << "success" << endl;
+		}
+		else
+			cout << "failure" << endl;
+
+		cout << parsedStrs[0] << "\t" << theSequence;
+		store();
 		return 0;
 	}
 

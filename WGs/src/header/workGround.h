@@ -20,6 +20,7 @@ public:
 	bool addTask(Task atask);
 	bool removeTask(const string taskNickName);
 	bool removeTask(const int taskIndex);
+	bool removeTaskSequence(map<int, int> tasksToKeep);
 	Task* findTask(const string taskName);
 	string getWgName();
 	string wgView();

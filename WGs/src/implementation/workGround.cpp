@@ -397,30 +397,76 @@ bool WorkGround::deserialize(stringstream &toDeserialize, WorkGround* deserializ
 bool WorkGround::filter(string filterSequence) {
 	map<int, int> parsedSequence;
 	pair<map<int, int>::iterator, bool> ret;
+
 	bool
 	bParsePange = parseRange(filterSequence.substr(1, filterSequence.size() - 1), parsedSequence);
 
 	// invalid sequence
-	if (!bParsePange)
+	if (!bParsePange) {
 		return false;
+	}
+
+	for (pair<int, int> i : parsedSequence)
+		cout << i.first << "\t";
 
 	// These are the tasks to keep
 	if (filterSequence[0] == '+') {
-		for (int i = 0; i < taskNo; i++) {
-			ret = parsedSequence.insert(pair<int, int>(i, 0));
-			// If could add the number -> it didn't exist then delete the task
-			// at that location
-			if (ret.second)
-				removeTask(i - 1);
-		}
+		cout << "Number of tasks : " << taskNo << endl;
+		removeTaskSequence(parsedSequence);
 	}
 	// These are the tasks to remove
 	else if (filterSequence[0] == '-') {
-		for (pair<int, int> i : parsedSequence) {
-			removeTask(i.first - 1);
+		// Find the tasks to keep
+		for (int i = 1; i <= taskNo; i++) {
+			ret = parsedSequence.insert(pair<int,int>(i, 0));
+
+			// Exist in the map of items to remove
+			// so remove it so the map will only contain
+			// the tasks to keep
+			if (!ret.second)
+				parsedSequence.erase(i);
 		}
+
+		removeTaskSequence(parsedSequence);
 	}
 	// Any other char at index 0 in invalid
 	else
 		return false;
+}
+
+bool WorkGround::removeTaskSequence(map<int, int> tasksToKeep) {
+	if (tasksToKeep.size() <= 0)
+		return false;
+
+	pair<map<int, int>::iterator, bool> ret;
+	for (int i = 1; i <= taskNo; i++) {
+		ret = tasksToKeep.insert(pair<int, int>(i, 0));
+		// If could add the number -> it didn't exist then delete the task
+		// at that location
+		cout << i << "\t was or was not added to the map \n";
+		if (ret.second) {
+			tasksToKeep.erase(i);
+			cout << i << "\t is being removed";
+			removeTask(i - 1);
+			// Because all indices after i-1 will shift by 1 to the
+			// lower end
+			cout << endl;
+			map<int, int> updatedParsedSequence;
+			for (pair<int, int> j : tasksToKeep) {
+				if (i < j.first) {
+					updatedParsedSequence.insert(pair<int, int>(j.first - 1, 0));
+				}
+			}
+
+			tasksToKeep = updatedParsedSequence;
+
+			for (pair<int, int> i : tasksToKeep)
+				cout << i.first << "\t";
+
+			cout << endl;
+			i--;
+		}
+	}
+
+	return true;
 }
