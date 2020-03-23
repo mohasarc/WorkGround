@@ -21,8 +21,7 @@ Here wg makes all this happen with only one command : `wg switch MATH102 CODETIM
 - `wg run wgName`
 - `wg swich currentWG,otherWG`
 - `wg capture wgName`                         \\\\ adds the currently open applications (not system ones) to a workground
-- `wg filter wgName(+1,4-7,12,15)`            \\\\ filters the tasks in the workground by keeping the ones specified 
-                                              \\\\ and delete everything else
+- `wg filter wgName(+1,4-7,12,15)`            \\\\ deletes all tasks in a workground but the ones specified 
 - `wg filter wgName(-1,4-7,12,15)`            \\\\ same as above but deletes the ones specified and keeps everything else
 
 # Feedback and contribution
