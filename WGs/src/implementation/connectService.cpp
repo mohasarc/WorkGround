@@ -143,7 +143,7 @@ bool startService() {
 	bIsRunning = IsProcessRunning(exeName);
 
 	if (bIsRunning) {
-		//cout << "Already running";
+		//cout << "Service Already running";
 		return true;
 	}
 	else {
@@ -163,10 +163,14 @@ bool startService() {
 		CloseHandle(pi.hProcess);
 		CloseHandle(pi.hThread);
 
-		if (bCreateProcess)
+		if (bCreateProcess) {
+			cout << "Service started running" << endl;
 			return true;
-		else
+		}
+		else {
+			cout << "Service failed running" << endl;
 			return false;
+		}
 	}
 }
 
@@ -249,9 +253,11 @@ bool terminateService(HANDLE hPipe) {	// Needs improve (currently is service is 
 	const TCHAR* exeName = TEXT("wgbgservice.exe");
 	if (IsProcessRunning(exeName)) {
 		sendRequest(hPipe, TERMINATE_SERVICE);
+		cout << "Service terminated" << endl;
 		return true;
 	}
 
+	cout << "Couldn't terminate service" << endl;
 	return false;
 }
 
