@@ -4,7 +4,7 @@
 #include "..\header\task.h"
 
 bool static runTask(const char* cmd, PROCESS_INFORMATION &pInfo) {
-	
+
 	STARTUPINFOA si;
 	memset(&si, 0, sizeof(STARTUPINFO));
 	si.cb = sizeof(STARTUPINFO);
@@ -142,9 +142,8 @@ void Task::operator=(const Task &rhs){
 bool Task::addFile(string afilePath, string afileNickName){
 	fileNode* last = NULL;
 
-	if(afilePath == "" | afileNickName == ""){
+	if(afilePath == "" | afileNickName == "")
 		return false;
-	}
 
 	// traverse till the last node
 	for (fileNode* cur = head; cur != NULL; cur = cur->next) {
@@ -157,10 +156,12 @@ bool Task::addFile(string afilePath, string afileNickName){
 	tmp->fileNickName = afileNickName;
 	tmp->filePath = afilePath;
 	tmp->next = NULL;
+
 	if (last != NULL)
 		last->next = tmp;
 	else
 		head = tmp;
+
 	fileNo++;
 	return true;
 }
@@ -215,7 +216,7 @@ bool Task::run(){
 	string cmdCommandStr = appPath;
 	if(head != NULL){
 		for (fileNode* cur = head; cur != NULL; cur = cur->next)
-			cmdCommandStr += " " + cur->filePath;
+			cmdCommandStr += " \"" + cur->filePath + "\"";
 	}
 
 	const char* cmdCommandChar = cmdCommandStr.c_str();
