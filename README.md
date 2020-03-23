@@ -16,13 +16,13 @@ Let's take, for example, a CS student, who studies math sometimes and develops c
 Here wg makes all this happen with only one command : `wg switch MATH102 CODETIME`
 
 # Usage
-- `wg add wgName,taskName,taskPath`           <p style="color:green">\\\\ adds a task (Program) to a WorkGround</p>
-- `wg add wgName,taskName,fileName,filePath`  ```<span style="color:green">\\\\ adds a file to be opened with the specified task (program)</span>```
+- `wg add wgName,taskName,taskPath`           <span style="color:#AAAA">\\\\ adds a task (Program) to a WorkGround</span>
+- `wg add wgName,taskName,fileName,filePath`  <span style="color:green">\\\\ adds a file to be opened with the specified task (program)</span>
 - `wg run wgName`
 - `wg swich currentWG,otherWG`
-- `wg capture wgName`                         ```<span style="color:green">\\\\ adds the currently open applications (not system ones) to a workground</span>```
-- `wg filter wgName(+1,4-7,12,15)`            ```<span style="color:green">\\\\ deletes all tasks in a workground but the ones specified</span>```
-- `wg filter wgName(-1,4-7,12,15)`            ```<span style="color:green">\\\\ same as above but deletes the ones specified and keeps everything else</span>```
+- `wg capture wgName`                         <span style="color:green">\\\\ adds the currently open applications (not system ones) to a workground</span>
+- `wg filter wgName(+1,4-7,12,15)`            <span style="color:green">\\\\ deletes all tasks in a workground but the ones specified</span>
+- `wg filter wgName(-1,4-7,12,15)`            <span style="color:green">\\\\ same as above but deletes the ones specified and keeps everything else</span>
 
 # Feedback and contribution
 If you are interested in the project's idea and have some feedback or you found a bug please file an issue in the issues page. Also if you are a developper interested in contributing to the project please feel free to fork the project play around and do a pull request :)
