@@ -38,7 +38,7 @@ public:
 	bool terminateWGBGService();
 	bool captureWG(string wgName);
 	string extractTaskName(string path);
-	bool filterWG(string filterSequence);
+	bool filterWG(string filterSequence, string wgName);
 	//void test();
 private:
 	vector<WorkGround*> wgs;

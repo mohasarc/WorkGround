@@ -117,6 +117,16 @@ int main(int argc, const char* argv[]) {
 		"cap"	// Flag token.
 	);
 
+	opt.add(
+		"",		// Default.
+		2,		// Required?
+		2,		// Number of args expected.
+		',',	// Delimiter if expecting multiple args.
+		"filter the tasks in a workground.",	// Help description.
+		"filter",	// Flag token. 
+		"fltr"	// Flag token.
+	);
+
 	//opt.add(
 	//	"", // Default.
 	//	0,	// Required?
@@ -155,6 +165,14 @@ int main(int argc, const char* argv[]) {
 	// Capture WorkGround
 	if (opt.isSet("capture")) {
 		wgs.captureWG("a new WG");
+	}
+
+	// Filter Option
+	opt.get("filter")->getMultiStrings(strs);
+	if (opt.isSet("filter")) {
+		parsedStrs = parseStrs(strs[0]);
+		wgs.filterWG(parsedStrs[0], parsedStrs[1]);
+		return 0;
 	}
 
 	// pt Option

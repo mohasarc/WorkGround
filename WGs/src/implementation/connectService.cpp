@@ -294,8 +294,30 @@ bool capture(std::vector<string> &paths) {
 	return true;
 }
 
-bool parseRange(string range, vector<int> parsedRange) {
+bool parseRange(string sequence, map<int, int>& parsedsequence) {
+	vector<string> partitions;
+	partitions = partition(sequence, ',');
+	int leftOfRange, rightOfRange;
 
+	// for each partition
+	for (string i : partitions) {
+		// If number just add it
+		if (isInt(i))
+			parsedsequence.insert(pair<int, int>(stoi(i), 0));
+		// If range add all in between inclusive
+		else if (isRange(i, leftOfRange, rightOfRange)) {
+			for (int j = leftOfRange; j <= rightOfRange; j++) {
+				parsedsequence.insert(pair<int, int>(j, 0));
+			}
+		}
+		// Not a valid character or Not a valid range 
+		else {
+			return false;
+		}
+		/// Using a map so no number is repeated
+	}
+
+	return true;
 }
 
 bool isRange(string range, int &leftNumber, int &rightNumber) {

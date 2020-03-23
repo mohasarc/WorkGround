@@ -1,5 +1,5 @@
-#ifndef APP_H
-#define APP_H
+#ifndef CONNECTSERVICE_H
+#define CONNECTSERVICE_H
 #include <tchar.h>
 #include <Windows.h>
 #include "workGround.h"
@@ -10,6 +10,7 @@
 #include <strsafe.h>
 #include <vector>
 #include <string>
+#include <map>
 #define BUFSIZE 4096
 using namespace std;
 
@@ -22,8 +23,8 @@ extern bool sendRequest(HANDLE hPipe, int opCode);
 extern bool IsProcessRunning(const TCHAR* const executableName);
 extern bool terminateService(HANDLE hPipe);
 extern bool capture(std::vector<string> &paths);
-extern bool parseRange(string range, vector<int> parsedRange);
-extern bool isRange(string range);
+extern bool parseRange(string sequence, map<int, int>& parsedsequence);
+extern bool isRange(string range, int& leftNumber, int& rightNumber);
 extern bool isInt(string str);
 extern bool isInt(char chr);
 extern vector<string> partition(string str, char delim);

@@ -148,6 +148,44 @@ bool WorkGround::removeTask(const string taskName){
 	return false;
 }
 
+bool WorkGround::removeTask(const int taskIndex) {
+	if (head == NULL) {
+		return false;
+	}
+
+	// Check if valid index
+	if (taskIndex < taskNo && taskIndex >= 0) {
+		taskNode* cur = NULL;
+		taskNode* prev = NULL;
+		int i = 0;
+		for (cur = head; cur != NULL && i != taskIndex; cur = cur->next) {
+			prev = cur;
+			i++;
+		}
+
+		if (cur != NULL && prev != NULL) {
+			//cout<<"cur is not null!!!!"<<endl;
+			prev->next = cur->next;
+			delete cur;
+			taskNo--;
+			return true;
+
+		}
+		else if (cur != NULL && prev == NULL) {
+			// the head is the targeted node
+			taskNode* tmp = cur;
+			head = head->next;
+			delete tmp;
+			taskNo--;
+			return true;
+		}
+		else
+			return false;
+	}
+
+	return false;
+}
+
 bool WorkGround::renameWorkGround(const string awgName){
 	if (awgName != ""){
 		wgName = awgName;
@@ -354,4 +392,35 @@ bool WorkGround::deserialize(stringstream &toDeserialize, WorkGround* deserializ
 		deserialized->addTask(*temp);
 	}
 	return true;
+}
+
+bool WorkGround::filter(string filterSequence) {
+	map<int, int> parsedSequence;
+	pair<map<int, int>::iterator, bool> ret;
+	bool
+	bParsePange = parseRange(filterSequence.substr(1, filterSequence.size() - 1), parsedSequence);
+
+	// invalid sequence
+	if (!bParsePange)
+		return false;
+
+	// These are the tasks to keep
+	if (filterSequence[0] == '+') {
+		for (int i = 0; i < taskNo; i++) {
+			ret = parsedSequence.insert(pair<int, int>(i, 0));
+			// If could add the number -> it didn't exist then delete the task
+			// at that location
+			if (ret.second)
+				removeTask(i - 1);
+		}
+	}
+	// These are the tasks to remove
+	else if (filterSequence[0] == '-') {
+		for (pair<int, int> i : parsedSequence) {
+			removeTask(i.first - 1);
+		}
+	}
+	// Any other char at index 0 in invalid
+	else
+		return false;
 }
