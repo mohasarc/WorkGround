@@ -4,8 +4,10 @@
 
 WorkGround (wg) is a console tool that helps saving the currently open programs and files as a WorkGround and provides the ability to reopen all of them later with only one command.
 
+# installation (For Windows)
+To install wg on your computer you can either download the excutables wg.exe and wgbgService.exe from [here](http://ge.tt/26d3i523) or fork the project and compile it yourself using visual studio to get the same two executables. Note that after compiling the project rename `WGs.exe` to `wg.exe`
 
-
+After downloading the executables you can either copy both of them into any folder and then run command prompt from that folder to be able to executethe commands normally. Or, recommended, copy `wgbgService.exe` to `C:\Users\moha9\` and `wg.exe` to `C:\Program Files\WorkGround-beta-v1.0.0` where you will make a new folder called `wg`. Finally, you need to set up the environment variables. Find `Edit the system environment variables` from search or `computer -> settings -> advanced settings` . Click on `Environment Variables...` then from the bottom panel find `Path` select it and click `Edit...` -> `New` then add `C:\Program Files\WorkGround-beta-v1.0.0\` there then save and exit. Notice the `\` at the end of the path.
 
 # The main cocept explained
 The main motivation for making this tool is to cut down on the time spent reopening programs and files that are usually used togather. Also, to make it easier to get back to work after restarting the PC for updates or after the "blue death screen".
@@ -14,11 +16,6 @@ The main motivation for making this tool is to cut down on the time spent reopen
 Let's take, for example, a CS student, who studies math sometimes and develops c++ apps othertimes. So when studying math he would open the WorkGround named MATH102 which opens a calculus book on a pdf reader, professor leonard youtube channel,and the homework website on the browser, and maybe a scientific calculator program as well. However, when coding, he would switch to the WorkGround called CODETIME which would open VSCODE and his github page and c++ docs page on the browser and some music on media player.
 
 Here wg makes all this happen with only one command : `wg switch MATH102 CODETIME`
-
-# installation (For Windows)
-To install wg on your computer you can either download the excutables wg.exe and wgbgService.exe from [here](http://ge.tt/26d3i523) or fork the project and compile it yourself using visual studio to get the same two executables. Note that after compiling the project rename `WGs.exe` to `wg.exe`
-
-After downloading the executables you can either copy both of them into any folder and then run command prompt from that folder to be able to executethe commands normally. Or, recommended, copy `wgbgService.exe` to `C:\Users\moha9\` and `wg.exe` to `C:\Program Files\WorkGround-beta-v1.0.0` where you will make a new folder called `wg`. Finally, you need to set up the environment variables. Find `Edit the system environment variables` from search or `computer -> settings -> advanced settings` . Click on `Environment Variables...` then from the bottom panel find `Path` select it and click `Edit...` -> `New` then add `C:\Program Files\WorkGround-beta-v1.0.0\` there then save and exit. Notice the `\` at the end of the path.
 
 
 # Usage
